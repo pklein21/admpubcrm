@@ -154,9 +154,10 @@ document.getElementById('login-logo').src = 'data:image/png;base64,/9j/4AAQSkZJR
 
   sb.auth.onAuthStateChange(function(e,s){if(e==='SIGNED_OUT')show('LS');});
 
+  // Show login immediately, then override if session exists
+  show('LS');
   sb.auth.getSession().then(function(r){
     if(r.data&&r.data.session)boot(r.data.session.user);
-    else show('LS');
   });
 })();
 </script>
