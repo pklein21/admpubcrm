@@ -1121,7 +1121,7 @@ async function saveGold() {
   } else {
     goldData.push(rec);
   }
-  if(window._sb){ try{ await window._sb.from('gold_opportunities').upsert(rec,{onConflict:'id'}); }catch(e){ console.error('DB save error',e); } }
+  if(window._sb){ try{ await window._sb.from('gold_opportunities').upsert([rec],{onConflict:'id',ignoreDuplicates:false}); }catch(e){ console.error('DB save error',e); } }
   closeGoldModal();
   renderGoldKPIs();
   renderGold();
@@ -1647,7 +1647,7 @@ async function savePub(){
   // Save to Supabase
   if(window._sb){
     try{
-      await window._sb.from('publishers').upsert({id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp,notes:pub.notes,cn:pub.cn,ce:pub.ce,cp:pub.cp,pref_method:pub.prefMethod,cgrp:pub.cgrp,lc:pub.lc,mth:pub.mth},{onConflict:'id'});
+      await window._sb.from('publishers').upsert([{id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||''}],{onConflict:'id',ignoreDuplicates:false});
       if(newLog) await window._sb.from('contact_logs').insert({pid:newLog.pid,date:newLog.date,mth:newLog.mth,am:newLog.am,note:newLog.note,grp:newLog.grp||''});
     }catch(e){console.error('DB save error',e);}
   }
@@ -1752,23 +1752,31 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     try{
       // Load publishers
       var {data:pubRows,error:pErr}=await sb.from('publishers').select('*').order('name');
+      if(pErr){ console.error('publishers load error:',pErr.message,pErr); }
       if(!pErr&&pubRows&&pubRows.length){
         pubs=pubRows.map(function(r){return{id:r.id,name:r.name,am:r.am,tier:r.tier||'',grp:r.grp||'',notes:r.notes||'',cn:r.cn||'',ce:r.ce||'',cp:r.cp||'',prefMethod:r.pref_method||'',cgrp:r.cgrp||'',lc:r.lc||'',mth:r.mth||''};});
+        console.log('Loaded',pubs.length,'publishers');
       }
       // Load contact logs
-      var {data:logRows,error:lErr}=await sb.from('contact_logs').select('*').order('date',{ascending:false});
+      var {data:logRows,error:lErr}=await sb.from('contact_logs').select('*').order('created_at',{ascending:false});
+      if(lErr){ console.error('contact_logs load error:',lErr.message,lErr); }
       if(!lErr&&logRows&&logRows.length){
         logs=logRows.map(function(r){return{pid:r.pid,date:r.date,mth:r.mth||'',am:r.am||'',note:r.note||'',grp:r.grp||''};});
+        console.log('Loaded',logs.length,'logs');
       }
       // Load gold opportunities
       var {data:goldRows,error:gErr}=await sb.from('gold_opportunities').select('*').order('pub');
+      if(gErr){ console.error('gold load error:',gErr.message,gErr); }
       if(!gErr&&goldRows&&goldRows.length){
         goldData=goldRows.map(function(r){return{id:r.id,pub:r.pub,buyer:r.buyer||'',budget:r.budget||'',review:r.review||'',live:r.live||'No',launch:r.launch||'',notes:r.notes||'',needs:r.needs||''};});
+        console.log('Loaded',goldData.length,'gold rows');
       }
       // Load verticals
       var {data:vertRows,error:vErr}=await sb.from('verticals').select('*').order('name');
+      if(vErr){ console.error('verticals load error:',vErr.message,vErr); }
       if(!vErr&&vertRows&&vertRows.length){
         verticals=vertRows.map(function(r){return{id:r.id,name:r.name,offerid:r.offerid||'',advertiser:r.advertiser||'',category:r.category||'Other',payout:r.payout||'',conversion:r.conversion||'',demo:r.demo||'',filters:r.filters||'',testPlan:r.test_plan||[],results:r.results||[],hitList:r.hit_list||[]};});
+        console.log('Loaded',verticals.length,'verticals');
       }
     }catch(e){ console.error('Data load error',e); }
     renderAMSidebar();renderKPIs();renderAttn();renderTable();
