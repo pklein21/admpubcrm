@@ -1,0 +1,183 @@
+name: Daily Publisher CRM Report
+
+on:
+  schedule:
+    - cron: '0 14 * * 1-5'  # 9am EST = 2pm UTC, Monday-Friday
+  workflow_dispatch:          # allows manual trigger from GitHub Actions tab
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Daily Slack Report
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          node << 'EOF'
+          const https = require('https');
+
+          async function fetchSupabase(path) {
+            return new Promise((resolve, reject) => {
+              const url = new URL(process.env.SUPABASE_URL + path);
+              const options = {
+                hostname: url.hostname,
+                path: url.pathname + url.search,
+                method: 'GET',
+                headers: {
+                  'apikey': process.env.SUPABASE_KEY,
+                  'Authorization': 'Bearer ' + process.env.SUPABASE_KEY,
+                  'Content-Type': 'application/json'
+                }
+              };
+              const req = https.request(options, (res) => {
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => resolve(JSON.parse(data)));
+              });
+              req.on('error', reject);
+              req.end();
+            });
+          }
+
+          async function postSlack(payload) {
+            return new Promise((resolve, reject) => {
+              const body = JSON.stringify(payload);
+              const url = new URL(process.env.SLACK_WEBHOOK);
+              const options = {
+                hostname: url.hostname,
+                path: url.pathname,
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Content-Length': Buffer.byteLength(body)
+                }
+              };
+              const req = https.request(options, (res) => {
+                res.on('data', () => {});
+                res.on('end', resolve);
+              });
+              req.on('error', reject);
+              req.write(body);
+              req.end();
+            });
+          }
+
+          function daysSince(dateStr) {
+            if (!dateStr) return 9999;
+            return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86400000);
+          }
+
+          function contactStatus(lc) {
+            const d = daysSince(lc);
+            if (d === 9999) return 'never';
+            if (d <= 14) return 'active';
+            return 'stale';
+          }
+
+          (async () => {
+            const pubs = await fetchSupabase('/rest/v1/publishers?select=*&order=name');
+            
+            const today = new Date().toLocaleDateString('en-US', { 
+              weekday: 'long', month: 'long', day: 'numeric', 
+              timeZone: 'America/New_York' 
+            });
+
+            // Group by AM
+            const ams = {};
+            for (const p of pubs) {
+              const am = p.am || 'Unassigned';
+              if (!ams[am]) ams[am] = { total: 0, active: 0, stale: 0, never: 0, needsFollowUp: [] };
+              ams[am].total++;
+              const status = contactStatus(p.lc);
+              ams[am][status]++;
+              if (status === 'never' || status === 'stale') {
+                ams[am].needsFollowUp.push({ name: p.name, tier: p.tier, lc: p.lc, days: daysSince(p.lc) });
+              }
+            }
+
+            // Sort AMs by total publishers desc
+            const amOrder = ['Andrew Stubenrauch', 'Robert Vlad', 'Bill Wilson', 'Noah Rosenthal', 'Needing Assignment'];
+            const sortedAMs = Object.entries(ams).sort((a, b) => {
+              const ai = amOrder.indexOf(a[0]);
+              const bi = amOrder.indexOf(b[0]);
+              if (ai === -1 && bi === -1) return b[1].total - a[1].total;
+              if (ai === -1) return 1;
+              if (bi === -1) return -1;
+              return ai - bi;
+            });
+
+            const blocks = [
+              {
+                type: 'header',
+                text: { type: 'plain_text', text: '📊 AdMediary Publisher CRM — Daily Report', emoji: true }
+              },
+              {
+                type: 'context',
+                elements: [{ type: 'mrkdwn', text: `*${today}*  |  ${pubs.length} total publishers` }]
+              },
+              { type: 'divider' }
+            ];
+
+            for (const [am, data] of sortedAMs) {
+              if (am === 'Needing Assignment') continue;
+              
+              const firstName = am.split(' ')[0];
+              const pct = data.total > 0 ? Math.round((data.active / data.total) * 100) : 0;
+              
+              // Top 5 priority follow-ups (never first, then stale, sorted by days)
+              const priority = data.needsFollowUp
+                .sort((a, b) => b.days - a.days)
+                .slice(0, 5);
+
+              const followUpText = priority.length > 0
+                ? priority.map(p => {
+                    const dayStr = p.days === 9999 ? 'Never' : `${p.days}d ago`;
+                    const tierEmoji = p.tier === '$500K+' ? '⭐' : p.tier === '$100K-$500K' ? '🔺' : '';
+                    return `${tierEmoji} ${p.name} — _${dayStr}_`;
+                  }).join('\n')
+                : '_All publishers contacted recently_ ✅';
+
+              blocks.push({
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: `*${firstName}* — ${data.total} publishers\n✅ Active: *${data.active}*  |  ⚠️ Stale: *${data.stale}*  |  🔴 Never: *${data.never}*  |  Contact rate: *${pct}%*`
+                }
+              });
+
+              if (priority.length > 0) {
+                blocks.push({
+                  type: 'section',
+                  text: {
+                    type: 'mrkdwn',
+                    text: `*Priority follow-ups:*\n${followUpText}`
+                  }
+                });
+              }
+
+              blocks.push({ type: 'divider' });
+            }
+
+            // Needing assignment section
+            const unassigned = ams['Needing Assignment'];
+            if (unassigned && unassigned.total > 0) {
+              blocks.push({
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text: `⚠️ *Needing Assignment:* ${unassigned.total} publishers have no account manager`
+                }
+              });
+            }
+
+            blocks.push({
+              type: 'context',
+              elements: [{ type: 'mrkdwn', text: `<https://pklein21.github.io/admpubcrm/|Open Publisher CRM>` }]
+            });
+
+            await postSlack({ blocks });
+            console.log('Slack report sent successfully');
+          })();
+          EOF
