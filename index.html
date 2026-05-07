@@ -1647,8 +1647,20 @@ async function savePub(){
   // Save to Supabase
   if(window._sb){
     try{
-      await window._sb.from('publishers').upsert([{id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||''}],{onConflict:'id',ignoreDuplicates:false});
-      if(newLog) await window._sb.from('contact_logs').insert({pid:newLog.pid,date:newLog.date,mth:newLog.mth,am:newLog.am,note:newLog.note,grp:newLog.grp||''});
+      var row={id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||''};
+      if(idx>=0){
+        var {error:ue}=await window._sb.from('publishers').update(row).eq('id',pub.id);
+        if(ue) console.error('Update error:',ue.message,ue);
+        else console.log('Publisher updated OK');
+      } else {
+        var {error:ie}=await window._sb.from('publishers').insert(row);
+        if(ie) console.error('Insert error:',ie.message,ie);
+        else console.log('Publisher inserted OK');
+      }
+      if(newLog){
+        var {error:le}=await window._sb.from('contact_logs').insert({pid:newLog.pid,date:newLog.date,mth:newLog.mth,am:newLog.am,note:newLog.note,grp:newLog.grp||''});
+        if(le) console.error('Log insert error:',le.message,le);
+      }
     }catch(e){console.error('DB save error',e);}
   }
   closeModal();renderAMSidebar();renderKPIs();renderAttn();renderTable();
