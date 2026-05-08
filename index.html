@@ -138,6 +138,8 @@ textarea.inp{resize:vertical;min-height:80px}
     <input type="password" id="l-pw" placeholder="Password">
     <button id="l-btn">Sign In</button>
     <div class="lerr" id="l-err"></div>
+    <div id="l-reset-msg" style="display:none;margin-top:10px;padding:9px;background:#0A2010;border:1px solid #3B6D11;border-radius:6px;font-size:12px;color:#7BC47F"></div>
+    <div style="margin-top:14px"><a href="#" id="l-forgot" style="color:#666;font-size:12px;text-decoration:none;">Forgot password?</a></div>
     <div class="lfooter">AdMediary team members only</div>
   </div>
 </div>
@@ -273,32 +275,13 @@ textarea.inp{resize:vertical;min-height:80px}
 <!-- REPORTS PAGE -->
 <div class="page" id="page-reports">
   <div class="ph">
-    <div><div class="ph-t">AM Activity Reports</div><div class="ph-s">Preview and send Monday&#8211;Friday summaries to Slack</div></div>
-    <button class="btn btn-r" onclick="sendAllToSlack()">&#9889; Send All to Slack</button>
+    <div><div class="ph-t">AM Activity Reports</div><div class="ph-s">Preview and send Monday&#8211;Friday summaries to Slack #pubcall</div></div>
+    <button class="btn btn-r" onclick="sendAllToSlack()">&#9889; Send to Slack</button>
   </div>
-
-  <!-- Slack Webhook Config -->
-  <div class="card" style="margin-bottom:20px">
-    <div class="ch"><span class="ch-t">&#128279; Slack Configuration</span></div>
-    <div style="padding:16px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
-      <div style="flex:1;min-width:300px">
-        <label class="fl" style="display:block;margin-bottom:6px">Your Slack Webhook URL</label>
-        <input class="inp" id="slack-webhook" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXX" style="width:100%">
-      </div>
-      <div>
-        <label class="fl" style="display:block;margin-bottom:6px">Send To</label>
-        <select class="inp" id="slack-target" style="min-width:160px">
-          <option value="self">My Slack (test)</option>
-          <option value="am">Each AM individually</option>
-        </select>
-      </div>
-      <button class="btn btn-o" onclick="saveWebhook()">&#128190; Save</button>
-    </div>
-    <div id="webhook-status" style="padding:0 16px 12px;font-size:12px;color:var(--g5)">
-      Paste your Slack Incoming Webhook URL above. <a href="https://api.slack.com/messaging/webhooks" target="_blank" style="color:#185FA5">How to get one &#8599;</a>
-    </div>
-  </div>
-
+  <!-- hidden webhook input kept for JS compatibility -->
+  <input type="hidden" id="slack-webhook" value="https://hooks.slack.com/services/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">
+  <input type="hidden" id="slack-target" value="self">
+  <div id="webhook-status" style="display:none"></div>
   <!-- Per-AM Report Cards -->
   <div id="report-cards"></div>
 </div>
@@ -1258,7 +1241,7 @@ function renderVertContent(vid) {
   html2 += '<div class="card">'
     + '<div class="ch" style="background:' + c.bg + '">'
     + '<span class="ch-t" style="color:#fff">Test Plan</span>'
-    + '<button class="ab" style="border-color:#fff;color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addtest">+ Add Affiliate</button>'
+    + '<button class="ab" style="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addtest">+ Add Affiliate</button>'
     + '</div>'
     + '<table class="tbl"><thead><tr>'
     + '<th>Aff ID</th><th>Affiliate</th><th>Budget</th><th>Traffic</th><th>ETA</th><th>Status</th><th></th>'
@@ -1274,7 +1257,7 @@ function renderVertContent(vid) {
         + '<td><span class="badge bgr" style="font-size:11px">' + esc(t.traffic) + '</span></td>'
         + '<td style="font-size:12px;color:#854F0B;font-weight:600">' + esc(t.eta) + '</td>'
         + '<td><span style="color:' + statusColor + ';font-weight:700;font-size:12px">' + (t.status||'Pending') + '</span></td>'
-        + '<td><button class="ab ab-r" data-vid="' + vid + '" data-ti="' + i + '" data-act="deltest">&#10005;</button></td>'
+        + '<td style="display:flex;gap:4px"><button class="ab" data-vid="' + vid + '" data-ti="' + i + '" data-act="edittest" style="font-size:11px">&#9998;</button><button class="ab ab-r" data-vid="' + vid + '" data-ti="' + i + '" data-act="deltest">&#10005;</button></td>'
         + '</tr>';
     }).join('');
   } else {
@@ -1286,7 +1269,7 @@ function renderVertContent(vid) {
   html2 += '<div class="card">'
     + '<div class="ch" style="background:' + c.bg + '">'
     + '<span class="ch-t" style="color:#fff">Test Results</span>'
-    + '<button class="ab" style="border-color:#fff;color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addresult">+ Add Result</button>'
+    + '<button class="ab" style="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addresult">+ Add Result</button>'
     + '</div>'
     + '<table class="tbl"><thead><tr>'
     + '<th>Affiliate</th><th>Clicks</th><th>Leads</th><th>Cost</th><th>Revenue</th><th>Profit</th><th>Notes</th><th></th>'
@@ -1306,7 +1289,7 @@ function renderVertContent(vid) {
         + '<td style="font-size:12px;color:#3B6D11;font-weight:600">' + (r.rev||'—') + '</td>'
         + '<td style="font-size:12px;font-weight:700;color:' + pc + '">' + (profit>=0?'+':'') + '$' + profit.toLocaleString() + '</td>'
         + '<td style="font-size:11px;max-width:120px;white-space:normal">' + esc(r.notes) + '</td>'
-        + '<td><button class="ab ab-r" data-vid="' + vid + '" data-ri="' + i + '" data-act="delresult">&#10005;</button></td>'
+        + '<td style="display:flex;gap:4px"><button class="ab" data-vid="' + vid + '" data-ri="' + i + '" data-act="editresult" style="font-size:11px">&#9998;</button><button class="ab ab-r" data-vid="' + vid + '" data-ri="' + i + '" data-act="delresult">&#10005;</button></td>'
         + '</tr>';
     }).join('');
   } else {
@@ -1341,6 +1324,8 @@ function renderVertContent(vid) {
       if (act === 'addhit')    openHitModal(vid2);
       if (act === 'deltest')   deleteTestRow(vid2, parseInt(ti));
       if (act === 'delresult') deleteResultRow(vid2, parseInt(ri));
+      if (act === 'edittest')  editTestRow(vid2, parseInt(ti));
+      if (act === 'editresult') editResultRow(vid2, parseInt(ri));
       if (act === 'vedit')     openVertEdit(vid2);
       if (act === 'vexport')   exportVertical(vid2);
       if (act === 'hitlist')   openHitList(vid2);
@@ -1487,6 +1472,49 @@ function deleteTestRow(vid, idx) {
 function deleteResultRow(vid, idx) {
   var v = verticals.filter(function(x){return x.id===vid;})[0];
   if (v) { v.results.splice(idx,1); renderVertContent(vid); if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); } }
+}
+function editTestRow(vid, idx) {
+  var v = verticals.filter(function(x){return x.id===vid;})[0]; if(!v) return;
+  var t = v.testPlan[idx]; if(!t) return;
+  var c = vColor(v.name);
+  showQuickModal('Edit Test Plan Row — ' + v.name, c.bg, `
+    <div class="fg">
+      <div class="fi"><label class="fl">Affiliate ID</label><input class="inp" id="qm-affid" value="${esc(t.affid||'')}"></div>
+      <div class="fi"><label class="fl">Affiliate Name</label><input class="inp" id="qm-affname" value="${esc(t.affname||'')}"></div>
+      <div class="fi"><label class="fl">Budget</label><input class="inp" id="qm-budget" value="${esc(t.budget||'')}"></div>
+      <div class="fi"><label class="fl">Traffic Type</label>
+        <select class="inp" id="qm-traffic">
+          ${['Internal Display','Internal Social','Internal Email','Internal SMS','3rd Party Display','3rd Party Email','3rd Party Social','CPC'].map(function(x){return '<option'+(x===t.traffic?' selected':'')+'>'+x+'</option>';}).join('')}
+        </select></div>
+      <div class="fi"><label class="fl">ETA</label><input class="inp" id="qm-eta" value="${esc(t.eta||'')}"></div>
+      <div class="fi"><label class="fl">Status</label>
+        <select class="inp" id="qm-status">
+          ${['Live','Testing','Pending','Paused'].map(function(x){return '<option'+(x===t.status?' selected':'')+'>'+x+'</option>';}).join('')}
+        </select></div>
+    </div>`, function() {
+    v.testPlan[idx] = { affid:g('qm-affid'), affname:g('qm-affname'), budget:g('qm-budget'), traffic:g('qm-traffic'), eta:g('qm-eta'), status:g('qm-status') };
+    renderVertContent(vid);
+    if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); }
+  });
+}
+function editResultRow(vid, idx) {
+  var v = verticals.filter(function(x){return x.id===vid;})[0]; if(!v) return;
+  var r = v.results[idx]; if(!r) return;
+  var c = vColor(v.name);
+  showQuickModal('Edit Result — ' + v.name, c.bg, `
+    <div class="fg">
+      <div class="fi"><label class="fl">Affiliate ID</label><input class="inp" id="qm-affid" value="${esc(r.affid||'')}"></div>
+      <div class="fi"><label class="fl">Affiliate Name</label><input class="inp" id="qm-affname" value="${esc(r.affname||'')}"></div>
+      <div class="fi"><label class="fl">Clicks</label><input class="inp" id="qm-clicks" value="${esc(r.clicks||'')}"></div>
+      <div class="fi"><label class="fl">Paid Leads</label><input class="inp" id="qm-paid" value="${esc(r.paid||'')}"></div>
+      <div class="fi"><label class="fl">Cost</label><input class="inp" id="qm-cost" value="${esc(r.cost||'')}"></div>
+      <div class="fi"><label class="fl">Revenue</label><input class="inp" id="qm-rev" value="${esc(r.rev||'')}"></div>
+      <div class="fi full"><label class="fl">Notes</label><input class="inp" id="qm-notes" value="${esc(r.notes||'')}"></div>
+    </div>`, function() {
+    v.results[idx] = { affid:g('qm-affid'), affname:g('qm-affname'), clicks:g('qm-clicks'), paid:g('qm-paid'), cost:g('qm-cost'), rev:g('qm-rev'), notes:g('qm-notes') };
+    renderVertContent(vid);
+    if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); }
+  });
 }
 
 // Add new vertical
@@ -1826,6 +1854,21 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
 
   document.getElementById('l-pw').addEventListener('keydown',function(e){
     if(e.key==='Enter')document.getElementById('l-btn').click();
+  });
+
+  document.getElementById('l-forgot').addEventListener('click',async function(e){
+    e.preventDefault();
+    var email=document.getElementById('l-email').value.trim();
+    var err=document.getElementById('l-err');
+    var msg=document.getElementById('l-reset-msg');
+    err.style.display='none';
+    msg.style.display='none';
+    if(!email){err.textContent='Enter your email address first.';err.style.display='block';return;}
+    this.textContent='Sending...';
+    var r=await sb.auth.resetPasswordForEmail(email,{redirectTo:'https://pklein21.github.io/admpubcrm/'});
+    this.textContent='Forgot password?';
+    if(r.error){err.textContent=r.error.message;err.style.display='block';}
+    else{msg.textContent='Password reset email sent to '+email+'. Check your inbox.';msg.style.display='block';}
   });
 
   sb.auth.onAuthStateChange(function(event,session){
