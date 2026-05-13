@@ -1822,6 +1822,16 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   }
 
   async function hideLogin(user){
+    var allowedDomains=['admediary.com','admediaryllc.com'];
+    var domain=user.email.split('@')[1]||'';
+    if(!allowedDomains.includes(domain)){
+      await sb.auth.signOut();
+      var err=document.getElementById('l-err');
+      err.textContent='Access restricted to AdMediary team members only.';
+      err.style.display='block';
+      overlay.style.display='flex';
+      return;
+    }
     overlay.style.display='none';
     window._currentUserName=user.email.split('@')[0];
     var tnav=document.querySelector('.tnav');
