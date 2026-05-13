@@ -794,6 +794,30 @@ function buildAMReport(am) {
   };
 }
 
+function renderSlackPreview(text) {
+  var emojiMap = {
+    ':red_circle:':'🔴',':large_green_circle:':'🟢',':large_yellow_circle:':'🟡',
+    ':white_check_mark:':'✅',':warning:':'⚠️',':rotating_light:':'🚨',
+    ':fire:':'🔥',':handshake:':'🤝',':chart_with_upwards_trend:':'📈'
+  };
+  var lines = text.split('\n');
+  return lines.map(function(line) {
+    // Replace emoji codes
+    Object.keys(emojiMap).forEach(function(k){ line = line.split(k).join(emojiMap[k]); });
+    // Bold
+    line = line.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+    // Italic
+    line = line.replace(/_([^_]+)_/g, '<em>$1</em>');
+    // Blockquote
+    if (line.startsWith('&gt; ') || line.startsWith('> ')) {
+      line = '<div style="border-left:3px solid #ddd;padding:2px 0 2px 10px;margin:2px 0;color:#555">' + line.replace(/^(&gt;|>) /, '') + '</div>';
+    } else {
+      line = '<div style="min-height:18px">' + line + '</div>';
+    }
+    return line;
+  }).join('');
+}
+
 function formatSlackMessage(r) {
   var emoji = r.pct >= 70 ? ':large_green_circle:' : r.pct >= 40 ? ':large_yellow_circle:' : ':red_circle:';
   var lines = [];
@@ -868,7 +892,7 @@ function renderReports() {
 
       + '<div style="padding:12px 16px;border-top:1px solid var(--g2);background:var(--g0)">'
       + '<div style="font-size:11px;font-weight:700;color:var(--g5);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">Slack Message Preview</div>'
-      + '<pre id="preview-'+safeAm+'" style="font-size:12px;line-height:1.6;white-space:pre-wrap;color:var(--g7);background:var(--w);border:1px solid var(--g2);border-radius:6px;padding:12px;margin:0;max-height:220px;overflow-y:auto">'+msgEsc+'</pre>'
+      + '<div id="preview-'+safeAm+'" data-raw="'+msgEsc+'" style="font-size:13px;line-height:1.7;color:var(--g8);background:var(--w);border:1px solid var(--g2);border-radius:6px;padding:14px;margin:0;max-height:260px;overflow-y:auto">'+renderSlackPreview(msg)+'</div>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -895,7 +919,7 @@ function sendOneToSlack(safeAm) {
   // Find the AM name from the preview element
   var pre = document.getElementById('preview-' + safeAm);
   if (!pre) return;
-  var text = pre.textContent;
+  var text = pre.getAttribute('data-raw') || pre.textContent;
 
   var status = document.getElementById('webhook-status');
   status.innerHTML = '<span style="color:#185FA5">&#8987; Sending to Slack...</span>';
