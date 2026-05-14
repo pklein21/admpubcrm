@@ -2,7 +2,7 @@ name: Daily Publisher CRM Report
 
 on:
   schedule:
-    - cron: '0 14 * * 1-5'  # 9am EST = 2pm UTC, Monday-Friday
+    - cron: '0 13 * * 2,5'  # 8am EST = 1pm UTC, Tuesday and Friday
   workflow_dispatch:          # allows manual trigger from GitHub Actions tab
 
 jobs:
@@ -88,10 +88,11 @@ jobs:
             const ams = {};
             for (const p of pubs) {
               const am = p.am || 'Unassigned';
-              if (!ams[am]) ams[am] = { total: 0, active: 0, stale: 0, never: 0, needsFollowUp: [] };
+              if (!ams[am]) ams[am] = { total: 0, active: 0, stale: 0, never: 0, awaiting: 0, needsFollowUp: [] };
               ams[am].total++;
               const status = contactStatus(p.lc);
               ams[am][status]++;
+              if (p.awaiting_response) ams[am].awaiting++;
               if (status === 'never' || status === 'stale') {
                 ams[am].needsFollowUp.push({ name: p.name, tier: p.tier, lc: p.lc, days: daysSince(p.lc) });
               }
