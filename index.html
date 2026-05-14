@@ -176,6 +176,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <div class="sbi" id="sb-cs-ok" onclick="sbCS('ok')">&#10003; Recently Contacted</div>
     <div class="sbi" id="sb-cs-stale" onclick="sbCS('stale')">&#9651; Needs Follow-up</div>
     <div class="sbi" id="sb-cs-none" onclick="sbCS('none')">! Never Contacted</div>
+    <div class="sbi" id="sb-cs-awaiting" onclick="sbCS('awaiting')">&#9202; Awaiting Response</div>
   </div>
 </nav>
 
@@ -209,7 +210,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <input class="srch" id="q" placeholder="Search publishers..." oninput="renderTable()">
     <select class="fsel" id="f-am" onchange="renderTable()"><option value="">All Managers</option></select>
     <select class="fsel" id="f-tier" onchange="renderTable()"><option value="">All Tiers</option><option>$500K+</option><option>$100K-$500K</option><option>$50-$100K</option><option>Under $50K</option></select>
-    <select class="fsel" id="f-cs" onchange="renderTable()"><option value="">All Statuses</option><option value="ok">Recently Contacted</option><option value="stale">Needs Follow-up</option><option value="none">Never Contacted</option></select>
+    <select class="fsel" id="f-cs" onchange="renderTable()"><option value="">All Statuses</option><option value="ok">Recently Contacted</option><option value="stale">Needs Follow-up</option><option value="none">Never Contacted</option><option value="awaiting">Awaiting Response</option></select>
     <button class="btn btn-o" style="padding:7px 12px;font-size:12px" onclick="clearF()">&#10005; Clear</button>
   </div>
   <div class="card">
@@ -475,6 +476,11 @@ textarea.inp{resize:vertical;min-height:80px}
             <option>Bill Wilson</option><option>Daniel Zelaya</option><option>Needing Assignment</option>
           </select></div>
           <div class="fi"><label class="fl">Slack / Teams / Telegram Group</label><input class="inp" id="m-group" placeholder="e.g. #admediary-partners"></div>
+          <div class="fi full" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+            <input type="checkbox" id="m-awaiting" style="width:16px;height:16px;cursor:pointer;accent-color:#C41C1C">
+            <label for="m-awaiting" style="font-weight:600;cursor:pointer;color:var(--g8)">Awaiting Response</label>
+            <span style="font-size:12px;color:var(--g5)">— contacted, waiting to hear back</span>
+          </div>
           <div class="fi full"><label class="fl">Notes</label><textarea class="inp" id="m-notes" placeholder="Internal notes..."></textarea></div>
         </div>
       </div>
@@ -572,12 +578,12 @@ function getList() {
   var L = pubs.slice();
   if(sbAMf!=='All') L = L.filter(function(p){return p.am===sbAMf});
   if(sbTf!=='All')  L = L.filter(function(p){return p.tier===sbTf});
-  if(sbCSf!=='All') L = L.filter(function(p){return csk(p.lc)===sbCSf});
+  if(sbCSf==='awaiting') L = L.filter(function(p){return p.awaiting||false;}); else if(sbCSf!=='All') L = L.filter(function(p){return csk(p.lc)===sbCSf});
   var q = (document.getElementById('q')||{}).value||'';
   if(q) { var ql=q.toLowerCase(); L=L.filter(function(p){return p.name.toLowerCase().indexOf(ql)>-1||p.id.indexOf(q)>-1||(p.am||'').toLowerCase().indexOf(ql)>-1}); }
   var fam=(document.getElementById('f-am')||{}).value||''; if(fam) L=L.filter(function(p){return p.am===fam});
   var ft=(document.getElementById('f-tier')||{}).value||''; if(ft) L=L.filter(function(p){return p.tier===ft});
-  var fcs=(document.getElementById('f-cs')||{}).value||''; if(fcs) L=L.filter(function(p){return csk(p.lc)===fcs});
+  var fcs=(document.getElementById('f-cs')||{}).value||''; if(fcs==='awaiting') L=L.filter(function(p){return p.awaiting||false;}); else if(fcs) L=L.filter(function(p){return csk(p.lc)===fcs});
   L.sort(function(a,b){
     var va,vb;
     if(sf==='tier'){va=TORD[a.tier]!=null?TORD[a.tier]:4; vb=TORD[b.tier]!=null?TORD[b.tier]:4;}
@@ -637,6 +643,7 @@ function renderKPIs() {
   var tot=pubs.length, ok=pubs.filter(function(p){return csk(p.lc)==='ok'}).length;
   var stale=pubs.filter(function(p){return csk(p.lc)==='stale'}).length;
   var none=pubs.filter(function(p){return csk(p.lc)==='none'}).length;
+  var awaiting=pubs.filter(function(p){return p.awaiting||false;}).length;
   var top=pubs.filter(function(p){return p.tier==='$500K+'}).length;
   document.getElementById('kpi-grid').innerHTML=
     '<div class="kpi"><div class="kpi-l">Total Publishers</div><div class="kpi-v">'+tot+'</div><div class="kpi-s">'+top+' at $500K+ tier</div></div>'
@@ -1668,13 +1675,13 @@ function openEdit(id){
   resetModal(); document.getElementById('modal-title').textContent='Edit Publisher';
   document.getElementById('m-id').value=p.id; document.getElementById('m-name').value=p.name;
   document.getElementById('m-am').value=p.am||'Andrew Stubenrauch'; document.getElementById('m-tier').value=p.tier||'$50-$100K';
-  document.getElementById('m-group').value=p.grp||''; document.getElementById('m-notes').value=p.notes||'';
+  document.getElementById('m-group').value=p.grp||''; document.getElementById('m-notes').value=p.notes||''; document.getElementById('m-awaiting').checked=p.awaiting||false;
   document.getElementById('m-cname').value=p.cn||''; document.getElementById('m-cemail').value=p.ce||''; document.getElementById('m-cphone').value=p.cp||''; var pm=document.getElementById('m-pref-method'); if(pm){pm.value=p.prefMethod||''; toggleContactGroup();} var cg=document.getElementById('m-cgrp'); if(cg) cg.value=p.cgrp||'';
   document.getElementById('m-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('modal').classList.add('open');
 }
 function logFor(id){openEdit(id);setTimeout(function(){mTab(document.querySelectorAll('#modal .tab')[2],'logc');},80);}
-function resetModal(){['m-id','m-name','m-group','m-notes','m-cname','m-cemail','m-cphone','m-lnote','m-grpname','m-cgrp'].forEach(function(i){var el=document.getElementById(i);if(el)el.value='';});mTab(document.querySelector('#modal .tab'),'info'); var gw=document.getElementById('m-group-wrap'); if(gw) gw.style.display='none'; var gw2=document.getElementById('m-cgrp-wrap'); if(gw2) gw2.style.display='none'; var pm=document.getElementById('m-pref-method'); if(pm) pm.value='';}
+function resetModal(){ var aw=document.getElementById('m-awaiting'); if(aw) aw.checked=false;['m-id','m-name','m-group','m-notes','m-cname','m-cemail','m-cphone','m-lnote','m-grpname','m-cgrp'].forEach(function(i){var el=document.getElementById(i);if(el)el.value='';});mTab(document.querySelector('#modal .tab'),'info'); var gw=document.getElementById('m-group-wrap'); if(gw) gw.style.display='none'; var gw2=document.getElementById('m-cgrp-wrap'); if(gw2) gw2.style.display='none'; var pm=document.getElementById('m-pref-method'); if(pm) pm.value='';}
 function closeModal(){document.getElementById('modal').classList.remove('open');eid=null;}
 function closeDM(){document.getElementById('dm').classList.remove('open');}
 function mTab(el,t){document.querySelectorAll('#modal .tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');['info','contacts','logc'].forEach(function(id){document.getElementById('mt-'+id).style.display=id===t?'block':'none';});}
@@ -1687,6 +1694,7 @@ async function savePub(){
   var pub={id:id,name:name,am:document.getElementById('m-am').value,tier:document.getElementById('m-tier').value,
     grp:document.getElementById('m-group').value,notes:document.getElementById('m-notes').value,
     cn:document.getElementById('m-cname').value,ce:document.getElementById('m-cemail').value,cp:document.getElementById('m-cphone').value,prefMethod:(document.getElementById('m-pref-method')||{}).value||'',cgrp:(document.getElementById('m-cgrp')||{}).value||'',
+    awaiting:document.getElementById('m-awaiting').checked,
     lc:'',mth:''};
   if(ld){pub.lc=ld;pub.mth=lm;}
   var lgn=document.getElementById('m-grpname'); var lgrp=lgn?lgn.value.trim():'';
@@ -1698,7 +1706,7 @@ async function savePub(){
   // Save to Supabase
   if(window._sb){
     try{
-      var row={id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||''};
+      var row={id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||'',awaiting_response:pub.awaiting||false};
       if(idx>=0){
         var {error:ue}=await window._sb.from('publishers').update(row).eq('id',pub.id);
         if(ue) console.error('Update error:',ue.message,ue);
@@ -1817,7 +1825,7 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
       var {data:pubRows,error:pErr}=await sb.from('publishers').select('*').order('name');
       if(pErr){ console.error('publishers load error:',pErr.message,pErr); }
       if(!pErr&&pubRows&&pubRows.length){
-        pubs=pubRows.map(function(r){return{id:r.id,name:r.name,am:r.am,tier:r.tier||'',grp:r.grp||'',notes:r.notes||'',cn:r.cn||'',ce:r.ce||'',cp:r.cp||'',prefMethod:r.pref_method||'',cgrp:r.cgrp||'',lc:r.lc||'',mth:r.mth||''};});
+        pubs=pubRows.map(function(r){return{id:r.id,name:r.name,am:r.am,tier:r.tier||'',grp:r.grp||'',notes:r.notes||'',cn:r.cn||'',ce:r.ce||'',cp:r.cp||'',prefMethod:r.pref_method||'',cgrp:r.cgrp||'',lc:r.lc||'',mth:r.mth||'',awaiting:r.awaiting_response||false};});
         console.log('Loaded',pubs.length,'publishers');
       }
       // Load contact logs
