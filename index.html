@@ -476,11 +476,6 @@ textarea.inp{resize:vertical;min-height:80px}
             <option>Bill Wilson</option><option>Daniel Zelaya</option><option>Needing Assignment</option>
           </select></div>
           <div class="fi"><label class="fl">Slack / Teams / Telegram Group</label><input class="inp" id="m-group" placeholder="e.g. #admediary-partners"></div>
-          <div class="fi full" style="display:flex;align-items:center;gap:10px;padding:6px 0">
-            <input type="checkbox" id="m-awaiting" style="width:16px;height:16px;cursor:pointer;accent-color:#C41C1C">
-            <label for="m-awaiting" style="font-weight:600;cursor:pointer;color:var(--g8)">Awaiting Response</label>
-            <span style="font-size:12px;color:var(--g5)">— contacted, waiting to hear back</span>
-          </div>
           <div class="fi full"><label class="fl">Notes</label><textarea class="inp" id="m-notes" placeholder="Internal notes..."></textarea></div>
         </div>
       </div>
@@ -508,6 +503,11 @@ textarea.inp{resize:vertical;min-height:80px}
           <div class="fi"><label class="fl">Contact Method</label><select class="inp" id="m-method" onchange="toggleGroupField()"><option>Call</option><option>Email</option><option>Slack</option><option>Teams</option><option>Telegram</option><option>Text</option></select></div>
           <div class="fi full" id="m-group-wrap" style="display:none"><label class="fl">Slack / Teams / Telegram Group Name</label><input class="inp" id="m-grpname" placeholder="e.g. #publisher-updates or channel name"></div>
           <div class="fi full"><label class="fl">Discussion Notes</label><textarea class="inp" id="m-lnote" placeholder="What was discussed, outcomes, next steps..."></textarea></div>
+          <div class="fi full" style="display:flex;align-items:center;gap:10px;padding:8px 0">
+            <input type="checkbox" id="m-awaiting" style="width:16px;height:16px;cursor:pointer;accent-color:#C41C1C">
+            <label for="m-awaiting" style="font-weight:600;cursor:pointer;color:var(--g8)">Awaiting Response</label>
+            <span style="font-size:12px;color:var(--g5)">— contacted, waiting to hear back</span>
+          </div>
         </div>
       </div>
     </div>
