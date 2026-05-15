@@ -2,7 +2,7 @@ name: Daily Publisher CRM Report
 
 on:
   schedule:
-    - cron: '0 13 * * 2,5'  # 8am EST = 1pm UTC, Tuesday and Friday
+    - cron: '0 14 * * 2,5'  # 9am EST = 2pm UTC, Tuesday and Friday
   workflow_dispatch:          # allows manual trigger from GitHub Actions tab
 
 jobs:
@@ -134,9 +134,9 @@ jobs:
 
               const followUpText = priority.length > 0
                 ? priority.map(p => {
-                    const dayStr = p.days === 9999 ? 'Never' : `${p.days}d ago`;
+                    const dayStr = p.days === 9999 ? '' : ` — _${p.days}d ago_`;
                     const tierEmoji = p.tier === '$500K+' ? '⭐' : p.tier === '$100K-$500K' ? '🔺' : '';
-                    return `${tierEmoji} ${p.name} — _${dayStr}_`;
+                    return `${tierEmoji} ${p.name}${dayStr}`;
                   }).join('\n')
                 : '_All publishers contacted recently_ ✅';
 
