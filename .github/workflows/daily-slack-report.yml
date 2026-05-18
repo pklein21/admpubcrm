@@ -12,7 +12,7 @@ jobs:
       - name: Send Daily Slack Report
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         run: |
           node << 'EOF'
