@@ -2,12 +2,14 @@ name: Daily Publisher CRM Report
 
 on:
   schedule:
-    - cron: '0 14 * * 2,5'  # 9am EST = 2pm UTC, Tuesday and Friday
+    - cron: '0 9 * * 2,5'
   workflow_dispatch:          # allows manual trigger from GitHub Actions tab
 
 jobs:
   send-report:
     runs-on: ubuntu-latest
+    env:
+      TZ: 'America/New_York'
     steps:
       - name: Send Daily Slack Report
         env:
