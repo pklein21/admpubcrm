@@ -2283,12 +2283,17 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     ppG('pp-lw-vs').textContent=ppFmtFull(totalActual)+' now';
     ppRenderCampaigns();
     ppRenderHistory();
+    // Auto-save with debounce
+    if(window._sb){
+      clearTimeout(window._ppSaveTimer);
+      window._ppSaveTimer = setTimeout(function(){ ppSave(true); }, 1500);
+    }
   };
 
-  window.ppSave = async function(){
-    if(!window._sb){ alert('Not connected to database'); return; }
+  window.ppSave = async function(silent){
+    if(!window._sb){ if(!silent) alert('Not connected to database'); return; }
     const statusEl=ppG('pp-save-status');
-    statusEl.textContent='Saving...';
+    if(!silent) statusEl.textContent='Saving...';
     const data={
       id:'current',
       month:parseInt(ppG('pp-month-select').value),
@@ -2303,7 +2308,7 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     try{
       const {error}=await window._sb.from('profit_projector').upsert(data,{onConflict:'id'});
       if(error){ statusEl.textContent='Error: '+error.message; }
-      else { statusEl.textContent='Saved ✓ '+new Date().toLocaleTimeString(); }
+      else { statusEl.textContent='Auto-saved ✓ '+new Date().toLocaleTimeString(); }
     }catch(e){ statusEl.textContent='Save failed'; console.error(e); }
   };
 
