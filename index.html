@@ -2150,6 +2150,7 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   const PP_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const PP_DAYS = [31,28,29,31,31,30,31,31,30,31,30,31];
   let ppCampaigns = [{ name: 'PGG/Money Group', profit: 85000, cap: 110000 }];
+  let ppIsLoading = false;
   const PP_HISTORY = {
     2026: [{month:'April',val:224727},{month:'March',val:238027},{month:'February',val:223193},{month:'January',val:204232}],
     2025: [{month:'December',val:175801},{month:'November',val:156232},{month:'October',val:230657},{month:'September',val:235150},{month:'August',val:123719},{month:'July',val:102748},{month:'June',val:178946},{month:'May',val:186432}]
@@ -2283,8 +2284,8 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     ppG('pp-lw-vs').textContent=ppFmtFull(totalActual)+' now';
     ppRenderCampaigns();
     ppRenderHistory();
-    // Auto-save with debounce
-    if(window._sb){
+    // Auto-save with debounce (skip during initial load)
+    if(window._sb && !ppIsLoading){
       clearTimeout(window._ppSaveTimer);
       window._ppSaveTimer = setTimeout(function(){ ppSave(true); }, 1500);
     }
@@ -2315,8 +2316,9 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   async function ppLoad(){
     if(!window._sb) return;
     try{
+      ppIsLoading = true;
       const {data,error}=await window._sb.from('profit_projector').select('*').eq('id','current').single();
-      if(error||!data) return;
+      if(error||!data){ ppIsLoading=false; return; }
       ppG('pp-month-select').value=data.month||4;
       ppG('pp-year-input').value=data.year||2026;
       ppG('pp-days-counted').value=data.days_counted||18;
@@ -2325,7 +2327,8 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
       ppG('pp-other-profit').value=data.other_profit?ppFmtInput(data.other_profit):'$95,000';
       if(data.campaigns&&data.campaigns.length>0) ppCampaigns=data.campaigns;
       ppRecalc();
-    }catch(e){ console.error('PP load error',e); ppRecalc(); }
+      ppIsLoading = false;
+    }catch(e){ console.error('PP load error',e); ppIsLoading=false; ppRecalc(); }
   }
 
   // Event listeners — set up when page is shown
