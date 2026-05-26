@@ -124,8 +124,105 @@ textarea.inp{resize:vertical;min-height:80px}
 .lerr{display:none;margin-top:10px;padding:9px;background:#2A1010;border:1px solid #8B1010;border-radius:6px;font-size:12px;color:#E24B4A}
 .lfooter{margin-top:20px;font-size:11px;color:#555}
 /* ========================= */
+
+/* ===== PROFIT PROJECTOR ===== */
+#page-profit {
+  padding: 24px;
+  background: #f4f4f5;
+  min-height: 100%;
+  font-family: 'Sora', sans-serif;
+}
+#page-profit .pp-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:2rem; gap:1rem; flex-wrap:wrap; }
+#page-profit .pp-header h2 { font-family:'Sora',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.03em; color:#111; }
+#page-profit .pp-header p { font-size:0.78rem; color:#888; margin-top:4px; font-family:'DM Mono',monospace; }
+#page-profit .pp-controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+#page-profit .pp-controls label { font-size:0.72rem; color:#888; font-family:'DM Mono',monospace; }
+#page-profit .pp-controls select, #page-profit .pp-controls input[type="number"] {
+  background:#fff; border:1px solid rgba(0,0,0,0.15); color:#111; font-family:'DM Mono',monospace;
+  font-size:0.8rem; padding:6px 10px; border-radius:6px; outline:none; }
+#page-profit .pp-controls input[type="number"] { width:70px; }
+#page-profit .pp-save-btn { background:#cc0000; color:#fff; border:none; border-radius:6px; padding:7px 16px; font-size:0.8rem; font-family:'DM Mono',monospace; cursor:pointer; margin-left:8px; }
+#page-profit .pp-save-btn:hover { background:#aa0000; }
+#page-profit .pp-save-status { font-size:0.72rem; font-family:'DM Mono',monospace; color:#888; margin-left:8px; }
+
+#page-profit .pp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:1.5rem; }
+#page-profit .pp-card { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:1.25rem 1.25rem 1rem; position:relative; overflow:hidden; }
+#page-profit .pp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+#page-profit .pp-card.pp-gray::before { background:#888; }
+#page-profit .pp-card.pp-red::before { background:#cc0000; }
+#page-profit .pp-card.pp-amber::before { background:#c05000; }
+#page-profit .pp-card.pp-black::before { background:#111; }
+#page-profit .pp-stat-label { font-size:0.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+#page-profit .pp-stat-value { font-size:1.85rem; font-weight:700; font-family:'DM Mono',monospace; letter-spacing:-0.04em; line-height:1; }
+#page-profit .pp-card.pp-red .pp-stat-value { color:#cc0000; }
+#page-profit .pp-card.pp-amber .pp-stat-value { color:#c05000; }
+#page-profit .pp-stat-sub { font-size:0.7rem; color:#888; margin-top:8px; font-family:'DM Mono',monospace; }
+#page-profit .pp-bar-wrap { margin-top:10px; background:rgba(0,0,0,0.06); border-radius:4px; height:4px; overflow:hidden; }
+#page-profit .pp-bar-fill { height:100%; border-radius:4px; transition:width .4s ease; }
+#page-profit .pp-card.pp-red .pp-bar-fill { background:#cc0000; }
+#page-profit .pp-card.pp-amber .pp-bar-fill { background:#c05000; }
+#page-profit .pp-card.pp-gray .pp-bar-fill { background:#888; }
+#page-profit .pp-card.pp-black .pp-bar-fill { background:#111; }
+
+#page-profit .pp-lw-bar { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+#page-profit .pp-lw-group { display:flex; flex-direction:column; gap:4px; }
+#page-profit .pp-lw-label { font-size:0.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; }
+#page-profit .pp-lw-value { font-size:1.1rem; font-family:'DM Mono',monospace; font-weight:500; color:#111; }
+#page-profit .pp-lw-input { background:#f4f4f5; border:1px solid rgba(0,0,0,0.15); color:#111; font-family:'DM Mono',monospace; font-size:0.95rem; padding:6px 10px; border-radius:6px; outline:none; width:140px; }
+
+#page-profit .pp-section-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem; }
+#page-profit .pp-section-title { font-size:0.72rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; }
+#page-profit .pp-add-btn { background:rgba(204,0,0,0.08); border:1px solid rgba(204,0,0,0.35); color:#cc0000; font-family:'DM Mono',monospace; font-size:0.72rem; padding:5px 12px; border-radius:6px; cursor:pointer; }
+
+#page-profit .pp-campaigns-table { width:100%; border-collapse:collapse; }
+#page-profit .pp-campaigns-table th { font-size:0.65rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; text-align:left; padding:0 12px 10px; font-weight:400; }
+#page-profit .pp-campaign-row { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:10px; margin-bottom:8px; }
+#page-profit .pp-campaign-row td { padding:14px 12px; font-size:0.85rem; }
+#page-profit .pp-campaign-row td:first-child { border-radius:10px 0 0 10px; }
+#page-profit .pp-campaign-row td:last-child { border-radius:0 10px 10px 0; text-align:right; }
+#page-profit .pp-cn-input, #page-profit .pp-cp-input, #page-profit .pp-cc-input { background:transparent; border:none; outline:none; color:#111; font-family:'DM Mono',monospace; font-size:0.85rem; width:100%; }
+#page-profit .pp-cn-input { font-family:'Sora',sans-serif; font-weight:600; }
+#page-profit .pp-cp-input, #page-profit .pp-cc-input { text-align:right; }
+#page-profit .pp-cap-badge { display:inline-block; font-size:.6rem; font-family:'DM Mono',monospace; padding:2px 6px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+#page-profit .pp-cap-badge.capped { background:rgba(239,68,68,.15); color:#ef4444; }
+#page-profit .pp-cap-badge.ok { background:rgba(204,0,0,.08); color:#cc0000; }
+#page-profit .pp-proj-cell { font-family:'DM Mono',monospace; font-weight:500; color:#cc0000; font-size:0.85rem; text-align:right; }
+#page-profit .pp-proj-cell.capped-val { color:#c05000; }
+#page-profit .pp-del-btn { background:none; border:none; color:#888; cursor:pointer; font-size:1rem; padding:2px 4px; border-radius:4px; }
+#page-profit .pp-del-btn:hover { color:#cc0000; }
+#page-profit .pp-bar-mini { height:3px; background:rgba(0,0,0,.06); border-radius:3px; margin-top:5px; overflow:hidden; }
+#page-profit .pp-bar-mini-fill { height:100%; border-radius:3px; background:#cc0000; transition:width .4s; }
+#page-profit .pp-bar-mini-fill.over { background:#c05000; }
+
+#page-profit .pp-other-block { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+#page-profit .pp-other-block label { font-size:.7rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; display:block; margin-bottom:5px; }
+#page-profit .pp-other-block input { background:#fff; border:1px solid rgba(0,0,0,.15); color:#111; font-family:'DM Mono',monospace; font-size:.9rem; padding:8px 12px; border-radius:7px; outline:none; width:150px; }
+#page-profit .pp-other-proj { margin-left:auto; text-align:right; }
+#page-profit .pp-other-proj .op-label { font-size:.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px; }
+#page-profit .pp-other-proj .op-value { font-size:1.3rem; font-family:'DM Mono',monospace; font-weight:600; color:#cc0000; letter-spacing:-0.03em; }
+
+#page-profit .pp-pacing { background:#e8e8ea; border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:1rem 1.25rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-top:1.5rem; }
+#page-profit .pp-pacing .pn-item { text-align:center; }
+#page-profit .pp-pacing .pn-label { font-size:.65rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; }
+#page-profit .pp-pacing .pn-val { font-size:1rem; font-family:'DM Mono',monospace; font-weight:500; color:#111; margin-top:3px; }
+#page-profit .pp-divider { width:1px; height:36px; background:rgba(0,0,0,.15); }
+#page-profit .pp-pace-ind { margin-left:auto; font-size:.78rem; font-family:'DM Mono',monospace; padding:6px 14px; border-radius:6px; }
+#page-profit .pp-pace-ind.ahead { background:rgba(204,0,0,.08); color:#cc0000; }
+#page-profit .pp-pace-ind.behind { background:rgba(192,80,0,.08); color:#c05000; }
+#page-profit .pp-pace-ind.danger { background:rgba(239,68,68,.1); color:#cc0000; }
+
+#page-profit .pp-history { margin-top:2.5rem; }
+#page-profit .pp-hist-year { font-size:.72rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; margin:1.25rem 0 .6rem; }
+#page-profit .pp-hist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; }
+#page-profit .pp-hist-card { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:.75rem 1rem; }
+#page-profit .pp-hist-card .hc-month { font-size:.72rem; font-family:'DM Mono',monospace; color:#888; margin-bottom:4px; }
+#page-profit .pp-hist-card .hc-val { font-size:1rem; font-family:'DM Mono',monospace; font-weight:500; }
+#page-profit .pp-hist-card .hc-bar { height:3px; background:rgba(0,0,0,.06); border-radius:3px; margin-top:8px; overflow:hidden; }
+#page-profit .pp-hist-card .hc-bar-fill { height:100%; border-radius:3px; }
+/* ===== END PROFIT PROJECTOR ===== */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- LOGIN OVERLAY -->
@@ -153,6 +250,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <button class="nb" onclick="goPage('import')">Import / Export</button>
     <button class="nb" onclick="goPage('verticals')">&#127919; Verticals</button>
     <button class="nb" onclick="goPage('reports')">&#128226; Reports</button>
+    <button class="nb" onclick="goPage('profit')" id="nav-profit" style="background:#cc0000;color:#fff;border-color:#cc0000;margin-left:4px">&#128181; Profit Projector</button>
     <button class="nb" onclick="goPage('gold')" style="background:#8B6914;border-color:#8B6914;color:#FFD700">&#11088; Gold Tracker</button>
   </div>
 </div>
@@ -454,6 +552,150 @@ textarea.inp{resize:vertical;min-height:80px}
     </div>
   </div>
 </div>
+
+<!-- PROFIT PROJECTOR -->
+<div class="page" id="page-profit">
+  <div class="pp-header">
+    <div>
+      <h2>&#128181; Profit Projector</h2>
+      <p id="pp-header-sub">Loading...</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+      <div class="pp-controls">
+        <label>Month</label>
+        <select id="pp-month-select">
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4" selected>May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+        <label>Year</label>
+        <input type="number" id="pp-year-input" value="2026" min="2020" max="2040">
+        <label>Days counted</label>
+        <input type="number" id="pp-days-counted" value="18" min="1" max="31" style="width:55px">
+        <label>Goal $</label>
+        <input type="number" id="pp-monthly-goal" value="350000" min="1" style="width:100px">
+      </div>
+      <button class="pp-save-btn" onclick="ppSave()">&#128190; Save</button>
+      <span class="pp-save-status" id="pp-save-status"></span>
+    </div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="pp-grid">
+    <div class="pp-card pp-gray">
+      <div class="pp-stat-label">Actual Profit So Far</div>
+      <div class="pp-stat-value" id="pp-stat-actual">—</div>
+      <div class="pp-stat-sub" id="pp-stat-actual-sub">through day —</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-actual" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-red">
+      <div class="pp-stat-label">Projected Month Total</div>
+      <div class="pp-stat-value" id="pp-stat-total">—</div>
+      <div class="pp-stat-sub" id="pp-stat-total-sub">calculating...</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-total" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-amber">
+      <div class="pp-stat-label">% to Goal</div>
+      <div class="pp-stat-value" id="pp-stat-goal-pct">—</div>
+      <div class="pp-stat-sub" id="pp-stat-goal-sub">of goal</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-goal" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-black">
+      <div class="pp-stat-label">% Through Month</div>
+      <div class="pp-stat-value" id="pp-stat-month-pct">—</div>
+      <div class="pp-stat-sub" id="pp-stat-month-sub">days elapsed</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-month" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Last week comparison -->
+  <div class="pp-lw-bar">
+    <div class="pp-lw-group">
+      <span class="pp-lw-label">Last week's profit (same point)</span>
+      <input class="pp-lw-input" type="text" id="pp-last-week-val" value="$99,047" placeholder="$0"
+        onfocus="this.value=ppParseNum(this.value)||''; this.select();"
+        onblur="var v=ppParseNum(this.value); this.value=v?ppFmtInput(v):''; ppRecalc();"
+        onkeydown="if(event.key==='Enter') this.blur();">
+    </div>
+    <div class="pp-lw-group">
+      <span class="pp-lw-label">vs now</span>
+      <span class="pp-lw-value" id="pp-lw-vs">—</span>
+    </div>
+  </div>
+
+  <!-- Capped Campaigns -->
+  <div class="pp-section-hdr">
+    <div class="pp-section-title">Capped Campaigns</div>
+    <button class="pp-add-btn" onclick="ppAddCampaign()">+ Add Campaign</button>
+  </div>
+  <table class="pp-campaigns-table">
+    <thead>
+      <tr>
+        <th style="width:28%">Campaign</th>
+        <th style="width:20%;text-align:right">Profit So Far</th>
+        <th style="width:20%;text-align:right">Monthly Cap</th>
+        <th style="width:16%;text-align:right">Projected</th>
+        <th style="width:12%;text-align:right">Action</th>
+      </tr>
+    </thead>
+    <tbody id="pp-campaign-tbody"></tbody>
+  </table>
+
+  <!-- Other campaigns -->
+  <div style="margin-top:1.5rem">
+    <div class="pp-section-hdr">
+      <div class="pp-section-title">Other Campaigns (no cap)</div>
+    </div>
+    <div class="pp-other-block">
+      <div>
+        <label>Profit so far ($)</label>
+        <input type="text" id="pp-other-profit" value="$95,000" placeholder="$0"
+          onfocus="this.value=ppParseNum(this.value)||''; this.select();"
+          onblur="var v=ppParseNum(this.value); this.value=v?ppFmtInput(v):''; ppRecalc();"
+          onkeydown="if(event.key==='Enter') this.blur();">
+      </div>
+      <div>
+        <label>Days counted</label>
+        <input type="number" id="pp-other-days-mirror" value="18" style="width:80px;pointer-events:none;opacity:0.5" readonly>
+      </div>
+      <div>
+        <label>Daily rate</label>
+        <input type="number" id="pp-other-daily" value="" style="width:110px;opacity:0.5" readonly>
+      </div>
+      <div class="pp-other-proj">
+        <div class="op-label">Projected end of month</div>
+        <div class="op-value" id="pp-other-eom">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pacing -->
+  <div class="pp-pacing">
+    <div class="pn-item"><div class="pn-label">Daily rate needed</div><div class="pn-val" id="pp-pn-daily-needed">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Current daily rate</div><div class="pn-val" id="pp-pn-daily-current">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Days remaining</div><div class="pn-val" id="pp-pn-days-remaining">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Still needed</div><div class="pn-val" id="pp-pn-still-needed">—</div></div>
+    <div class="pp-pace-ind" id="pp-pace-indicator">—</div>
+  </div>
+
+  <!-- History -->
+  <div class="pp-history">
+    <div class="pp-section-title">Monthly History</div>
+    <div class="pp-hist-year">2026</div>
+    <div class="pp-hist-grid" id="pp-hist-2026"></div>
+    <div class="pp-hist-year">2025</div>
+    <div class="pp-hist-grid" id="pp-hist-2025"></div>
+  </div>
+
+  <div style="margin-top:2rem;font-size:0.68rem;font-family:'DM Mono',monospace;color:#888;text-align:center">
+    Profit Projector · Save before your meeting to preserve the week's numbers
+  </div>
+</div>
+
 </main>
 
 <!-- ADD/EDIT MODAL -->
@@ -1902,6 +2144,218 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     else showLogin();
   });
 })();
+
+/* ===== PROFIT PROJECTOR JS ===== */
+(function() {
+  const PP_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const PP_DAYS = [31,28,29,31,31,30,31,31,30,31,30,31];
+  let ppCampaigns = [{ name: 'PGG/Money Group', profit: 85000, cap: 110000 }];
+  const PP_HISTORY = {
+    2026: [{month:'April',val:224727},{month:'March',val:238027},{month:'February',val:223193},{month:'January',val:204232}],
+    2025: [{month:'December',val:175801},{month:'November',val:156232},{month:'October',val:230657},{month:'September',val:235150},{month:'August',val:123719},{month:'July',val:102748},{month:'June',val:178946},{month:'May',val:186432}]
+  };
+
+  function ppGetDays(m,y){ if(m===1) return(y%4===0&&(y%100!==0||y%400===0))?29:28; return PP_DAYS[m]; }
+  function ppFmt(n){ if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M'; if(n>=1000) return '$'+Math.round(n/1000)+'k'; return '$'+Math.round(n); }
+  function ppFmtFull(n){ return '$'+Math.round(n).toLocaleString(); }
+  function ppFmtInput(n){ if(!n&&n!==0) return ''; return '$'+Math.round(n).toLocaleString(); }
+  function ppParseNum(s){ if(!s) return 0; return parseFloat(String(s).replace(/[$,]/g,''))||0; }
+  function ppG(id){ return document.getElementById(id); }
+
+  window.ppAddCampaign = function(){ ppCampaigns.push({name:'',profit:0,cap:0}); ppRecalc(); };
+
+  window.ppRemoveCampaign = function(i){ ppCampaigns.splice(i,1); ppRecalc(); };
+
+  function ppRenderCampaigns(){
+    const tbody = ppG('pp-campaign-tbody');
+    if(!tbody) return;
+    const daysCounted = parseInt(ppG('pp-days-counted').value)||1;
+    const month = parseInt(ppG('pp-month-select').value);
+    const year = parseInt(ppG('pp-year-input').value);
+    const totalDays = ppGetDays(month,year);
+    const remaining = totalDays - daysCounted;
+    tbody.innerHTML = '';
+    ppCampaigns.forEach(function(c,i){
+      const dailyRate = daysCounted>0 ? c.profit/daysCounted : 0;
+      const projected = c.cap>0 ? Math.min(c.cap, c.profit+dailyRate*remaining) : c.profit+dailyRate*remaining;
+      const isCapped = c.cap>0 && (c.profit+dailyRate*remaining)>=c.cap;
+      const pct = c.cap>0 ? Math.min(100,(c.profit/c.cap)*100) : 0;
+      const tr = document.createElement('tr');
+      tr.className = 'pp-campaign-row';
+      const td1 = document.createElement('td');
+      const nameInput = document.createElement('input');
+      nameInput.className='pp-cn-input'; nameInput.placeholder='Campaign name'; nameInput.value=c.name||'';
+      nameInput.addEventListener('input',function(){ ppCampaigns[i].name=this.value; });
+      td1.appendChild(nameInput);
+      if(c.cap>0){ const bm=document.createElement('div'); bm.className='pp-bar-mini'; const bmf=document.createElement('div'); bmf.className='pp-bar-mini-fill'+(isCapped?' over':''); bmf.style.width=pct+'%'; bm.appendChild(bmf); td1.appendChild(bm); }
+      const td2=document.createElement('td'); td2.style.textAlign='right';
+      const pi=document.createElement('input'); pi.className='pp-cp-input'; pi.type='text'; pi.value=ppFmtInput(c.profit); pi.placeholder='$0';
+      pi.addEventListener('focus',function(){ this.value=ppCampaigns[i].profit||''; this.select(); });
+      pi.addEventListener('blur',function(){ ppCampaigns[i].profit=ppParseNum(this.value); this.value=ppFmtInput(ppCampaigns[i].profit); ppRecalc(); });
+      pi.addEventListener('keydown',function(e){ if(e.key==='Enter') this.blur(); });
+      td2.appendChild(pi);
+      const td3=document.createElement('td'); td3.style.textAlign='right';
+      const ci=document.createElement('input'); ci.className='pp-cc-input'; ci.type='text'; ci.value=c.cap?ppFmtInput(c.cap):''; ci.placeholder='no cap';
+      ci.addEventListener('focus',function(){ this.value=ppCampaigns[i].cap||''; this.select(); });
+      ci.addEventListener('blur',function(){ ppCampaigns[i].cap=ppParseNum(this.value); this.value=ppCampaigns[i].cap?ppFmtInput(ppCampaigns[i].cap):''; ppRecalc(); });
+      ci.addEventListener('keydown',function(e){ if(e.key==='Enter') this.blur(); });
+      td3.appendChild(ci);
+      if(c.cap>0){ const badge=document.createElement('span'); badge.className='pp-cap-badge '+(isCapped?'capped':'ok'); badge.textContent=isCapped?'CAPPED':'open'; td3.appendChild(badge); }
+      const td4=document.createElement('td'); td4.className='pp-proj-cell'+(isCapped?' capped-val':''); td4.textContent=ppFmtFull(projected);
+      const td5=document.createElement('td');
+      const db=document.createElement('button'); db.className='pp-del-btn'; db.textContent='✕';
+      db.addEventListener('click',(function(idx){ return function(){ ppRemoveCampaign(idx); }; })(i));
+      td5.appendChild(db);
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4); tr.appendChild(td5);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function ppRenderHistory(){
+    const goal=parseFloat(ppG('pp-monthly-goal').value)||350000;
+    const allVals=Object.values(PP_HISTORY).flat().map(function(h){return h.val;});
+    const maxVal=Math.max(...allVals,goal);
+    [2026,2025].forEach(function(yr){
+      const el=ppG('pp-hist-'+yr); if(!el) return;
+      el.innerHTML='';
+      PP_HISTORY[yr].forEach(function(h){
+        const pct=Math.min(100,(h.val/maxVal)*100);
+        const hitGoal=h.val>=goal;
+        const card=document.createElement('div'); card.className='pp-hist-card';
+        card.innerHTML='<div class="hc-month">'+h.month+' '+yr+'</div>'+
+          '<div class="hc-val" style="color:'+(hitGoal?'#008040':'#111')+'">'+ppFmtFull(h.val)+'</div>'+
+          '<div class="hc-bar"><div class="hc-bar-fill" style="width:'+pct+'%;background:'+(hitGoal?'#008040':'#cc0000')+'"></div></div>';
+        el.appendChild(card);
+      });
+    });
+  }
+
+  window.ppRecalc = function(){
+    if(!ppG('pp-days-counted')) return;
+    const daysCounted=parseInt(ppG('pp-days-counted').value)||1;
+    const month=parseInt(ppG('pp-month-select').value);
+    const year=parseInt(ppG('pp-year-input').value);
+    const goal=parseFloat(ppG('pp-monthly-goal').value)||350000;
+    const totalDays=ppGetDays(month,year);
+    const remaining=totalDays-daysCounted;
+    ppG('pp-other-days-mirror').value=daysCounted;
+    const otherProfit=ppParseNum(ppG('pp-other-profit').value)||0;
+    const otherDaily=daysCounted>0?otherProfit/daysCounted:0;
+    const otherEOM=otherProfit+otherDaily*remaining;
+    ppG('pp-other-eom').textContent=ppFmt(otherEOM);
+    ppG('pp-other-daily').value=Math.round(otherDaily);
+    let cappedActual=0, cappedProjected=0;
+    ppCampaigns.forEach(function(c){
+      cappedActual+=c.profit;
+      const dr=daysCounted>0?c.profit/daysCounted:0;
+      const proj=c.cap>0?Math.min(c.cap,c.profit+dr*remaining):c.profit+dr*remaining;
+      cappedProjected+=proj;
+    });
+    const totalActual=cappedActual+otherProfit;
+    const totalProjected=cappedProjected+otherEOM;
+    const goalPct=Math.min(999,(totalActual/goal)*100);
+    const monthPct=(daysCounted/totalDays)*100;
+    ppG('pp-stat-actual').textContent=ppFmt(totalActual);
+    ppG('pp-stat-actual-sub').textContent='through day '+daysCounted;
+    ppG('pp-bar-actual').style.width=Math.min(100,(totalActual/goal)*100)+'%';
+    ppG('pp-stat-total').textContent=ppFmt(totalProjected);
+    ppG('pp-stat-total-sub').textContent='of '+ppFmt(goal)+' goal';
+    ppG('pp-bar-total').style.width=Math.min(100,goalPct)+'%';
+    ppG('pp-stat-goal-pct').textContent=Math.round(goalPct)+'%';
+    ppG('pp-stat-goal-sub').textContent='projected vs '+ppFmtFull(goal)+' goal';
+    ppG('pp-bar-goal').style.width=Math.min(100,goalPct)+'%';
+    ppG('pp-stat-month-pct').textContent=Math.round(monthPct)+'%';
+    ppG('pp-stat-month-sub').textContent=daysCounted+' of '+totalDays+' days elapsed';
+    ppG('pp-bar-month').style.width=monthPct+'%';
+    const totalDailyRate=daysCounted>0?totalActual/daysCounted:0;
+    const stillNeeded=Math.max(0,goal-totalProjected);
+    const dailyNeeded=remaining>0?(goal-totalActual)/remaining:0;
+    ppG('pp-pn-daily-needed').textContent=ppFmtFull(Math.max(0,dailyNeeded))+'/day';
+    ppG('pp-pn-daily-current').textContent=ppFmtFull(totalDailyRate)+'/day';
+    ppG('pp-pn-days-remaining').textContent=remaining+' days';
+    ppG('pp-pn-still-needed').textContent=ppFmtFull(stillNeeded);
+    const pi=ppG('pp-pace-indicator');
+    if(totalProjected>=goal){ pi.textContent='✓ On track to hit goal'; pi.className='pp-pace-ind ahead'; }
+    else if(goalPct>=monthPct){ pi.textContent='~ Slightly behind — monitor'; pi.className='pp-pace-ind behind'; }
+    else { pi.textContent='⚠ Needs attention'; pi.className='pp-pace-ind danger'; }
+    ppG('pp-header-sub').textContent=PP_MONTHS[month]+' '+year+' · '+daysCounted+' days counted · '+remaining+' remaining';
+    const lastWeek=ppParseNum(ppG('pp-last-week-val').value)||0;
+    ppG('pp-lw-vs').textContent=ppFmtFull(totalActual)+' now';
+    ppRenderCampaigns();
+    ppRenderHistory();
+  };
+
+  window.ppSave = async function(){
+    if(!window._sb){ alert('Not connected to database'); return; }
+    const statusEl=ppG('pp-save-status');
+    statusEl.textContent='Saving...';
+    const data={
+      id:'current',
+      month:parseInt(ppG('pp-month-select').value),
+      year:parseInt(ppG('pp-year-input').value),
+      days_counted:parseInt(ppG('pp-days-counted').value)||18,
+      goal:parseFloat(ppG('pp-monthly-goal').value)||350000,
+      last_week_val:ppParseNum(ppG('pp-last-week-val').value)||0,
+      other_profit:ppParseNum(ppG('pp-other-profit').value)||0,
+      campaigns:ppCampaigns,
+      updated_at:new Date().toISOString()
+    };
+    try{
+      const {error}=await window._sb.from('profit_projector').upsert(data,{onConflict:'id'});
+      if(error){ statusEl.textContent='Error: '+error.message; }
+      else { statusEl.textContent='Saved ✓ '+new Date().toLocaleTimeString(); }
+    }catch(e){ statusEl.textContent='Save failed'; console.error(e); }
+  };
+
+  async function ppLoad(){
+    if(!window._sb) return;
+    try{
+      const {data,error}=await window._sb.from('profit_projector').select('*').eq('id','current').single();
+      if(error||!data) return;
+      ppG('pp-month-select').value=data.month||4;
+      ppG('pp-year-input').value=data.year||2026;
+      ppG('pp-days-counted').value=data.days_counted||18;
+      ppG('pp-monthly-goal').value=data.goal||350000;
+      ppG('pp-last-week-val').value=data.last_week_val?ppFmtInput(data.last_week_val):'$99,047';
+      ppG('pp-other-profit').value=data.other_profit?ppFmtInput(data.other_profit):'$95,000';
+      if(data.campaigns&&data.campaigns.length>0) ppCampaigns=data.campaigns;
+      ppRecalc();
+    }catch(e){ console.error('PP load error',e); ppRecalc(); }
+  }
+
+  // Event listeners — set up when page is shown
+  function ppInitListeners(){
+    var m=ppG('pp-month-select'); if(m&&!m._ppInit){ m._ppInit=true; m.addEventListener('change',ppRecalc); }
+    var y=ppG('pp-year-input'); if(y&&!y._ppInit){ y._ppInit=true; y.addEventListener('input',ppRecalc); }
+    var d=ppG('pp-days-counted'); if(d&&!d._ppInit){ d._ppInit=true; d.addEventListener('input',ppRecalc); }
+    var g=ppG('pp-monthly-goal'); if(g&&!g._ppInit){ g._ppInit=true; g.addEventListener('input',ppRecalc); }
+    var op=ppG('pp-other-profit'); if(op&&!op._ppInit){ op._ppInit=true; op.addEventListener('blur',ppRecalc); }
+    var lw=ppG('pp-last-week-val'); if(lw&&!lw._ppInit){ lw._ppInit=true; lw.addEventListener('blur',ppRecalc); }
+  }
+
+  // Hook into the existing goPage function to load data when tab is opened
+  var _origGoPage=window.goPage;
+  window.goPage=function(page){
+    _origGoPage(page);
+    if(page==='profit'){
+      ppInitListeners();
+      if(!ppG('pp-month-select')._ppLoaded){
+        ppG('pp-month-select')._ppLoaded=true;
+        ppLoad();
+      } else {
+        ppRecalc();
+      }
+    }
+  };
+
+  // Also load if already on profit page on init
+  document.addEventListener('DOMContentLoaded',function(){
+    ppInitListeners();
+    // Will load data when tab is first clicked via goPage hook
+  });
+})();
+/* ===== END PROFIT PROJECTOR JS ===== */
+
 </script>
 </body>
 </html>
