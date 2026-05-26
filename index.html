@@ -970,8 +970,8 @@ function goPage(pg) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.getElementById('page-'+pg).classList.add('active');
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
-  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,gold:6};
-  document.querySelectorAll('.nb')[idx[pg]].classList.add('active');
+  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,gold:6,profit:7};
+  var activeBtn=document.querySelectorAll('.nb')[idx[pg]]; if(activeBtn) activeBtn.classList.add('active');
   if(pg==='dashboard'){renderKPIs();renderAMSidebar();renderAttn();}
   if(pg==='publishers'){populateAMFilter();renderTable();}
   if(pg==='activity') renderActivity('all');
@@ -2163,6 +2163,8 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   function ppParseNum(s){ if(!s) return 0; return parseFloat(String(s).replace(/[$,]/g,''))||0; }
   function ppG(id){ return document.getElementById(id); }
 
+  window.ppParseNum = ppParseNum;
+  window.ppFmtInput = ppFmtInput;
   window.ppAddCampaign = function(){ ppCampaigns.push({name:'',profit:0,cap:0}); ppRecalc(); };
 
   window.ppRemoveCampaign = function(i){ ppCampaigns.splice(i,1); ppRecalc(); };
@@ -2307,18 +2309,26 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
       updated_at:new Date().toISOString()
     };
     try{
+      console.log('PP saving data:', JSON.stringify(data));
       const {error}=await window._sb.from('profit_projector').upsert(data,{onConflict:'id'});
-      if(error){ statusEl.textContent='Error: '+error.message; }
-      else { statusEl.textContent='Auto-saved ✓ '+new Date().toLocaleTimeString(); }
-    }catch(e){ statusEl.textContent='Save failed'; console.error(e); }
+      if(error){ 
+        console.error('PP save error:', error.message, error); 
+        statusEl.textContent='Error: '+error.message; 
+      } else { 
+        console.log('PP saved OK');
+        statusEl.textContent='Auto-saved ✓ '+new Date().toLocaleTimeString(); 
+      }
+    }catch(e){ statusEl.textContent='Save failed'; console.error('PP save exception:',e); }
   };
 
   async function ppLoad(){
     if(!window._sb) return;
     try{
       ppIsLoading = true;
+      console.log('PP loading from Supabase...');
       const {data,error}=await window._sb.from('profit_projector').select('*').eq('id','current').single();
-      if(error||!data){ ppIsLoading=false; return; }
+      console.log('PP load result:', data, error);
+      if(error||!data){ ppIsLoading=false; console.log('PP no data found'); return; }
       ppG('pp-month-select').value=data.month||4;
       ppG('pp-year-input').value=data.year||2026;
       ppG('pp-days-counted').value=data.days_counted||18;
