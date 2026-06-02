@@ -1926,7 +1926,7 @@ function renderAdvTable() {
       +'<td style="white-space:nowrap">'+(a.lc||'<span style="color:#aaa">&#8212;</span>')+'</td>'
       +'<td>'+acsc(a.lc)+'</td>'
       +'<td>'+mBadge(a.mth)+'</td>'
-      +'<td><button class="btn btn-r" style="padding:4px 10px;font-size:11px" onclick="openAdvEdit(\'' +a.id+ '\')">Edit</button></td>'
+      +'<td><button class="btn btn-r" style="padding:4px 10px;font-size:11px" data-aid="'+a.id+'" onclick="openAdvEdit(this.dataset.aid)">Edit</button></td>'
       +'</tr>';
   }).join('');
   renderAdvPag(total);
