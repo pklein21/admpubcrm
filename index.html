@@ -830,9 +830,10 @@ function goPage(pg) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.getElementById('page-'+pg).classList.add('active');
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
-  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,gold:6};
-  document.querySelectorAll('.nb')[idx[pg]].classList.add('active');
+  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,advertisers:6,gold:7};
+  var nb=document.querySelectorAll('.nb')[idx[pg]];if(nb)nb.classList.add('active');
   if(pg==='dashboard'){renderKPIs();renderAMSidebar();renderAttn();}
+  if(pg==='advertisers'){renderAdvTable();}
   if(pg==='publishers'){populateAMFilter();renderTable();}
   if(pg==='activity') renderActivity('all');
   if(pg==='import')   renderImportSummary();
