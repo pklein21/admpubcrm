@@ -1920,13 +1920,13 @@ function renderAdvTable() {
     var rc=d>45&&a.lc?'over-row':d>14&&a.lc?'stale-row':'';
     return '<tr class="'+rc+'">'
       +'<td><strong>'+esc(a.name)+'</strong></td>'
-      +'<td>'+esc(a.cn||'&#8212;')+'</td>'
-      +'<td>'+esc(a.phone||'&#8212;')+'</td>'
-      +'<td>'+esc(a.email||'&#8212;')+'</td>'
-      +'<td style="white-space:nowrap">'+(a.lc||'<span style="color:#aaa">&#8212;</span>')+'</td>'
+      +'<td>'+(a.cn||'')+'</td>'
+      +'<td>'+(a.phone||'')+'</td>'
+      +'<td>'+(a.email||'')+'</td>'
+      +'<td style="white-space:nowrap">'+(a.lc||'')+'</td>'
       +'<td>'+acsc(a.lc)+'</td>'
       +'<td>'+mBadge(a.mth)+'</td>'
-      +'<td><button class="btn btn-r" style="padding:4px 10px;font-size:11px" data-aid="'+a.id+'" onclick="openAdvEdit(this.dataset.aid)">Edit</button></td>'
+      +'<td><button class="btn btn-r" style="padding:4px 10px;font-size:11px" data-aid="'+a.id+'" onclick="openAdvEdit(this.getAttribute('data-aid'))">Edit</button></td>'
       +'</tr>';
   }).join('');
   renderAdvPag(total);
@@ -1950,7 +1950,8 @@ function openAdvAdd(){
   document.getElementById('adv-modal-title').textContent='Add Advertiser';
   document.getElementById('adv-eid').value='';
   ['adv-ename','adv-ecn','adv-ephone','adv-eemail','adv-eaddr','adv-enotes','adv-elc','adv-emth','adv-eam'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-  advMTab(document.querySelector('#adv-modal .tab'),'info');
+  document.getElementById('adv-mtab-info').style.display='';
+  document.getElementById('adv-mtab-contact').style.display='none';
   document.getElementById('adv-modal').style.display='flex';
 }
 
@@ -1968,7 +1969,8 @@ function openAdvEdit(id){
   document.getElementById('adv-elc').value=a.lc||'';
   document.getElementById('adv-emth').value=a.mth||'';
   document.getElementById('adv-eam').value=a.am||'';
-  advMTab(document.querySelector('#adv-modal .tab'),'info');
+  document.getElementById('adv-mtab-info').style.display='';
+  document.getElementById('adv-mtab-contact').style.display='none';
   document.getElementById('adv-modal').style.display='flex';
 }
 
