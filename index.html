@@ -124,19 +124,117 @@ textarea.inp{resize:vertical;min-height:80px}
 .lerr{display:none;margin-top:10px;padding:9px;background:#2A1010;border:1px solid #8B1010;border-radius:6px;font-size:12px;color:#E24B4A}
 .lfooter{margin-top:20px;font-size:11px;color:#555}
 /* ========================= */
+
+/* ===== PROFIT PROJECTOR ===== */
+#page-profit {
+  padding: 24px;
+  background: #f4f4f5;
+  min-height: 100%;
+  font-family: 'Sora', sans-serif;
+}
+#page-profit .pp-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:2rem; gap:1rem; flex-wrap:wrap; }
+#page-profit .pp-header h2 { font-family:'Sora',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.03em; color:#111; }
+#page-profit .pp-header p { font-size:0.78rem; color:#888; margin-top:4px; font-family:'DM Mono',monospace; }
+#page-profit .pp-controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+#page-profit .pp-controls label { font-size:0.72rem; color:#888; font-family:'DM Mono',monospace; }
+#page-profit .pp-controls select, #page-profit .pp-controls input[type="number"] {
+  background:#fff; border:1px solid rgba(0,0,0,0.15); color:#111; font-family:'DM Mono',monospace;
+  font-size:0.8rem; padding:6px 10px; border-radius:6px; outline:none; }
+#page-profit .pp-controls input[type="number"] { width:70px; }
+#page-profit .pp-save-btn { background:#cc0000; color:#fff; border:none; border-radius:6px; padding:7px 16px; font-size:0.8rem; font-family:'DM Mono',monospace; cursor:pointer; margin-left:8px; }
+#page-profit .pp-save-btn:hover { background:#aa0000; }
+#page-profit .pp-save-status { font-size:0.72rem; font-family:'DM Mono',monospace; color:#888; margin-left:8px; }
+
+#page-profit .pp-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:1.5rem; }
+#page-profit .pp-card { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:1.25rem 1.25rem 1rem; position:relative; overflow:hidden; }
+#page-profit .pp-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:12px 12px 0 0; }
+#page-profit .pp-card.pp-gray::before { background:#888; }
+#page-profit .pp-card.pp-red::before { background:#cc0000; }
+#page-profit .pp-card.pp-amber::before { background:#c05000; }
+#page-profit .pp-card.pp-black::before { background:#111; }
+#page-profit .pp-stat-label { font-size:0.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+#page-profit .pp-stat-value { font-size:1.85rem; font-weight:700; font-family:'DM Mono',monospace; letter-spacing:-0.04em; line-height:1; }
+#page-profit .pp-card.pp-red .pp-stat-value { color:#cc0000; }
+#page-profit .pp-card.pp-amber .pp-stat-value { color:#c05000; }
+#page-profit .pp-stat-sub { font-size:0.7rem; color:#888; margin-top:8px; font-family:'DM Mono',monospace; }
+#page-profit .pp-bar-wrap { margin-top:10px; background:rgba(0,0,0,0.06); border-radius:4px; height:4px; overflow:hidden; }
+#page-profit .pp-bar-fill { height:100%; border-radius:4px; transition:width .4s ease; }
+#page-profit .pp-card.pp-red .pp-bar-fill { background:#cc0000; }
+#page-profit .pp-card.pp-amber .pp-bar-fill { background:#c05000; }
+#page-profit .pp-card.pp-gray .pp-bar-fill { background:#888; }
+#page-profit .pp-card.pp-black .pp-bar-fill { background:#111; }
+
+#page-profit .pp-lw-bar { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+#page-profit .pp-lw-group { display:flex; flex-direction:column; gap:4px; }
+#page-profit .pp-lw-label { font-size:0.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; }
+#page-profit .pp-lw-value { font-size:1.1rem; font-family:'DM Mono',monospace; font-weight:500; color:#111; }
+#page-profit .pp-lw-input { background:#f4f4f5; border:1px solid rgba(0,0,0,0.15); color:#111; font-family:'DM Mono',monospace; font-size:0.95rem; padding:6px 10px; border-radius:6px; outline:none; width:140px; }
+
+#page-profit .pp-section-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem; }
+#page-profit .pp-section-title { font-size:0.72rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; }
+#page-profit .pp-add-btn { background:rgba(204,0,0,0.08); border:1px solid rgba(204,0,0,0.35); color:#cc0000; font-family:'DM Mono',monospace; font-size:0.72rem; padding:5px 12px; border-radius:6px; cursor:pointer; }
+
+#page-profit .pp-campaigns-table { width:100%; border-collapse:collapse; }
+#page-profit .pp-campaigns-table th { font-size:0.65rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; text-align:left; padding:0 12px 10px; font-weight:400; }
+#page-profit .pp-campaign-row { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:10px; margin-bottom:8px; }
+#page-profit .pp-campaign-row td { padding:14px 12px; font-size:0.85rem; }
+#page-profit .pp-campaign-row td:first-child { border-radius:10px 0 0 10px; }
+#page-profit .pp-campaign-row td:last-child { border-radius:0 10px 10px 0; text-align:right; }
+#page-profit .pp-cn-input, #page-profit .pp-cp-input, #page-profit .pp-cc-input { background:transparent; border:none; outline:none; color:#111; font-family:'DM Mono',monospace; font-size:0.85rem; width:100%; }
+#page-profit .pp-cn-input { font-family:'Sora',sans-serif; font-weight:600; }
+#page-profit .pp-cp-input, #page-profit .pp-cc-input { text-align:right; }
+#page-profit .pp-cap-badge { display:inline-block; font-size:.6rem; font-family:'DM Mono',monospace; padding:2px 6px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+#page-profit .pp-cap-badge.capped { background:rgba(239,68,68,.15); color:#ef4444; }
+#page-profit .pp-cap-badge.ok { background:rgba(204,0,0,.08); color:#cc0000; }
+#page-profit .pp-proj-cell { font-family:'DM Mono',monospace; font-weight:500; color:#cc0000; font-size:0.85rem; text-align:right; }
+#page-profit .pp-proj-cell.capped-val { color:#c05000; }
+#page-profit .pp-del-btn { background:none; border:none; color:#888; cursor:pointer; font-size:1rem; padding:2px 4px; border-radius:4px; }
+#page-profit .pp-del-btn:hover { color:#cc0000; }
+#page-profit .pp-bar-mini { height:3px; background:rgba(0,0,0,.06); border-radius:3px; margin-top:5px; overflow:hidden; }
+#page-profit .pp-bar-mini-fill { height:100%; border-radius:3px; background:#cc0000; transition:width .4s; }
+#page-profit .pp-bar-mini-fill.over { background:#c05000; }
+
+#page-profit .pp-other-block { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+#page-profit .pp-other-block label { font-size:.7rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; display:block; margin-bottom:5px; }
+#page-profit .pp-other-block input { background:#fff; border:1px solid rgba(0,0,0,.15); color:#111; font-family:'DM Mono',monospace; font-size:.9rem; padding:8px 12px; border-radius:7px; outline:none; width:150px; }
+#page-profit .pp-other-proj { margin-left:auto; text-align:right; }
+#page-profit .pp-other-proj .op-label { font-size:.68rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; margin-bottom:4px; }
+#page-profit .pp-other-proj .op-value { font-size:1.3rem; font-family:'DM Mono',monospace; font-weight:600; color:#cc0000; letter-spacing:-0.03em; }
+
+#page-profit .pp-pacing { background:#e8e8ea; border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:1rem 1.25rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; margin-top:1.5rem; }
+#page-profit .pp-pacing .pn-item { text-align:center; }
+#page-profit .pp-pacing .pn-label { font-size:.65rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.07em; }
+#page-profit .pp-pacing .pn-val { font-size:1rem; font-family:'DM Mono',monospace; font-weight:500; color:#111; margin-top:3px; }
+#page-profit .pp-divider { width:1px; height:36px; background:rgba(0,0,0,.15); }
+#page-profit .pp-pace-ind { margin-left:auto; font-size:.78rem; font-family:'DM Mono',monospace; padding:6px 14px; border-radius:6px; }
+#page-profit .pp-pace-ind.ahead { background:rgba(204,0,0,.08); color:#cc0000; }
+#page-profit .pp-pace-ind.behind { background:rgba(192,80,0,.08); color:#c05000; }
+#page-profit .pp-pace-ind.danger { background:rgba(239,68,68,.1); color:#cc0000; }
+
+#page-profit .pp-history { margin-top:2.5rem; }
+#page-profit .pp-hist-year { font-size:.72rem; font-family:'DM Mono',monospace; color:#888; text-transform:uppercase; letter-spacing:.08em; margin:1.25rem 0 .6rem; }
+#page-profit .pp-hist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; }
+#page-profit .pp-hist-card { background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:10px; padding:.75rem 1rem; }
+#page-profit .pp-hist-card .hc-month { font-size:.72rem; font-family:'DM Mono',monospace; color:#888; margin-bottom:4px; }
+#page-profit .pp-hist-card .hc-val { font-size:1rem; font-family:'DM Mono',monospace; font-weight:500; }
+#page-profit .pp-hist-card .hc-bar { height:3px; background:rgba(0,0,0,.06); border-radius:3px; margin-top:8px; overflow:hidden; }
+#page-profit .pp-hist-card .hc-bar-fill { height:100%; border-radius:3px; }
+/* ===== END PROFIT PROJECTOR ===== */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <!-- LOGIN OVERLAY -->
 <div id="login-overlay" style="display:none">
   <div class="lcard">
-    <img src="" alt="AdMediary">
+    <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACgAZADASIAAhEBAxEB/8QAHQAAAgICAwEAAAAAAAAAAAAAAAgGBwQFAgMJAf/EAEsQAAEDAwIDBAcEBwMLAwUAAAECAwQABREGBwgSIRMxQVEUImFxkaHBMoGx0RUjM0JSYpIkcuEWFxgmNENTVVaTsiWClDY3VPDx/8QAHAEBAAEFAQEAAAAAAAAAAAAAAAUBAwQGBwII/8QAOBEAAgEDAQUFBQcDBQAAAAAAAAECAwQRBQYSITFBE1FhcbEHgZGhwSIjMkJS0fAU4fEVFiRikv/aAAwDAQACEQMRAD8AcuiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCiiigCtLqrUlv0/BU9JdSp49GmEn13Ce4AeNZGqLxHsFhl3aSMtx0FRA8T4Cq32wsb+qdRObj3lRPalSIEZQyGkDoD7++rU6jTUI82Z9raxlTlXq8IR+b7v3ZYGk590ucATZ8VMZDhJbbKSFhPhkGtypSUjKiAPbXVMkMQ4jkl9aW2WklSlHoABUCtNwuuurmqXEV6Lp5h4oBJyqQU95Hsz4+yquW7hc2W40XW3qmN2K/mPFlhJIUMg5Ffa4NIQwwlCeiEDHXyrgiS040XG1hSQcZFXDFxnkdxOK4laR+8Kg2qtbNw5qrdCaL8kd5B9VPvqMPX2/PrKzNS1n91PXFY07qEXhcSattCuK0FN/ZT7y4QpJ7iK+1UsLV13t555KRMbHeEn1vhVg6av0W8w0PsK7x1ST1SfI16p141HhFi80mvareksrvRuaCQBk11yH2o6Od5YQnOMmuXquN9DlKh3ir5GY6n1KkqGUkEeytRquZdYNu9JtUZEhaD66CCSR7MVE9SXC5aBkLvD6nJ9jdc5FtIHrxye5XtFT23S2J8FmZGWFsvIC0EeIIzVtS3sx5MypUHRUauN6L/jRqNJaotuoY+I7yES2xh+Oo4W2fHI8K31VTu3YZFinNa902js50dXLLbT/AL5s9PyqwNIXtjUOnod1YHKH2wopPek+IqkJvecJcy7dWsVSjcUvwPh5Pu/Zm2oooq6R4UUUUAUUUUAUUUUAUUUUAUUUUAUUUUAUUUUBxecS00t1ZAShJUSfAClq1xxMPQr6/D0/a2H4zKuUPOKJ5z49PCrY3+1E1p3bC7vdpyvyI6mGgD1yr1cj3ZpCiSSSTknqTUPqV5Ok1CDwdF2J2ctr+nO5uo7yTwl08WNdtZxBztUatg2CfZWmzLXyh1teOX7qYavPrZaR6Punp1ecc05tHxUBXoLV7Ta861Nuby0yO220q2067pxto7qlHPvyFFFFSRpYUUUUAUUUUAUUVVXE/qSbp/bSSbZMdhzX1JS260rlWkcwzg+40BatFedv+XmvP+tL5/8AKVTg8L94n3naSA/c5z86Wh11DjzyipavXOMn3UBaNFFcXVoabU44oJSkZJPgKA5UUkG9e5eprhuVdlWPUlzgW9h3sGmmHyhJ5RgnA9oNdmw+qdaXjdqxW6Xqq7ymHHVFxp2QooUEoUeo+6gGL3znLlNQdMN9BNeR2hHfy5/wqfaYt7drsEKA0MJZaSmq03RHJulYHnB+qwgZ9vMattogtpI7iOlY1LjVm35E5f8A3djbwjyeZPz5EE3llOvWVjT0ZZQ7dH0MKUO9KCev4VKdJ2diw6dhWmOMIjthPvPifjUN3Dy3r3Trzv7EvBI/vdasavVPjUk304Fi7fZ2dGnHlLMn55x8kQ/XV1ku3CHpe3L5JU45ccHe231JI+FdOspydHaGeU0suKZQEpWs9VKJxk/GsdwhjeZHbjHbQsMk/wD77DWj4mO0Og3eTIHbI5seWatzm9ycuqMy1t4SuLeh+WWG/Fv+YIjbH1vNiU6eZ+R+scX4nPXHuraNjI76rjR+oXY8VqPIBcQkYB7zip9ZLvbZKyl9Smxy5yRUXCSfM3u5oSgsxXDwO15RR1BxXLSF5Fj1bHb58MXAlBQT0Sodcj51przqGKzzhpBVg4HTvqCJuMu46wgL5lDle9RIPd0oqm7JNFJWfa0JRqLg0N5NiNXS3Fh4qCVjvT3iovoa7T2NQz9J3Ec/oSeeO+e91Ht92RUrtGfQGebv5B+FRl91iRudGajYL0eMsvkeR5cZqZm8brRzW3SkqtKSysN+TX8x7yTXi3xrpbX4EtpLjLqcKSoZFQXZu4vsm5aUkHmFpdLbKj3qRzHHwGKsWqx0EQ5u1qVbX2EjlVjzyK81eFSLXkXbFKpaV4S5JKS8849GWLc4rU2A9FeTzIcSQRVX7HzHod6vOmVklqK4pTWfAcx/OrZPcaqPbYhe72oFI+yELB9/OKpW4VINF7TUp2VzCXJJP3pluUUUVkkGFFFFAFFFFAFFFFAFFFFAFFFFAFFFFAFFFY9zltwbdImPKCW2W1LUT4ACj4FYpyeEKrxl6n9M1JA0/GfQtmK0XHORWfWJxg+7FL5W11ddXL3qe43V3PNKkLcwTnGTWqrTrmr21VzPo/RNPWn2NO3XRcfN8WSTa9Ya3H044e5NyYJ/rFeiCTlII8RXnBpF70fVVqf/AOHLbV8FCvRuGrmiMq820n5VL6M/syRzr2kQ+/oS8H6o7aKKKmjmgUUUUAUUUUAUsnHBcFoVp23Nr6L7VbifZ0x+FM3Sg8aUxT241uhdORi3pXn2qWofSgKKpvuC+aX9uJsVSv8AZ5ykpHsKQfrSg0yvBTcwHrraOZWTl/GOn7ooBnqgW/2o/wDJnay8Tm3EpkONdgyCepUshPT3A5+6p7SmcZOrnZmp42kWVZjQ0pfdwe5wg9PgRQFALW44tTjqytxR5lKPiT3mrd4RYQl7wNvEf7JFW78Ry/Wqhpi+Cq0g3q6XrByGjHzj2pNAXHvpbFK02m/RW1KlW5xDvQZykHr+NSnQd2avek7fcm1hXasjmwe5Q6H51uJTDUqM5HfQFtOJKVJPiDVYWiPcdudSvR1o7fTM58rbUnviqV5/y58fbWPJblTf6PmS1OaurT+nf44PK8U+a+qN/u9bJEvS6rhb21Ln25xMlgJGSSk9Rj3Zra6AvzeodLw5/Nh8o5X2z0UhY6EEeHWt2w61IYS60tLjSxlKh1BFRmPpVdt1U5erXIDTUg5kR8dFHzHyr24tT3l1LEa0Klv2FTg4ttP1RlawsZuCGbjC9S5Q1BbC/PzSfYQTWp1zZH9UaDkQpTfJKda7gMYWP/5U2HdXxQBGDVZU1LPiW6N5UpOLXOLyv2E9i6cuUCSuI/HcS4yopOUnrjxratxJzQx2Ln9NM5OssCW52jrKef8AixWIvTEBQ/Zp+FYD0/uZt0Nr+H2oixzocxxJ/VL+FbjZzSMu56zE6ZGdTEipKkqKSApR6fnV/DSFsJ9dsEeWK3MGDGhtJajtpQlIwABVadjiSbZau9q3UpShCPFnCUtyJbSphsrcSnCUgZrTaO08YEqVepyi5c5/V456JHgkVJqKkN1NpmoxryjGUV15/sanVl9haesj9ymupQhAwkE9VKPcBUa2gszse1PX+ahSJ13WX3UqGOUEkpGPca2dy0wu9X5qbd3Uuw4yipiPjoFeZqSqU2y1lRCEIH3AV43XKe8+nIye2jSt3RpvLljL8uS+rMHUl0j2eyyLhKcS222k9VHHWoFsZanCxO1PJSQ5c1laM/w8x/wrG1U1N3Nu4sEZtyJY4T3PIkqHSSR0AT5jNWhb4rMGCxDjpCWmUBCAPAAYrwl2lTe6IyJTVpaOjn7c8Z8EuS83zO+iiisgiAooooAooooAooooAooooAooooAooooAqp+KHVy9MbduR46ULfuZVGwT1CSDlQ93SrYpPOMDU7F51pDtMR7tGbc0oLx4OE4UPkKwr+t2VBtc2bLslp39dqlOMlmMeL93L5lHV8r6ASQB3msq52+VbnG2pbfZuLQFhJ7wDWq4O/OSTSzxZwtyyi4R1p70upI+Ir0ktJza4h82Ef8AiK814xxIaPksH516KaBmCfpG3SQc8zIGfd0qa0Z8ZryOZe0mDcKE+7e+hvaKKiu7OqF6N0Hcb+0hK3Y6QG0qGQVE4GfZmpuclCLk+hy+3oTuKsaUOcmkvNkqopPf9JzW/wDy+1/0Gvo4nNb56262f0GsD/VLfvfwNt/2Hq/6Y/8AocGil20HxK26XKTF1REXHLiwlLzKPURnxPXNMJDksS4zcmM4lxpxPMlSTkEVl0binWWYM1/UtIvNMmo3MMZ5Po/JnbSPcU84zd5Lk3nIittsj4c31p3pCuSO4s/uoJ+VeeO5N2bvmubrc2lrWh57AKu/oMfSrxGEdq6+DSSWd1ZbJUeV63qATnpnmBz8qpSrR4WJXo29Nqb6j0hDrfT2IUevwoB1L/cmLPZZl1knDMVlTq+vgBmvPjcG/r1RrS635ZyJb5Uj+4OifkBTXcWuqGbTtu9Z2nimZcVobCUnqEZyT7uhFJkAAAB4UB9pt+EURrLtPc73OUG2DKceW4R3ISkA/hSjk4BJ8KaexE2Lg3ede9VbzDgOPHtHSB8iKAnKuILaxKik6gOQcH9SqsedvxtJNirjSr2HWljCkqYUQaS+zW2Xc50a2wI/by31BtpsYBUo+HWp5/mQ3Q/6Te/7zf50KptPKGm0Huxt1eLrE01YLyqRKfKuwaLRHQAqIz4dAaLzvltvaLrJtk6+dnJjOFt1IaJwod4zVH7N7b6w0XfrlqfUllVb4cG2PLS4paVHm5T3YPlVJXiQLle5cxsFZlSFuJ8zzKyKBtt5Y6jfEDtataUJ1AcqOB+pVU+01qKz6igpmWia3IaV3YPX4V5+X3SOobHbo9wulqdjRZABacOCCCMju7q2e0Oqpekde2y5tSXER+2DclAUeVTauhyPZnP3UKHoKenfVcX/AHt25sd1ftlxvnZyY6ihxIaJwR7RUn1LeWE6Bn31lZ7AQFyEKHfy8uQa89LvKFxucucCVekvKcBPeeY5oD0b05erfqGyxrxanu2hyUBbS8YyK2FRPZ6IIO1+nI/JyKFuZKh/MUAmthrzUELS+lJ16nrKGWGz1Hfk9B8zQEV1DvbtzYb1JtFzvfZTIy+R1AaJ5T5ZqeWi4Rbta4tzgudpFlNJdZXjHMlQyDXm7dpbtxuMu4SDzPSXVurJ8Sok0/Gxrwf2m04oEnlgto6+xIFATSoDqPcnQ7T8m0T7utp1pZbdCUHoQeozU5mLDcR5wnHKhR+VJbeHxLvEyUOvbSFrBPjlRoVTaeUMlbd09u4bCIsS5BtA6ABoiptZbzbrxHD9vkoeQRnoeuPdSj3fSWoLTaWrrcLYtiE9jkdJBByMjurlojUc3TGoY1xiOL5Qrlcbz6q0np1FA228sZW/7k6QsV1dtlyuRalNY50chOM1sNIay0/qwyRY5npBjY7X1SMZ7qXDelvn3BmTUgFmU204g478oGamfC04E3S8tfxIQr4UKF6z5ceDEclSnA2y2MqUfCoSd39BhRSbucg4/ZGtPxKXj0TSDNrbWQ5NeAUAf3B1PzxVL7Zace1Jq6HDaQlTTKw8/wA3dyAjNANzFfblRm5DJy24kKScYyDXZXxCQhCUJGAkYAr7QBRRRQBRRRQBRRRQBRRRQGHfJ7Nss8u4PrCG47KnFKJ6DArzm1Jc5F5v866Slcz0p9TiiO7JNN3xb6qcsWhWbZGWUv3NamyPNsD1vxFJpWv6vW3pqmuh1/2eac6VtO7kvxvC8l/f0NrpC2qvGqbXa0ZzKlNtdPDKgKnfE3CRb9znYraAhCIzQAHsGK3HCXpVy9bgJvZKfR7V6y0nxKgcY9xFcOL9rs91+b/iQ0K+ZFYqpYtHN9WTk9QVTaCFtF/hg8+bafoim0nCgfI5p9+H6WZ201lkqOSpCh8FEUg5p5uF14O7MWdI72+dJ/qJrI0h/eteBEe0WGdPpy7pfRln1R/GDefQtAotWQPT1/8AiQavClb43pnPc7DB5h+rbW5jPmcfSpbUJ7tvJnP9kbdV9XoxfJPPwWfUXOKw5Jktx2UlTjqghIHiTUu1Ztnq7TcRMyZapC43JzreQ2eVA9p8K122cYTNwrBGUMpcuDIPu5xXoFf7excNOzba+kKaejKaUCPApxULZWUbiEm3yOm7TbTVNHuaNOMU1Li/ieblN/wc6lk3XRUuzS3y6u3Pfq+Y5IbV3D45pS71EMG7SoqiD2bqh07sZq+eCyf6PqK7Q8q/tCEdAOnTmrxp03C4S7+Be2yoQudHnPHFYa+P7DO6tlmBpe6TQQCxEcXk+xJrzgcPM86v+JxSviSaf7fGWmHtNqRxX78B1odfFSSPrXn+noke6tpOEHLB5QrBwTgGptsNJEXd3TzxUE/2gpyfakj61pr1A9H0ZYJ3/wCWt75YrXWK5SLPeIl0inD0Z0OI94oCxOJ/Ubl+3XnMpd5otvCY7QB6ZAyr78k1V1ZV3nOXG6S7i/8AtJLynV9fFRya2F4iIt2n7UhxvMiehUvm/gQFKQE/fjP30Bo3ErWgobBK1DCQPE01O7xTaOFWzW5I5DJZjJUk9+eiz8xS3aMjemavs8QDPbTWkfFQphuMOU3D0nYdOhQ52HEuYB8AlSaAqHh5hifvJp6OruDy1n/2oUr6U+tJZwhRUyd3w4U5MaGtwezPq/WnToCEb7zfQNpdQv8AMBzRFN9f5vV+tIzoKKZerbHDSkq7SayjHs5hTg8W0tLGzc+OTgyXmkD24WFfSlj4f4Yn7w6ejHH7dS+v8qCr6UA3O8FghStm7zAksoUI0ArScdQpscw6+8UgvMVROfJBKM5r0O3fdSztfqNa+4291P3lJFeeAyIOO8hH0oB1b7dFReFRMt09VWZtnPnzAJ+tJlBaWt+Ky2grUXUJAA694pqd2XzC4T7REKs+lRoqfLxSr6VQuzFsF53OsltOMOvHv9iSfpQD62CP6LY4Mb/hR0J+CRVH8aN+9E0ZAsLTiQudI5nE56lCQc/Mir8bTyNJT/CkCkT4i9TPai3Ruo7QmJBdMdlJ/dKeiviRQFcnuxT38N76pGztjUrGUtFHTyBxSNXGG9AkoYfAC1stvD+6tIUPkadDhNfS5s5bmBzczbruSfas0BO9wriLVpCfNJwEN4z7+n1pQGULeltIbQpalup6AdT61M1xDSOx21ltZx27iEfPP0qh9roH6S13a4fcFuEk+WEk0Ax2u7bFkbbvwX0czSI6AAfDGMUph6LAHgoY+NNPvjM9A20nkHC1BCEdfHIpW4rS35TDTaSpSnEjA99AWRvbEWzA0xLcB534I5unXISmsnhldKdbzGfBcJSvgpNb/iNghnSVhcAyGVBnPvR/hVfbR3piwX+bcn88qIK0jr4kpxQGRvhqB29a5lxw4FRYKi01jwPcr5irO4ctMpt9gXfnUqD84YSFfupBPd7+lUTbIUzUeokRWfXkzHiok+OTk04Vigt2yzQ7e0MIjspbH3DFAZtFFFAFFFFAFFFFAFFFFAFFFa7U10j2XT866SlFLMZhbiiO/AHhVG0llnqEHOSjHmxQuLPVbd/141bo6wpi2IU0R5OE+t+AqmKy7zNduV2lT31lbkh1TilE9Tk136Ytki86hgWuKnmdkvobTnu6nxrTq1R1qrl3n0jp1pT02xhR6QXH1Y4fCrpFenNACfISO3uZD4Vj/dkDlH41TnGgkJ3PhEfvW1BP9a6bq0xG4FsjQmUBDbDSUJSB0GBSncarJGv7Y/j7UAJ+C1fnU5fUlTtFBdMHLNlb6V7tFK4nzkpf2KEp0+ESR220zaM/spS0fIH60llOFwWrKts5ySc8tyWMf+xFR+lPFf3G3bfwzpOe6SLzpN+MmWmRuhHZST+ogIQR7eZR+tOQTgEnwpEuJOeLhu9d3EHLaChCPdyipLVpYoY72aX7PqO/qjn+mL+iOHDhDTO3isjSk5CFqc7vFIz9KeuX/sr39xX4UpHBtaPTNYzLnypPoKB1PeOYEdKa+/PiLZJsg4AbjrV19iTTSo7tBvvK7eV+21aNOP5Ul73x+qPO7WP/ANTT+oP65X41cnBqw65q+a8hOUNoTzHyyDVGXFfPcJK855nln5mmN4IYvNK1BKUDhIaCT7euaibFb11E6DtTLsdDqeSXzSLF4r7l6HtLOjJxzyVISD7OYZpJj3Gmf43rk4zF0/bW1+q+p1TifYMYpYkDK0jzUB862o4GWRri0utbH6DmlHKQqSXBjzUAKrams3x04bfw6RAtKUKhJbPKnu9dYpU6A22jbE5qbVNusLZUPTX0tqKe9Kf3iPcM1Jt+Y7Fu3DdsMU80azxmYjSvFWEJJJ9uSasTg80c7J1C/rSUhHocNK2WSe8OY6n4E1U26039Ibk6glec5xI9yTj6UBsNhoIuO7unopGf7QXP6UlX0qbcZc9T+58SGk+oxBTzD+Ykn8DWs4S4fpe8cV3kCvRI7juf4cgpz86wOJ2YqXvVegVBSGOybR7uzST880BqdpNwZG3d5kXSHbW5jz7PYnmOMDIP0q3dO8S18ul/t9sOnY6RLkts8wc7uZQH1qC7W7JXbXemE32LPjMNKcUhKVqIPQ48BVj6C4c7jY9Y2y73C4xXo8N4OqQhRJJHd3jzxQGbxn3T/U2020jleclJdWPZyn61V3CTDEveKO6U8xiRnHQfLIKfrW740Lk85uDb7WlYLDcEOEeS+Y/StlwVWlR1DdL3hPKGDH9ucpNAXNxIzv0fs1fn8A8zaGuv8ywn60jdhiemXeDC7+2fQ38SBTe8Y89MXa5uIVHMuYhsAeOPW6/Clj2ft5um5+noae8zUOfcj1vpQF3cU76LftZpjT6SAtpTRUkdPVCCPxqv+E+EJe8MRwo5vRY7jw9ncnPzrc8ZtwU7uRBtyD+qZgpUoeSuY/Q1lcE8Mua5u8/phmF2Xt9ZST9KAZXcjUcfSejLhfJPVDDeMZx1PQfM15+obm6g1AUtIL0qdJKiB4lSsk/jTP8AGrfksaWtenm3VB2XILzgSehQgEYP3kVV/CZYP0zum3NWgKYtrCnlZHTmOEgfM0BGt9bI5YdxXYGCWGYUVlpR71BDSQaY3g+krc249HPLytOKxjv6qPfVO8XER1jc1chRTyPtjkA9iRU/4Ipbbttv8VPNzsLa5s93XmNATTiekcuk4EYHBcmBRHmAlVV7w9xRI3GZWQf1DC3PwH1qS8UM1Lk60w0K/ZpWpY9vTFU/b58+3Pl+3TX4bxTylbK+VRT5e6gLn4ldSx32IunIrgWtDvayCD9nA6D5/KoLspZRe9fRWlglmOhTzvTwHT8SKiCRLuE0AqckSXld6jlSj76ZnZXQ50pZzLmpH6SlpBdHfyDwA+tAYHEnFDugGXAD/Z5SF9P7pH1pbwohJAJAUMEeYpqd9Iq5e2lzbbTlYCVJ/qFKqM9B4noPfQFr8NVlE3VMq7upPJCa5UdP31ePwzTF1EtpLEmxaHt7Cm0pkONBx0465V1wfdmpbQBRRRQBRRRQBRRRQBRRRQBVFcYep37Ro6FaIjxbduLqgvHi2Bgj5ir1pH+J3VyNUbiussJUhm2gxcE9CoE5UPf0rA1Kt2dBrqzbdi9Od5qkZNZjDi/p8yqq3WjdRy9LXtu7wWWXZDX2O1GQDnOa0tFavGTi8o7pVpQqwcJrKfMuf/SQ17/DB/oNQXcnX1617OjzL0lkOR0ciOzGOmc1EqKvTuatRbspZRH2uiWFpUVWjSUZLqgpsuCaRzaQu8bP2JnPj3pH5UptM7wPv5a1FH/hLSvjn8qyNMeLhENtvDe0eo+5p/NDJTlhqE+4SAEtqOT4dK85dW3F666knTpBBcceUCR7DgV6B7gyvQdC3yZgnsYDy8D2INedTy+0eW5/Eoq+JrN1mX4YmtezeisV6vkvVjScEUJKLRfbhynLjyGs+HqjP1q5d25gg7aahkFXKRAdCT/MUkCq/wCDuCqJtWt5RB9KmrdHu5Uj6Vs+Ka6ogbTXCMFlL0nlSj2jmGflWXQ+7ss+BruqJ3u0rgus0vhhCQklRKj3k5NNpwUQko0Vdp/7zs3sz7glJ+tKVTu8KVu9B2hhO8oCpbq3j8eX6VFaVHNfPcjfdvq3Z6Vufqkl9foU5xqze13AtcAHPYQQ596lKH0ql9NxhN1FbYaklQflttkDvOVAVYvFXO9M3jntY/2Rltnv9nN9ai+zUI3DdXTkcY9Wc271/kUD9K2Y4iOFvrb0y9lrtFKVENRErAAyfUAP0pE4UWXMcZjxmHVvPEIQkIPVR7q9L3EIcQULQlSSMEKGQaxkW63oUFJgRUkdQQykEfKgK40fZ0aC2BcQltSH2ba5JfCu/tCkqI+lJHPlm4Tn5ygQZDinTn+Y5p7OImf+jNnb9I5SeZlLWB/OoJ+tIWgcqAnyFAMPwWWn/WW6X5SgEpjmP18OqTVQ7tTjP3I1DLUc/wBtcQD7EnlH4VfnDMhNn2P1JfnEFR5nnU+HqpR3fKlkuj6rtc5MhlJCpjyloBPio9PxoB3+GKF6FsxZUqQUrcDjhz45Woj5VZlRjamIqDtvYIqhhSILXMPbyjNSegEd4p5pl70XVvmyIqGmk/ehJ+tXbwYwQxt1MmFJ5pE1RBPkAB9KW7eaem4boahlhJSPTFt4J/g9X6U2vDKwi2bI2h2SpLaSHXlqPQAFajk/dQFPcaN/dd1Zb9OoWlTDUcSFAd6V5IwfuNRjhLtvp+8MWQUKUIMdx4HHQEgp6/Goxvffm9SbpXu6MnLPb9i31yMIATkew4zTBcGum0xdHSNRvIAcmPLQ0rH7gwD8waApnikmqmb03ZBUFJjJbaTj+4kn5mrU4JrYY1svt0WFASVNhKj3YTzA4qht4JyZ+5uoZQBA9NWjB/lPL9KYrbS9s7f8MKb/ACmC6spXhCTgq51kD8c0BRO/+pHtR7o3dwu88aK+phlI7hy+qSPfisfa/c6+bdemGxW23PrmcvarkBRPTuxg1E4zMq73ZDLKVOyJT3gMklR6mmHj8KbrrDbi9aLQpaQopEQHBI7u+gKY3H15eNfXRu43mLEjvNggCODg93mfZVy8DbvLcdTs8wHOGlY8TjP51W29u1itspNsZN6VdPT0LVks8nJyke0576nXBK8E6wvcfByuKF59xA+tAbLf24LlbiS4hVluMlIT7MpGa+6L0MzfdBXW6BClzkcpjHPRIBPNUf3LkiXr+9PAEASlt9f5SRV/bIwQxtbGCk4W+hxRPmCTj8aAWWLIehy25DKuRxpYIOPI05mmpv6R0/b5/T+0R0OdPakGk3vLAj3abHHc2+tA+4mmq2dkGTtzaFnPqshH9PSgOreqcu37cXOQ1jnCUhOR5qFLDpqAbrfocIHBddB+HX6UwHEtJ7HQTTPX+0S0o+RP0qpdjovpW5NtyMpa5lqHs5SPrQDTxk8kdtA/dQB8q7KKKAKKKKAKKKKAKKKKAKKKKA1Osbqix6WuV1cwRFjLcwTjOBXnRcZTk2e/LeUVOPOFaie8kmmr4z9RKhaatlhjvLQ7MdU4vkOPUSMYPsOaUytd1atvVFBdDsvs+07sLKVzLnUfDyXD1MyzW+RdrtFtsRHO/JdDbY8yT0q2Rw761x+zHy/OsnhD0ui965k3SSwlyNbWkqBIzyuE+qR8DTj16sdPhWp78zH2q2uuNOvFbWuOC4573/YTD/R31r/wx8vzqH7k7bX3QrMR27IATJKgn7sfnT/1QHGdG7XS1ukY/ZLV195FXbrTqVOk5x5owNB2yv73UKdCtjdk+7wFJpjuCSUlq636OcZeQ1j7ualxq6+EKaGNxfRObHpCD088JNRthLduIs3Xaul2ukV4+Gfg8jH7/TzbtpL88Djnjlr+v1frSDJGSE+fSnJ4vLw1D25NrU5yuTVjlT58qgaTy3tqenx2kjmUt1IA8+tZWrS3qyj3Ig/Z/R7LTZ1WvxSfwS/yPXw6W42zaSzx1fbKVKUceajVTcbN3Wl6y2dtRAKFuuDPeCen4UxenIrNu0/DjtJCG22EnHl0yaSvic1CzqHdKU5Fe7WPFaSw2odxx1PzJrOv32VqoeSNW2Tpu/16dy1wW9L48vUraAyqTOYjoGVOOJSB55NeiOjLSzp/R0O3MEcjDGe7HeMmkc2Pszl83RsURDYWlEpLzgI6cqDzHP3Cn1uweFolJit87vYqDaB4nHQVa0enwlMkPaPd5qUbZPkm36L6iAbtXP8ATG4t4uJWF9q93jxwAPpUk4YbeqZvLaHSCW44cUrp48pxXQ9spukuQ84dKvnndUrJfb8ST51c3C5tnqbSt3uF01LbjBKkpSwhSwonvz3e+po5iMPRRXznRz8nMnm8s9aApvi/nGLtK5FHdMkttn7jzfSkxJwM04fFRpPV+rrdboOnbWueyy8HVhK0pwcEeJ9tUB/mO3Sc/V/5Luo5unMp5GB86AuPSKlWbg7kyFJ5HH47wVnxC3SkfI0sem3I0a8W56YSmM0+2p0+SQRn5U4OstDaie4dImirbES9c+yZS6jmAAIWFK6/dVB/5g9zP+To/wC6n86Avm28QO3UK3sREXBXKy2ED1D4D3Vu7DvJpbVLV1jWKUXJMKCuUrKSAEilq/zBbl/8mb/7qfzqzdrNpdW6e0NqhMyAym5z4jkVhoKHMQoAd/l30AuOqJKp9+uczIKpElxzI9qiauC671MwtpYeibBGJeVDSy/KUv8AZk/aAFR9rYHc1LaUmzo6DH7VP51kQ+HzcqQ+GlQI0YH/AHjjg5R8KArzStll6k1HBscUqU/MdDfN3kA96j7hk099ptLOg9qv0dHVzC2wVqKsY5lAEk/HNRnYzZ6BoKIidcOxl3xQPaPJGUoz4IJ6gYqZboW+43XQF5ttqb7SZKiqabTnGSoYoDz81JKVcLzcZiRzKkSHHB17ypRNXfvjcv0XsjonSzSxzSmESnhnqMI7viqtFpjYPcJq924zrU0iKh9BeKnAQEgjPyrebp7Qbj6g1nJlwraF29tCGYqS6AlKUpA6DPTOKAjvCpYW73uxHdeRzNW9hcggjIJ6JAP9Xyp3AMDAqmuGPbS56Ets+XfGm2584pBQDkoCc9M+3pVy0AsnHCygq03IJPOntUAeGDg/Sopwbvqa3IuaQcJNpcWfeFoq3uKTQmoNbWu0t6fhJkPxnlKWSoDCSPbUD2L2p13pTVM653K3JZbXb3GWyHASVKKenyNAQ7UL5lX24Se8vSXF/FRpstuI/o239naIwfQmyoe0pFL8jaPW65CSqAhKS4CSXB3ZpmLfFMWzsQwOrTAb6ewYoBPdXgDVd3Axj013u/vGmZ2Q/wDtra/7qvxqmL1tVrWTd5shq3JLbr61pPOOoJJHjV87a2eTYtF2+2S08shpv9YM5wT1IoCueKOVi3WmH/G6pz4DH1qL8NUcu68feKcpahq6+RKk/wCNS7fHR+qNUXiIu2RA7HjpUASoDvx+VZGw2iL3pibcpV5YSyXkpS2ArJPnQFt0UUUAUUUUAUUUUAUUUUAUEgAknAFFRzcnUDGmtGXK6PLSlTbC+yBOOZWDgV5lJRTbLtGlKtUjTguLeBOOI3Vq9U7jSsFJYgFUZvl7lAKPWq0rm+4XXluqJJWoqOfbWXp+3u3W+QrawMuyX0tpHtJrTak3VqOT5s+k7S3p2FrGlHhGC9BvuEjSzth0G9cZTJRIuTgcBP7zYHq/iaumsKxQWrZZodvZTytx2UtpHlgVm1t9CkqVNQXQ+dtUvZX15UuJfmf+PkFU1xcRu12yekY/ZLT196hVy1VvFQkHZe7HHULa/wDMV4u1mhPyMnZ+bhqdBr9S9RHKtHhacKN57SnmwlSXc/0GquqwOHl/0fd6xL/ie5PiMVq1s8VovxR3nW4b+nV4/wDWXoWpxvTeaZYIA/cQ44fvwPpVFbdRhM15Yoyscrk9lJz5c4q0uM2X225kOOlWUswEgjyJUr/CqSjvOR30PMrKHEHKVDvBq/ez/wCVJvoyK2YtmtDpU08OUX88j37y67tujdDTS3Pji5KjlEVoLBUVEYBA9lIhIdcffW86oqWtRUonxJrsnTZU54vS33HlnxWompLtboe6a51NGtsJtSY/aD0iRy5S0nvOfbjupc3E7yokl5IaLo9vs7aTnUnnPGUuXLoXzwY6VbRabhqiUwe0ce7GOVDuAHUj35x91Xlr65P2nSk2bGc7N5CMIVjuJ6CsrS9jgacsca0W1oNR2E4SB5+J+NRfeaSRp1FvT9qU4kJHtBFbHbUexpKBxjW9SepX1S56N8PLoaOdre6o0RaFNyf/AFOeojtAkZGFY7vbVkv3KHAhMu3GYyxzIBKnFBOTil60+Hpd6szTh5mkSksIHkArJ/GpbuXLhytZvtTXQmPAhlCWiftuFJI/EVfIots3O3iD6cZjHouM9rzjl+NQC03VVw3QukiPMQ5BjxMtL5v1ecDPX35qH29Ls+HpiwLKg08pTzqCe9BV3fKt3aI0eDYtWTY7YbZaU5FQnPcOgoCd6TuL/wCh5Nwu90jPNGQvkdSociEZwBmttbrzari4puBcI8laRkpbWCRVf2oWmBs/BRe21vsOKz2bf2lkrJAFYW1TcV7X1wl2+K5FhiOEttL70np30BbdFRzVmqDYnm2k2uZMK05yyjIFbizzDcLaxMLDjBdTzdmsYUn30BAtRXPUs/cF2xWS5+iNtMhShygjOM56j21L4s9qz2thq/3Vj0oJ9dxxQTzVAIkO83Pc26XCzS0RghxLbylDOUpCQQK6ddtom7glEnLyIVuWpwfxEJJz8TQFqx58KRC9NYlNORsE9qlWU499YsbUFkkyBHYukVx0nAQlwEk1VjRcRsu440otty5Hf/Annx9K69GxrYrXEdcblMWDBC33QfVKuXqfnQFsKv8AZUzRCNziiSVcvZ9oObPliuy4Xi129YROnx46j3BxYBqoJ7+n52pIDVlgPodVcQtyQr7Lgz1xXTrFURWp9RSLgvmcbaDcZknrzeqARQFzouttXBVOTNYMVPe6FjlH319tt0t1ySpUCYzJCftFtYOKqCfJjQ9N6d09LPYNOlMmSonGUZJwa3WzKGF36/PwUlEMLCWhnoRk4/CgLQoqK6k1ebPcvQk2edK7sraRlPWpNGd7WM28pJb5khRSrvFAQPdzU86zC3xbXK7B950FxQAJ5R4dffU4MphmCiTIeQ23yAlajgd1UHreexc9TXWU476zT6WmEZ78HBPyqdbiKcudo09ZWnChU0pcUR4pSnqPnQE8iXm1S2XHo1wjutt/bUlYIT76IF5tU9biIVwjyFNjKwhYPKPbVb69sUK2RYFiszRjuXJ1KniFH1koHd86wtGmNarpqmWyjkZhp9HAz7cfSgLSVfbMmKiUq5RgwtfIlztBgq8h7a1cqdOc1pFiMXKMmIhtS3mARzqGBgn41AIMQv2nSVqUAfSHnX+7p4n61lRpIa3C1Jcz9iPE7HGfHoPpQFmRLxa5ctcSLPjvSEAlTaFgqA91fG7zanJ5gIuEdUoHHZBY5vhUA0lEt2ndCHVC4/NNUyoKXzd6VK6fSo3pVEGVe7AmK4F3F5x1yU4D3d5ANAXlRQkYAFFAFFFFAFFFFAFFFFAFQ3eLRiNcaNftHbusupPaslB71gHAPs61MqK8zgpxcXyZftripbVY1qbxKLyhJZfD/uA05ys28Op8+YCrK2L2JnWbUDd+1Ors1xSFMMAA+uDkKzTIUVg09Mo05KRtN5tvqV1QlReEnwbS4hRRRUgaeFQ7efTcrVm3lxscIjt3wko94OamNFeZwU4uL6l+2uJ21aNaHOLTXuEjkbAbhIc5WraHE+fOBVj7HbE3ey6ni6i1A/6OqG5zIjhOec46HNMrRWBT0yjCSkbVebcaldUJUXhJrDaXHBRu7Gw0jXOspF/OpEREupSlLRjlXKAPPNRP/RVf/wCrm/8A4p/Omeoq7OwoTk5OPFmFb7W6tb0o0qdXEYrC4Ll8Ba7ZwsR25KVXDU6n2cjmS0xyEj35NXZtzoWx6Es5t1mbWQo5W65grX7yKlFFXKVpRovMI8TE1DaDUdRhuXFVuPdwS+QVBtxLTcbrqPT4jR+eMw/zvqz3DI/KpzRWQQxWsjSbkTX9pTb4mLayC845kfbJP5CsbUlkvLOtJ0yNYo90ZmcpQp7GEEDBq08CigKu1dYr9G1FbbzaLc072EXslNJ9VKFEn86+uWC+DbK5RVRCLjPkdqpsK7srH0q0KKArnVFjug0hYG4kP0h2Cttx1jOO4dfnWz21tM6L6fcblEER+U8VIbByAjAxUzooDitttZytAV76Feo2eROcDoK5UUBWelTqW1aimNfoZKo8yapxTxX1Skmum/2O9van1JcmYZU29EDMf1u8kJB+tWlgeQowPKgKfvkeTD0RY9Ko5RPdcC1sK8Rknv8AfXfpHtnoN602i0Mx56Iyx2rZHrkjon51MtYaOh6hktTFvvR5LSeVDjZwcVm6T07D09BLEcqdcUSpbq+q1E+ZoCs9IWC+QrhbHLnbhFg2wLU89zA5PrHPzrXPPSP0nK1Q9b2LhBVMICl95GcDFXjNjNS4b0V0ZbdQUK9xqF23ba2w7m3IMqS7HaXzojrVlGfdQGm1jZblcbpaNQ260ty2ExUpMVf2RnPT7s1M9DxJMe1c8y2Rrc+snmaZTgAZ6ZrfpSlKAhKQEgYAHhX2gOCmm1K5lIST5kVgalkS4tkkuwI/pEgJwhvOM56VsqD176Aqi4aJeTt8laIQdvC1BxZOOYEnJGa2GpbdfmWNM3OBBTIkwGOR1pR6AlIFWPgYxRQFcasiankix3xFvacmxQsusZwE5H0rU6Ys0286MvrzICZdyd5iB3ZCjmrZlNdtHcayU86SMitfpezMWGztW5haloQSeZXeSTmgILo20aidvdpculuTFjWplSG1BWeY4xWvf09fjC1a6IZ7abIHo/rd6ecmreowPKgIZdNPzJW17djbTyyvRm0lP8wwTWt23tl1izmW52nYkNthkp9JABWtQwPzqxaKAKKKKAKKKKAKKKKAKKKKA//Z" alt="AdMediary">
     <h2>Publisher CRM</h2>
     <p>Sign in with your AdMediary account</p>
-    <input type="email" id="l-email" placeholder="Email address">
-    <input type="password" id="l-pw" placeholder="Password">
-    <button id="l-btn">Sign In</button>
+    <button id="l-btn" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#333;border:1px solid #ddd;border-radius:6px;padding:12px 24px;font-size:15px;font-weight:600;cursor:pointer;width:100%">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Sign in with Google
+    </button>
     <div class="lerr" id="l-err"></div>
     <div class="lfooter">AdMediary team members only</div>
   </div>
@@ -152,6 +250,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <button class="nb" onclick="goPage('import')">Import / Export</button>
     <button class="nb" onclick="goPage('verticals')">&#127919; Verticals</button>
     <button class="nb" onclick="goPage('reports')">&#128226; Reports</button>
+    <button class="nb" onclick="goPage('profit')" id="nav-profit" style="background:#cc0000;color:#fff;border-color:#cc0000;margin-left:4px">&#128181; Profit Projector</button>
     <button class="nb" onclick="goPage('gold')" style="background:#8B6914;border-color:#8B6914;color:#FFD700">&#11088; Gold Tracker</button>
   </div>
 </div>
@@ -175,6 +274,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <div class="sbi" id="sb-cs-ok" onclick="sbCS('ok')">&#10003; Recently Contacted</div>
     <div class="sbi" id="sb-cs-stale" onclick="sbCS('stale')">&#9651; Needs Follow-up</div>
     <div class="sbi" id="sb-cs-none" onclick="sbCS('none')">! Never Contacted</div>
+    <div class="sbi" id="sb-cs-awaiting" onclick="sbCS('awaiting')">&#9202; Awaiting Response</div>
   </div>
 </nav>
 
@@ -208,7 +308,7 @@ textarea.inp{resize:vertical;min-height:80px}
     <input class="srch" id="q" placeholder="Search publishers..." oninput="renderTable()">
     <select class="fsel" id="f-am" onchange="renderTable()"><option value="">All Managers</option></select>
     <select class="fsel" id="f-tier" onchange="renderTable()"><option value="">All Tiers</option><option>$500K+</option><option>$100K-$500K</option><option>$50-$100K</option><option>Under $50K</option></select>
-    <select class="fsel" id="f-cs" onchange="renderTable()"><option value="">All Statuses</option><option value="ok">Recently Contacted</option><option value="stale">Needs Follow-up</option><option value="none">Never Contacted</option></select>
+    <select class="fsel" id="f-cs" onchange="renderTable()"><option value="">All Statuses</option><option value="ok">Recently Contacted</option><option value="stale">Needs Follow-up</option><option value="none">Never Contacted</option><option value="awaiting">Awaiting Response</option></select>
     <button class="btn btn-o" style="padding:7px 12px;font-size:12px" onclick="clearF()">&#10005; Clear</button>
   </div>
   <div class="card">
@@ -273,32 +373,13 @@ textarea.inp{resize:vertical;min-height:80px}
 <!-- REPORTS PAGE -->
 <div class="page" id="page-reports">
   <div class="ph">
-    <div><div class="ph-t">AM Activity Reports</div><div class="ph-s">Preview and send Monday&#8211;Friday summaries to Slack</div></div>
-    <button class="btn btn-r" onclick="sendAllToSlack()">&#9889; Send All to Slack</button>
+    <div><div class="ph-t">AM Activity Reports</div><div class="ph-s">Preview and send Monday&#8211;Friday summaries to Slack #pubcall</div></div>
+    <button class="btn btn-r" onclick="sendAllToSlack()">&#9889; Send to Slack</button>
   </div>
-
-  <!-- Slack Webhook Config -->
-  <div class="card" style="margin-bottom:20px">
-    <div class="ch"><span class="ch-t">&#128279; Slack Configuration</span></div>
-    <div style="padding:16px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
-      <div style="flex:1;min-width:300px">
-        <label class="fl" style="display:block;margin-bottom:6px">Your Slack Webhook URL</label>
-        <input class="inp" id="slack-webhook" placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXX" style="width:100%">
-      </div>
-      <div>
-        <label class="fl" style="display:block;margin-bottom:6px">Send To</label>
-        <select class="inp" id="slack-target" style="min-width:160px">
-          <option value="self">My Slack (test)</option>
-          <option value="am">Each AM individually</option>
-        </select>
-      </div>
-      <button class="btn btn-o" onclick="saveWebhook()">&#128190; Save</button>
-    </div>
-    <div id="webhook-status" style="padding:0 16px 12px;font-size:12px;color:var(--g5)">
-      Paste your Slack Incoming Webhook URL above. <a href="https://api.slack.com/messaging/webhooks" target="_blank" style="color:#185FA5">How to get one &#8599;</a>
-    </div>
-  </div>
-
+  <!-- hidden webhook input kept for JS compatibility -->
+  <input type="hidden" id="slack-webhook" value="https://hooks.slack.com/services/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">
+  <input type="hidden" id="slack-target" value="self">
+  <div id="webhook-status" style="display:none"></div>
   <!-- Per-AM Report Cards -->
   <div id="report-cards"></div>
 </div>
@@ -471,6 +552,150 @@ textarea.inp{resize:vertical;min-height:80px}
     </div>
   </div>
 </div>
+
+<!-- PROFIT PROJECTOR -->
+<div class="page" id="page-profit">
+  <div class="pp-header">
+    <div>
+      <h2>&#128181; Profit Projector</h2>
+      <p id="pp-header-sub">Loading...</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+      <div class="pp-controls">
+        <label>Month</label>
+        <select id="pp-month-select">
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4" selected>May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+        <label>Year</label>
+        <input type="number" id="pp-year-input" value="2026" min="2020" max="2040">
+        <label>Days counted</label>
+        <input type="number" id="pp-days-counted" value="18" min="1" max="31" style="width:55px">
+        <label>Goal $</label>
+        <input type="number" id="pp-monthly-goal" value="350000" min="1" style="width:100px">
+      </div>
+      <button class="pp-save-btn" onclick="ppSave()">&#128190; Save</button>
+      <span class="pp-save-status" id="pp-save-status"></span>
+    </div>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="pp-grid">
+    <div class="pp-card pp-gray">
+      <div class="pp-stat-label">Actual Profit So Far</div>
+      <div class="pp-stat-value" id="pp-stat-actual">—</div>
+      <div class="pp-stat-sub" id="pp-stat-actual-sub">through day —</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-actual" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-red">
+      <div class="pp-stat-label">Projected Month Total</div>
+      <div class="pp-stat-value" id="pp-stat-total">—</div>
+      <div class="pp-stat-sub" id="pp-stat-total-sub">calculating...</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-total" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-amber">
+      <div class="pp-stat-label">% to Goal</div>
+      <div class="pp-stat-value" id="pp-stat-goal-pct">—</div>
+      <div class="pp-stat-sub" id="pp-stat-goal-sub">of goal</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-goal" style="width:0%"></div></div>
+    </div>
+    <div class="pp-card pp-black">
+      <div class="pp-stat-label">% Through Month</div>
+      <div class="pp-stat-value" id="pp-stat-month-pct">—</div>
+      <div class="pp-stat-sub" id="pp-stat-month-sub">days elapsed</div>
+      <div class="pp-bar-wrap"><div class="pp-bar-fill" id="pp-bar-month" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Last week comparison -->
+  <div class="pp-lw-bar">
+    <div class="pp-lw-group">
+      <span class="pp-lw-label">Last week's profit (same point)</span>
+      <input class="pp-lw-input" type="text" id="pp-last-week-val" value="$99,047" placeholder="$0"
+        onfocus="this.value=ppParseNum(this.value)||''; this.select();"
+        onblur="var v=ppParseNum(this.value); this.value=v?ppFmtInput(v):''; ppRecalc();"
+        onkeydown="if(event.key==='Enter') this.blur();">
+    </div>
+    <div class="pp-lw-group">
+      <span class="pp-lw-label">vs now</span>
+      <span class="pp-lw-value" id="pp-lw-vs">—</span>
+    </div>
+  </div>
+
+  <!-- Capped Campaigns -->
+  <div class="pp-section-hdr">
+    <div class="pp-section-title">Capped Campaigns</div>
+    <button class="pp-add-btn" onclick="ppAddCampaign()">+ Add Campaign</button>
+  </div>
+  <table class="pp-campaigns-table">
+    <thead>
+      <tr>
+        <th style="width:28%">Campaign</th>
+        <th style="width:20%;text-align:right">Profit So Far</th>
+        <th style="width:20%;text-align:right">Monthly Cap</th>
+        <th style="width:16%;text-align:right">Projected</th>
+        <th style="width:12%;text-align:right">Action</th>
+      </tr>
+    </thead>
+    <tbody id="pp-campaign-tbody"></tbody>
+  </table>
+
+  <!-- Other campaigns -->
+  <div style="margin-top:1.5rem">
+    <div class="pp-section-hdr">
+      <div class="pp-section-title">Other Campaigns (no cap)</div>
+    </div>
+    <div class="pp-other-block">
+      <div>
+        <label>Profit so far ($)</label>
+        <input type="text" id="pp-other-profit" value="$95,000" placeholder="$0"
+          onfocus="this.value=ppParseNum(this.value)||''; this.select();"
+          onblur="var v=ppParseNum(this.value); this.value=v?ppFmtInput(v):''; ppRecalc();"
+          onkeydown="if(event.key==='Enter') this.blur();">
+      </div>
+      <div>
+        <label>Days counted</label>
+        <input type="number" id="pp-other-days-mirror" value="18" style="width:80px;pointer-events:none;opacity:0.5" readonly>
+      </div>
+      <div>
+        <label>Daily rate</label>
+        <input type="number" id="pp-other-daily" value="" style="width:110px;opacity:0.5" readonly>
+      </div>
+      <div class="pp-other-proj">
+        <div class="op-label">Projected end of month</div>
+        <div class="op-value" id="pp-other-eom">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pacing -->
+  <div class="pp-pacing">
+    <div class="pn-item"><div class="pn-label">Daily rate needed</div><div class="pn-val" id="pp-pn-daily-needed">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Current daily rate</div><div class="pn-val" id="pp-pn-daily-current">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Days remaining</div><div class="pn-val" id="pp-pn-days-remaining">—</div></div>
+    <div class="pp-divider"></div>
+    <div class="pn-item"><div class="pn-label">Still needed</div><div class="pn-val" id="pp-pn-still-needed">—</div></div>
+    <div class="pp-pace-ind" id="pp-pace-indicator">—</div>
+  </div>
+
+  <!-- History -->
+  <div class="pp-history">
+    <div class="pp-section-title">Monthly History</div>
+    <div class="pp-hist-year">2026</div>
+    <div class="pp-hist-grid" id="pp-hist-2026"></div>
+    <div class="pp-hist-year">2025</div>
+    <div class="pp-hist-grid" id="pp-hist-2025"></div>
+  </div>
+
+  <div style="margin-top:2rem;font-size:0.68rem;font-family:'DM Mono',monospace;color:#888;text-align:center">
+    Profit Projector · Save before your meeting to preserve the week's numbers
+  </div>
+</div>
+
 </main>
 
 <!-- ADD/EDIT MODAL -->
@@ -520,6 +745,11 @@ textarea.inp{resize:vertical;min-height:80px}
           <div class="fi"><label class="fl">Contact Method</label><select class="inp" id="m-method" onchange="toggleGroupField()"><option>Call</option><option>Email</option><option>Slack</option><option>Teams</option><option>Telegram</option><option>Text</option></select></div>
           <div class="fi full" id="m-group-wrap" style="display:none"><label class="fl">Slack / Teams / Telegram Group Name</label><input class="inp" id="m-grpname" placeholder="e.g. #publisher-updates or channel name"></div>
           <div class="fi full"><label class="fl">Discussion Notes</label><textarea class="inp" id="m-lnote" placeholder="What was discussed, outcomes, next steps..."></textarea></div>
+          <div class="fi full" style="display:flex;align-items:center;gap:10px;padding:8px 0">
+            <input type="checkbox" id="m-awaiting" style="width:16px;height:16px;cursor:pointer;accent-color:#C41C1C">
+            <label for="m-awaiting" style="font-weight:600;cursor:pointer;color:var(--g8)">Awaiting Response</label>
+            <span style="font-size:12px;color:var(--g5)">— contacted, waiting to hear back</span>
+          </div>
         </div>
       </div>
     </div>
@@ -556,11 +786,9 @@ const AM_CLR = {
 const TORD = {'$500K+':0,'$100K-$500K':1,'$50-$100K':2,'Under $50K':3,'':4};
 const TCL  = {'$500K+':'br','$100K-$500K':'ba','$50-$100K':'bb','Under $50K':'bgr','':'bgr'};
 
-let pubs = [{"id": "1238", "name": "Money Group Prev. Ad Practitioners(Consumers Ad)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$500K+", "notes": ""}, {"id": "2716", "name": "Five Star Media, LLC (ConsumerVoice)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$500K+", "notes": ""}, {"id": "2270", "name": "Interest Media, Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$500K+", "notes": ""}, {"id": "2365", "name": "Shop Tutors Inc (LendEDU)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "2755", "name": "Kolmind LTD/Spotower", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "72", "name": "Natural Intelligence Ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "1269", "name": "Launch Media Solutions, LLC (dba Launch Potato)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "2439", "name": "AdSwapper Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "18", "name": "Flex Marketing Group, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "3381", "name": "Velor Advertising Group SL (dba ChameleonAds)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "3273", "name": "Mosten Media B.V.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "2405", "name": "VIET NAM INTERATE CORPORATION COMPANY(Dynu InMedia", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$100K-$500K", "notes": ""}, {"id": "602", "name": "Cx3 Ads", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "4271", "name": "AdsNextGen", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "2900", "name": "GoodRX", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "3500", "name": "Apollo Interactive", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "2324", "name": "Enginefish", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "1176", "name": "Nitro Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "3546", "name": "BriteBox LLC (Email)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "217", "name": "GlobalWide Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "2838", "name": "ConsumerCo Prev.Fun Ventures LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "3626", "name": "Sunny Ad Media Group", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "2488", "name": "eFlow Media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "760", "name": "navona media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "154", "name": "Diablo Media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "751", "name": "Rapid Response", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "3799", "name": "Glitchy (processway llc)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "931", "name": "BriteBox LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "$50-$100K", "notes": ""}, {"id": "3858", "name": "Moxxi Digital", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3312", "name": "Clickmatize LLC (dba Ampry)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3600", "name": "Coinis", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3467", "name": "Altus Media Group", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2660", "name": "Media Stream LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "487", "name": "Popular Marketing LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3462", "name": "NB Elite LLC dba Cloudbase Group", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "431", "name": "All Inbox", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4615", "name": "ArcherFish Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "345", "name": "What If Holdings, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1938", "name": "Addicted Affiliate, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4325", "name": "Deltos Partners LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3290", "name": "Yep Ads", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "53", "name": "Clickso", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4322", "name": "AG Media Partners LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4192", "name": "Onpoint Global  (Direct Market, LLC)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1655", "name": "Ifficient (Shopgala)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1131", "name": "Darwin List Network", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1255", "name": "Rooftop Digital", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3226", "name": "AKD Trading", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1891", "name": "Modaramo (Prev.Bright Reach Media)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "117", "name": "Spark Revenue LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "446", "name": "MaxBounty", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2760", "name": "Blue Modo Media, Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "416", "name": "Adprecise Inc. (Formerly Modaramo LLC)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2314", "name": "Axis Empire LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4076", "name": "Otto Quotes", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2915", "name": "b2 Direct 2", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3946", "name": "Applied Mind Inc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "458", "name": "Atwave (Bliss Media)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "445", "name": "OFFERweb, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3222", "name": "Purvis E-Commerce DBA Scale Pros", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "105", "name": "PointClick, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3932", "name": "Sunny Ad Media - (External Partners)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "202", "name": "Conceptual Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4031", "name": "B-452 Holdings Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4333", "name": "Leadgen Network Organization, Inc (Billy.com)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2302", "name": "Avanto Media LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3019", "name": "Standard Conversions dba Sinlao Media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2016", "name": "RXMG SMS & Display", "am": "Noah  Rosenthal", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2836", "name": "PerformCB", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2970", "name": "Cannaball LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3487", "name": "Ring Partner", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2438", "name": "Zapptastic LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3553", "name": "CRMarketing ApS", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2380", "name": "Monetise Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2901", "name": "Maverick Media S.L.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1229", "name": "VSC Digital - CompleteCarWarranty", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3597", "name": "Ignite Media Group", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3463", "name": "Instal US", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3884", "name": "Quotes Direct, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1291", "name": "Auto Credit Express/Internet Brands", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2635", "name": "Shift 44", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2376", "name": "Axad Capital", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "413", "name": "Cactus Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1635", "name": "HasTraffic - Main", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1803", "name": "Bunny Foo Foo Labs LLC/Next Click Partners", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4478", "name": "BankBeach - Beach Life Network Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2011", "name": "Peter Day Marketing LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "163", "name": "W4 LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2119", "name": "ITS Management Pty Ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4377", "name": "JD Atlantic", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2408", "name": "Brock Boehm", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4290", "name": "Rubicon Performance LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3904", "name": "Phactory", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2371", "name": "Mountain Top Affiliate Network Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4365", "name": "Kapture Growth Ltd.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "515", "name": "Banner Edge Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "109", "name": "Rate Special Interactive; SECONDARY REVENUE,LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4056", "name": "Leadxpression LLC DBA Webclick Media LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1474", "name": "Pushnami LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "121", "name": "Rex Direct Net", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2880", "name": "Amazing Products Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "33", "name": "Fluent Inc", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3131", "name": "Fuzeclick", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2135", "name": "instar, inc", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "580", "name": "A4D, Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3478", "name": "OFFERSPIKE INC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2571", "name": "Inbounds LLC (aka Unreal Media)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3660", "name": "Partners Edge LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4601", "name": "Webselenese LTD", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "766", "name": "PureAds LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1566", "name": "Oleynik Media Group LLC (prev OSX MEDIA LLC)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4267", "name": "Connect Your Home LLC DBA Connect Your Leads", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4025", "name": "OMSG Digital, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "659", "name": "Unlimited Net Resources dba RXMG", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2640", "name": "Web Widget Media LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2643", "name": "Legal Claim Assistant (Prev. AffiMedia B.V.)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4595", "name": "Adsora LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4587", "name": "Tango Technologies", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4517", "name": "OnePride Group OÜ", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1356", "name": "Acquire Crowd (ReserveTech)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "474", "name": "flatiron media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4293", "name": "Gumball Digital", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2141", "name": "Three Hyphens LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3705", "name": "Bluefin Enterprises Inc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "456", "name": "Lincoln Concepts Management", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4270", "name": "JVJ Insurance Marketing Services LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3135", "name": "Brain Spark (Prev.Mobile Pushers)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1386", "name": "DDR - Turtle Leads -2", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1843", "name": "Media Force LTD.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4466", "name": "Webtronic ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2110", "name": "Elite Web Holding, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4083", "name": "Wonderous Star", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2619", "name": "Valor Clicks LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "917", "name": "CashNetwork LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4015", "name": "BH Direct Inc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1472", "name": "The Affiliati Network, Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1334", "name": "E Marketing Services, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3988", "name": "Jet Marketing LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2720", "name": "JLL Marketing", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4470", "name": "Zeel Media, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "339", "name": "tracsion", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4530", "name": "Montecito Digital LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3935", "name": "Apptness", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4029", "name": "D SQUARED DIGITAL", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1569", "name": "Buzzery LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1396", "name": "SBG Email", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2295", "name": "RXMG Display #2", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4345", "name": "Flex 2", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2768", "name": "The Lighthouse Information Network LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "87", "name": "DDR Media - Turtle Leads", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2446", "name": "Rapid Response Marketing, LLC. #2", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1833", "name": "Sonder Data Group, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "581", "name": "Clickdealer Ltd.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4571", "name": "Briefs Finance", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3697", "name": "Brightfire", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4415", "name": "TortShark LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2447", "name": "Connexus Digital", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3328", "name": "Advertising Results,Inc (prev. American Classified", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2527", "name": "(IDSG) Integrated Data Solutions Group BV", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "529", "name": "HyperTarget Marketing", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "288", "name": "Aragon Advertising", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4465", "name": "Adstone Affiliates", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4292", "name": "Moonshot Marketing Ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2013", "name": "Convert 4 Media, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4472", "name": "Automaite", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2214", "name": "Synergy Interactiv LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "246", "name": "Broadbase Media, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3471", "name": "Digital Hub LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2009", "name": "Digital Branding, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2707", "name": "QuickApply, Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2258", "name": "Bruck Interactive Marketing (dba Hyper Media)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4354", "name": "Mobplus Co Ltd", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2021", "name": "Cashfiesta.com", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "197", "name": "Publishers Clearing House", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4391", "name": "Etherial Design DBA Unframed", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4355", "name": "RevvMind Media LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4610", "name": "pingprofit llc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3672", "name": "Site Impact", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "265", "name": "iDrive Interactive LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4394", "name": "Limitless Marketing", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "131", "name": "Madrivo", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3957", "name": "Connect Social", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2296", "name": "TwoOneFour Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1866", "name": "Renaissance Media LLC.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4014", "name": "Diablo Media External", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2301", "name": "Revlinker (Onlyellow)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3499", "name": "Calls By Brand LLC (formerly FOUNDATION MT)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3225", "name": "GoodClicks Digital, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2284", "name": "Mobinner LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "155", "name": "Active Sun Network (1)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2268", "name": "Surfin Mouse LLC.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3772", "name": "DripX LLC-FZ", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4514", "name": "eMediaGroup", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2300", "name": "Prime Media Connect", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "435", "name": "Suited Connector", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4620", "name": "Fat Cat Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4618", "name": "SwimmingMonkey", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "674", "name": "Bronson Ventures LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1080", "name": "Live Oak Media Ventures, ULC - 2", "am": "Noah  Rosenthal", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4459", "name": "Click Lab Group, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3267", "name": "UpYield", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1296", "name": "LuxeAds Pty Ltd", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4619", "name": "Spataro Media Inc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2875", "name": "ANOVA Digital, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3137", "name": "Callcore Media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1807", "name": "All Inbox, LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "612", "name": "AlsonMedia LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2948", "name": "Ghost Ventures LLC", "am": "Needing Assignment", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3284", "name": "CPA VIRAL LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3311", "name": "Joy Wallet LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4208", "name": "Auto Credit Express/Internet Brands - Push", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3264", "name": "Burn the Boats Media, LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2705", "name": "Agree Media", "am": "Needing Assignment", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4095", "name": "Union Square Media", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2659", "name": "Trafficjam Media, Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2823", "name": "The Fellas Ads", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "835", "name": "Ascend Media Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4349", "name": "0fterCommas", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3515", "name": "Yepleads Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3491", "name": "Horizon 2 Media II LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3155", "name": "Adthority Ltd", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3560", "name": "Online vision LLC", "am": "Bill Wilson", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1259", "name": "Common Acquire", "am": "Noah  Rosenthal", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1567", "name": "Green Rain Media", "am": "Needing Assignment", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4084", "name": "Tappa Operations Inc.", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2645", "name": "Digipropz LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3661", "name": "Ori Bachar (Media Buying)", "am": "Bill Wilson", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3269", "name": "Lets Make A Lead", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1524", "name": "BestCompany", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3641", "name": "HEBS Digital Marketing Llp", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4397", "name": "F15 Media LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4181", "name": "Leadstore.com LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4504", "name": "Smart Gravity Ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "473", "name": "Transparent Ads", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2064", "name": "Influencer Interactive", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3724", "name": "Cosmopolitan Consumer Group", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2391", "name": "EdgeOwl Media", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1649", "name": "RingPartner Inc.", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3385", "name": "Retirement Living LLC", "am": "Bill Wilson", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "2699", "name": "Radiant", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4594", "name": "XOLO PUBLISHING", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4486", "name": "Liminal ads limited (2)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4593", "name": "Sigma Growth Partners", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3422", "name": "Natural Intelligence Ltd (Cappsool)", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1459", "name": "Creative Clicks Media Group", "am": "Needing Assignment", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "296", "name": "Nocturnal Enterprises (Lido Labs, LLC)", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3927", "name": "Avanto Media LLC (Sub ID 5)", "am": "Bill Wilson", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1317", "name": "Airflo Media LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4347", "name": "Massconnect Inc", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4437", "name": "Obsidian Media LLC", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "3706", "name": "Pareto Publishing Ltd", "am": "Andrew Stubenrauch", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "1492", "name": "The Wisdom Companies", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}, {"id": "4623", "name": "GRIT Media Collective LLC", "am": "Robert Vlad", "cn": "", "cp": "", "ce": "", "lc": "", "mth": "", "grp": "", "tier": "Under $50K", "notes": ""}];
+let pubs = [];
 
-let logs = [
-  {pid:'1238',date:'2024-11-15',mth:'Call',am:'Andrew Stubenrauch',note:'Discussed Q4 budget and new campaign verticals. Publisher interested in expanding to insurance leads.'}
-];
+let logs = [];
 
 let sbAMf='All', sbTf='All', sbCSf='All';
 let sf='tier', sd='asc', cp=1, pp=15, eid=null;
@@ -592,12 +820,12 @@ function getList() {
   var L = pubs.slice();
   if(sbAMf!=='All') L = L.filter(function(p){return p.am===sbAMf});
   if(sbTf!=='All')  L = L.filter(function(p){return p.tier===sbTf});
-  if(sbCSf!=='All') L = L.filter(function(p){return csk(p.lc)===sbCSf});
+  if(sbCSf==='awaiting') L = L.filter(function(p){return p.awaiting||false;}); else if(sbCSf!=='All') L = L.filter(function(p){return csk(p.lc)===sbCSf});
   var q = (document.getElementById('q')||{}).value||'';
   if(q) { var ql=q.toLowerCase(); L=L.filter(function(p){return p.name.toLowerCase().indexOf(ql)>-1||p.id.indexOf(q)>-1||(p.am||'').toLowerCase().indexOf(ql)>-1}); }
   var fam=(document.getElementById('f-am')||{}).value||''; if(fam) L=L.filter(function(p){return p.am===fam});
   var ft=(document.getElementById('f-tier')||{}).value||''; if(ft) L=L.filter(function(p){return p.tier===ft});
-  var fcs=(document.getElementById('f-cs')||{}).value||''; if(fcs) L=L.filter(function(p){return csk(p.lc)===fcs});
+  var fcs=(document.getElementById('f-cs')||{}).value||''; if(fcs==='awaiting') L=L.filter(function(p){return p.awaiting||false;}); else if(fcs) L=L.filter(function(p){return csk(p.lc)===fcs});
   L.sort(function(a,b){
     var va,vb;
     if(sf==='tier'){va=TORD[a.tier]!=null?TORD[a.tier]:4; vb=TORD[b.tier]!=null?TORD[b.tier]:4;}
@@ -657,6 +885,7 @@ function renderKPIs() {
   var tot=pubs.length, ok=pubs.filter(function(p){return csk(p.lc)==='ok'}).length;
   var stale=pubs.filter(function(p){return csk(p.lc)==='stale'}).length;
   var none=pubs.filter(function(p){return csk(p.lc)==='none'}).length;
+  var awaiting=pubs.filter(function(p){return p.awaiting||false;}).length;
   var top=pubs.filter(function(p){return p.tier==='$500K+'}).length;
   document.getElementById('kpi-grid').innerHTML=
     '<div class="kpi"><div class="kpi-l">Total Publishers</div><div class="kpi-v">'+tot+'</div><div class="kpi-s">'+top+' at $500K+ tier</div></div>'
@@ -741,8 +970,8 @@ function goPage(pg) {
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.getElementById('page-'+pg).classList.add('active');
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
-  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,gold:6};
-  document.querySelectorAll('.nb')[idx[pg]].classList.add('active');
+  var idx={dashboard:0,publishers:1,activity:2,import:3,verticals:4,reports:5,gold:6,profit:7};
+  var activeBtn=document.querySelectorAll('.nb')[idx[pg]]; if(activeBtn) activeBtn.classList.add('active');
   if(pg==='dashboard'){renderKPIs();renderAMSidebar();renderAttn();}
   if(pg==='publishers'){populateAMFilter();renderTable();}
   if(pg==='activity') renderActivity('all');
@@ -812,6 +1041,30 @@ function buildAMReport(am) {
     topOverdue: topOverdue,
     today: today
   };
+}
+
+function renderSlackPreview(text) {
+  var emojiMap = {
+    ':red_circle:':'🔴',':large_green_circle:':'🟢',':large_yellow_circle:':'🟡',
+    ':white_check_mark:':'✅',':warning:':'⚠️',':rotating_light:':'🚨',
+    ':fire:':'🔥',':handshake:':'🤝',':chart_with_upwards_trend:':'📈'
+  };
+  var lines = text.split('\n');
+  return lines.map(function(line) {
+    // Replace emoji codes
+    Object.keys(emojiMap).forEach(function(k){ line = line.split(k).join(emojiMap[k]); });
+    // Bold
+    line = line.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+    // Italic
+    line = line.replace(/_([^_]+)_/g, '<em>$1</em>');
+    // Blockquote
+    if (line.startsWith('&gt; ') || line.startsWith('> ')) {
+      line = '<div style="border-left:3px solid #ddd;padding:2px 0 2px 10px;margin:2px 0;color:#555">' + line.replace(/^(&gt;|>) /, '') + '</div>';
+    } else {
+      line = '<div style="min-height:18px">' + line + '</div>';
+    }
+    return line;
+  }).join('');
 }
 
 function formatSlackMessage(r) {
@@ -888,7 +1141,7 @@ function renderReports() {
 
       + '<div style="padding:12px 16px;border-top:1px solid var(--g2);background:var(--g0)">'
       + '<div style="font-size:11px;font-weight:700;color:var(--g5);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">Slack Message Preview</div>'
-      + '<pre id="preview-'+safeAm+'" style="font-size:12px;line-height:1.6;white-space:pre-wrap;color:var(--g7);background:var(--w);border:1px solid var(--g2);border-radius:6px;padding:12px;margin:0;max-height:220px;overflow-y:auto">'+msgEsc+'</pre>'
+      + '<div id="preview-'+safeAm+'" data-raw="'+msgEsc+'" style="font-size:13px;line-height:1.7;color:var(--g8);background:var(--w);border:1px solid var(--g2);border-radius:6px;padding:14px;margin:0;max-height:260px;overflow-y:auto">'+renderSlackPreview(msg)+'</div>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -915,7 +1168,7 @@ function sendOneToSlack(safeAm) {
   // Find the AM name from the preview element
   var pre = document.getElementById('preview-' + safeAm);
   if (!pre) return;
-  var text = pre.textContent;
+  var text = pre.getAttribute('data-raw') || pre.textContent;
 
   var status = document.getElementById('webhook-status');
   status.innerHTML = '<span style="color:#185FA5">&#8987; Sending to Slack...</span>';
@@ -964,20 +1217,7 @@ function sendAllToSlack() {
 }
 
 // ── GOLD TRACKER ─────────────────────────────────────────────────────────
-var goldData = [
-  {id:'g1', pub:'Fund.com',          buyer:'True Gold',     budget:'$15,200',  review:'Yes', live:'Yes',     launch:'',         notes:'Live, have to fix link',                        needs:''},
-  {id:'g2', pub:'Radiant',           buyer:'True Gold',     budget:'$7,500',   review:'No',  live:'Pending', launch:'2026-05-05',notes:'Said Friday they can launch True Gold today or tomorrow', needs:''},
-  {id:'g3', pub:'Radiant',           buyer:'National Gold', budget:'$7,500',   review:'No',  live:'No',      launch:'2026-06-01',notes:'',                                              needs:''},
-  {id:'g4', pub:'Consumer Voice',    buyer:'National Gold', budget:'$2,610',   review:'Yes', live:'Yes',     launch:'',         notes:'',                                              needs:''},
-  {id:'g5', pub:'Consumer Voice',    buyer:'Patriot',       budget:'$10,000',  review:'Yes', live:'Yes',     launch:'',         notes:'',                                              needs:''},
-  {id:'g6', pub:'Consumer Voice',    buyer:'Lear',          budget:'$10,000',  review:'Yes', live:'Yes',     launch:'',         notes:'',                                              needs:''},
-  {id:'g7', pub:'Patriot',           buyer:'Finance Buzz',  budget:'$12,000',  review:'No',  live:'No',      launch:'2026-05-06',notes:'',                                              needs:''},
-  {id:'g8', pub:'Darwin Investor',   buyer:'Hartford',      budget:'$12,000',  review:'No',  live:'Yes',     launch:'',         notes:'New display placement today 5/5',               needs:''},
-  {id:'g9', pub:'Darwin Investor',   buyer:'Augusta',       budget:'$5,000',   review:'No',  live:'No',      launch:'2026-05-06',notes:'I need to fix the link',                        needs:''},
-  {id:'g10',pub:'Motive Interactive',buyer:'Hartford',      budget:'',         review:'No',  live:'No',      launch:'',         notes:'Need to send info to',                          needs:''},
-  {id:'g11',pub:'Patriot',           buyer:'Money Group',   budget:'$205,000', review:'Yes', live:'Yes',     launch:'',         notes:'Ramping today 5/5',                             needs:'Speak with Tom on new sites'},
-  {id:'g12',pub:'Lear',              buyer:'Money Group',   budget:'$54,000',  review:'Yes', live:'Yes',     launch:'',         notes:'Brand bidding at $350 good to go',              needs:'NEED TO CONFIRM BUDGETS'},
-];
+var goldData = [];
 
 var gSortF = 'pub', gSortD = 'asc', gEditId = null;
 
@@ -1116,7 +1356,7 @@ function openGoldEdit(id) {
 
 function closeGoldModal() { document.getElementById('gold-modal').classList.remove('open'); gEditId = null; }
 
-function saveGold() {
+async function saveGold() {
   var pub = document.getElementById('g-pub').value.trim();
   if (!pub) { alert('Publisher name is required'); return; }
   var rec = {
@@ -1136,14 +1376,16 @@ function saveGold() {
   } else {
     goldData.push(rec);
   }
+  if(window._sb){ try{ await window._sb.from('gold_opportunities').upsert([rec],{onConflict:'id',ignoreDuplicates:false}); }catch(e){ console.error('DB save error',e); } }
   closeGoldModal();
   renderGoldKPIs();
   renderGold();
 }
 
-function deleteGold(id) {
+async function deleteGold(id) {
   if (!confirm('Remove this opportunity?')) return;
   goldData = goldData.filter(function(r) { return r.id !== id; });
+  if(window._sb){ try{ await window._sb.from('gold_opportunities').delete().eq('id',id); }catch(e){ console.error('DB delete error',e); } }
   renderGoldKPIs();
   renderGold();
 }
@@ -1180,7 +1422,7 @@ function vColor(name) {
   return VERT_COLORS[name] || {bg:'#C41C1C', light:'#FCEBEB', badge:'#E24B4A'};
 }
 
-var verticals = [{"id": "v1", "name": "Gold Trust", "offerid": "3824", "advertiser": "Admediary", "category": "Gold", "payout": "$25.00", "conversion": "Main LP", "demo": "Men, 55+. Conservative audience | Test Budget: 25-50 leads weekly per source", "filters": "", "testPlan": [{"affid": "2270", "affname": "Interest Media", "budget": "Uncapped", "traffic": "Internal Display", "eta": "Live", "status": "Live"}, {"affid": "602", "affname": "Cx3", "budget": "Uncapped", "traffic": "3rd Party Email", "eta": "Live", "status": "Live"}, {"affid": "2699", "affname": "Radiant", "budget": "$7,500", "traffic": "Internal Email", "eta": "Live", "status": "Live"}, {"affid": "1131", "affname": "Darwin Investor", "budget": "$5,000", "traffic": "3rd Party Email", "eta": "3/26", "status": "Testing"}, {"affid": "3597", "affname": "Ignite", "budget": "$5,000", "traffic": "3rd Party Email", "eta": "Live, low vol", "status": "Live"}], "results": [], "hitList": []}, {"id": "v2", "name": "Timeshare Cancellation", "offerid": "4094", "advertiser": "Stonegate", "category": "Legal", "payout": "$50 CPL / $150 CPS", "conversion": "Form Submit", "demo": "Midprime - Prime | Test Budget: 25 leads per day per source (3 source cap)", "filters": "", "testPlan": [{"affid": "4347", "affname": "Massconnect", "budget": "$3,000", "traffic": "Internal Social", "eta": "4/14", "status": "Testing"}, {"affid": "3222", "affname": "Scale Pros (Purvis)", "budget": "$3,000", "traffic": "Internal Social", "eta": "4/14", "status": "Testing"}, {"affid": "3226", "affname": "AKD Trading", "budget": "$3,000", "traffic": "Internal Social", "eta": "4/15", "status": "Testing"}, {"affid": "402", "affname": "Digital Moses", "budget": "$5,000", "traffic": "Internal Social", "eta": "4/15", "status": "Testing"}], "results": [{"affid": "4615", "affname": "ArcherFish Media", "clicks": "16951", "paid": "321", "cost": "$16,050", "rev": "$21,150", "notes": "$5,100 profit | EPC $0.95"}, {"affid": "1269", "affname": "Launch Potato", "clicks": "1259", "paid": "159", "cost": "$7,950", "rev": "$11,100", "notes": "$3,150 profit | EPC $6.31"}, {"affid": "3290", "affname": "Yep Ads", "clicks": "310", "paid": "55", "cost": "$2,750", "rev": "$4,350", "notes": "$1,600 profit | EPC $8.87"}, {"affid": "4322", "affname": "AG Media Partners", "clicks": "207", "paid": "49", "cost": "$2,450", "rev": "$3,550", "notes": "$1,100 profit | EPC $11.84"}, {"affid": "4595", "affname": "Adsora LLC", "clicks": "1149", "paid": "48", "cost": "$2,400", "rev": "$3,150", "notes": "$750 profit | EPC $2.09"}, {"affid": "3312", "affname": "Clickmatize (Ampry)", "clicks": "360", "paid": "18", "cost": "$900", "rev": "$1,200", "notes": "$300 profit | EPC $2.50"}, {"affid": "2296", "affname": "TwoOneFour Inc.", "clicks": "649", "paid": "15", "cost": "$600", "rev": "$750", "notes": "$150 profit"}, {"affid": "4472", "affname": "Automaite", "clicks": "335", "paid": "12", "cost": "$600", "rev": "$600", "notes": "Breakeven"}, {"affid": "402", "affname": "Admediary - DigitalMoses FB", "clicks": "166", "paid": "10", "cost": "$10", "rev": "$500", "notes": "$490 profit — strong"}], "hitList": []}, {"id": "v3", "name": "Social Media", "offerid": "3522", "advertiser": "Admediary", "category": "Legal", "payout": "$20.00", "conversion": "Main LP", "demo": "Parents | Test Budget: 100 leads per source", "filters": "", "testPlan": [{"affid": "154", "affname": "Diablo", "budget": "100 leads", "traffic": "Internal Social", "eta": "4/13", "status": "Live"}, {"affid": "2716", "affname": "Consumer Voice", "budget": "100 leads", "traffic": "Internal Social", "eta": "4/15", "status": "Live"}], "results": [{"affid": "2371", "affname": "Mountain Top Affiliate", "clicks": "17496", "paid": "96", "cost": "$2,880", "rev": "$1,500", "notes": "-$1,380 loss | EPC $0.15"}, {"affid": "4347", "affname": "Massconnect Inc", "clicks": "938", "paid": "42", "cost": "$1,680", "rev": "$1,200", "notes": "-$480 loss"}, {"affid": "4322", "affname": "AG Media Partners", "clicks": "53", "paid": "47", "cost": "$940", "rev": "$6", "notes": "-$934 loss"}, {"affid": "2376", "affname": "Axad Capital", "clicks": "1389", "paid": "26", "cost": "$910", "rev": "$300", "notes": "-$610 loss"}, {"affid": "2119", "affname": "ITS Management", "clicks": "438", "paid": "10", "cost": "$250", "rev": "$300", "notes": "+$50 profit"}, {"affid": "2296", "affname": "TwoOneFour Inc.", "clicks": "661", "paid": "5", "cost": "$175", "rev": "$300", "notes": "+$125 profit"}, {"affid": "2300", "affname": "Prime Media Connect", "clicks": "2868", "paid": "2", "cost": "$60", "rev": "$2", "notes": "-$58 loss"}], "hitList": []}, {"id": "v4", "name": "DepoProvera", "offerid": "3824", "advertiser": "Admediary", "category": "Legal", "payout": "$125.00", "conversion": "Main LP", "demo": "Women, 25+ | Test Budget: 35 leads per source", "filters": "", "testPlan": [{"affid": "154", "affname": "Diablo", "budget": "$5,000", "traffic": "Internal Social", "eta": "Live", "status": "Live"}, {"affid": "4347", "affname": "Massconnect", "budget": "$5,000", "traffic": "Internal Social", "eta": "Live", "status": "Live"}, {"affid": "4325", "affname": "Deltos", "budget": "$3,000", "traffic": "Internal Email", "eta": "Live", "status": "Live"}, {"affid": "487", "affname": "Popular", "budget": "$3,000", "traffic": "Internal SMS", "eta": "Live", "status": "Live"}, {"affid": "154", "affname": "Diablo", "budget": "25", "traffic": "Internal Social", "eta": "3/10", "status": "Testing"}, {"affid": "4347", "affname": "Massconnect", "budget": "25", "traffic": "Internal Social", "eta": "3/11", "status": "Testing"}, {"affid": "4031", "affname": "B-452", "budget": "25", "traffic": "3rd Party Display", "eta": "3/11", "status": "Testing"}], "results": [{"affid": "154", "affname": "Diablo", "clicks": "Post", "paid": "42", "cost": "$4,200", "rev": "$2,400", "notes": "-$1,800 loss"}, {"affid": "4347", "affname": "Massconnect", "clicks": "Post", "paid": "23", "cost": "$4,750", "rev": "$7,400", "notes": "+$2,650 profit"}, {"affid": "2011", "affname": "Peterday", "clicks": "3193", "paid": "10", "cost": "$2,000", "rev": "$2,400", "notes": "+$400 profit"}, {"affid": "18", "affname": "Flex Marketing", "clicks": "3193", "paid": "10", "cost": "$1,200", "rev": "$0", "notes": "-$1,200 loss"}, {"affid": "4610", "affname": "Pingprofit", "clicks": "Post", "paid": "6", "cost": "$4,700", "rev": "$2,400", "notes": "-$2,300 loss"}, {"affid": "4031", "affname": "B-452", "clicks": "172", "paid": "0", "cost": "$0", "rev": "$0", "notes": "No conversions"}], "hitList": [{"pub": "Nat Intel", "affid": "72", "status": "Live", "notes": ""}, {"pub": "Diablo", "affid": "154/7054", "status": "Not Live", "notes": "No"}, {"pub": "Admediary Gold Trust", "affid": "1203", "status": "Live", "notes": "1 lead, 1 sale"}, {"pub": "Consumer Advocate", "affid": "1238", "status": "Live", "notes": ""}, {"pub": "E Marketing Services", "affid": "1334", "status": "Not Live", "notes": "Yes"}, {"pub": "Buzzeg", "affid": "1569", "status": "Not Live", "notes": "Live on 1269 ID"}, {"pub": "Avanto", "affid": "2302/7223/7302", "status": "Not Live", "notes": "Live"}, {"pub": "MediaStream", "affid": "2660", "status": "Live", "notes": ""}, {"pub": "Consumer Voice", "affid": "2716", "status": "Live", "notes": ""}, {"pub": "Spotower", "affid": "2755", "status": "Live", "notes": ""}, {"pub": "Sunny Ad", "affid": "3626", "status": "Not Live", "notes": ""}, {"pub": "BlueFin", "affid": "3705", "status": "Not Live", "notes": "No"}, {"pub": "Applied Mind", "affid": "3946", "status": "Not Live", "notes": "Live"}, {"pub": "Moonshot", "affid": "4292", "status": "Not Live", "notes": ""}, {"pub": "Launch Potato", "affid": "7470", "status": "Live", "notes": ""}, {"pub": "Interest Media", "affid": "2270", "status": "Not Live", "notes": "Yes"}, {"pub": "Ampry", "affid": "3312", "status": "Not Live", "notes": ""}, {"pub": "NB Elite", "affid": "3462", "status": "Not Live", "notes": ""}, {"pub": "Apollo", "affid": "3500", "status": "Not Live", "notes": ""}, {"pub": "BriteBox", "affid": "3546", "status": "Not Live", "notes": "No"}]}, {"id": "v5", "name": "MVA", "offerid": "1601", "advertiser": "Admediary", "category": "Legal", "payout": "$70.00", "conversion": "Main LP", "demo": "Adults | Test Budget: 50 leads per source", "filters": "", "testPlan": [{"affid": "4615", "affname": "Archerfish", "budget": "50/lander", "traffic": "Internal Display", "eta": "5/5", "status": "Testing"}, {"affid": "3312", "affname": "Ampry", "budget": "50/lander", "traffic": "Internal Display", "eta": "5/7", "status": "Pending"}, {"affid": "2365", "affname": "Shift 44", "budget": "", "traffic": "Internal Display", "eta": "5/5", "status": "Pending"}, {"affid": "4322", "affname": "AG Media", "budget": "CPC", "traffic": "3rd Party Display", "eta": "5/5", "status": "Pending"}], "results": [{"affid": "2270", "affname": "Interest Media", "clicks": "937", "paid": "836", "cost": "$1,050", "rev": "$500", "notes": "-$550 loss | EPC $1.20"}, {"affid": "1269", "affname": "Launch Potato", "clicks": "223", "paid": "0", "cost": "$446", "rev": "$0", "notes": "No conversions | EPC $2.00"}, {"affid": "1269", "affname": "Launch Potato (run 2)", "clicks": "1050", "paid": "8", "cost": "$640", "rev": "$1,291", "notes": "+$651 profit | EPC $0.61"}, {"affid": "2900", "affname": "GoodRx", "clicks": "973", "paid": "0", "cost": "$1,940", "rev": "$350", "notes": "-$1,590 loss | EPC $1.99"}, {"affid": "4325", "affname": "Deltos", "clicks": "618", "paid": "1", "cost": "$80", "rev": "$150", "notes": "+$70 profit"}, {"affid": "18", "affname": "Flex Marketing", "clicks": "363", "paid": "0", "cost": "$0", "rev": "$0", "notes": "No conversions"}, {"affid": "2915", "affname": "B2 Direct", "clicks": "157", "paid": "0", "cost": "$0", "rev": "$0", "notes": "No conversions"}], "hitList": []}, {"id": "v6", "name": "Auto Warranty", "offerid": "", "advertiser": "", "category": "Finance", "payout": "", "conversion": "", "demo": "", "filters": "", "testPlan": [], "results": [], "hitList": []}, {"id": "v7", "name": "Roblox", "offerid": "3957", "advertiser": "Admediary", "category": "Legal", "payout": "$100.00", "conversion": "Main LP", "demo": "Parents | Test Budget: 25 leads per source", "filters": "", "testPlan": [], "results": [{"affid": "4322", "affname": "AG Media", "clicks": "3183", "paid": "265", "cost": "$7,950", "rev": "$9,811", "notes": "+$1,861 profit | EPC $2.50"}, {"affid": "4615", "affname": "Archerfish", "clicks": "17040", "paid": "380", "cost": "$9,500", "rev": "$10,936", "notes": "+$1,436 profit | EPC $0.56"}, {"affid": "602", "affname": "Cx3 Ads", "clicks": "5224", "paid": "51", "cost": "$2,805", "rev": "$2,198", "notes": "-$607 loss"}, {"affid": "2900", "affname": "GoodRX", "clicks": "725", "paid": "37", "cost": "$885", "rev": "$1,180", "notes": "+$295 profit"}, {"affid": "18", "affname": "Flex Marketing", "clicks": "999", "paid": "21", "cost": "$840", "rev": "$605", "notes": "-$235 loss"}, {"affid": "416", "affname": "Adprecise Inc.", "clicks": "2922", "paid": "5", "cost": "$225", "rev": "$330", "notes": "+$105 profit"}, {"affid": "2699", "affname": "Radiant", "clicks": "5298", "paid": "7", "cost": "$420", "rev": "$103", "notes": "-$318 loss"}, {"affid": "2302", "affname": "Avanto Media", "clicks": "299", "paid": "6", "cost": "$210", "rev": "$130", "notes": "-$80 loss"}, {"affid": "3312", "affname": "Clickmatize (Ampry)", "clicks": "58", "paid": "4", "cost": "$180", "rev": "$130", "notes": "-$50 loss"}, {"affid": "4618", "affname": "Swimming Monkey", "clicks": "2800", "paid": "15", "cost": "$450", "rev": "$420", "notes": "-$30 loss"}, {"affid": "1472", "affname": "Affiliati", "clicks": "3928", "paid": "14", "cost": "$390", "rev": "$240", "notes": "-$150 loss"}, {"affid": "3626", "affname": "Sunny Ad Media", "clicks": "171", "paid": "7", "cost": "$280", "rev": "$246", "notes": "-$34 loss"}], "hitList": []}];
+var verticals = [];
 
 var activeVert = 'v1';
 var vEditId = null;
@@ -1271,7 +1513,7 @@ function renderVertContent(vid) {
   html2 += '<div class="card">'
     + '<div class="ch" style="background:' + c.bg + '">'
     + '<span class="ch-t" style="color:#fff">Test Plan</span>'
-    + '<button class="ab" style="border-color:#fff;color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addtest">+ Add Affiliate</button>'
+    + '<button class="ab" style="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addtest">+ Add Affiliate</button>'
     + '</div>'
     + '<table class="tbl"><thead><tr>'
     + '<th>Aff ID</th><th>Affiliate</th><th>Budget</th><th>Traffic</th><th>ETA</th><th>Status</th><th></th>'
@@ -1287,7 +1529,7 @@ function renderVertContent(vid) {
         + '<td><span class="badge bgr" style="font-size:11px">' + esc(t.traffic) + '</span></td>'
         + '<td style="font-size:12px;color:#854F0B;font-weight:600">' + esc(t.eta) + '</td>'
         + '<td><span style="color:' + statusColor + ';font-weight:700;font-size:12px">' + (t.status||'Pending') + '</span></td>'
-        + '<td><button class="ab ab-r" data-vid="' + vid + '" data-ti="' + i + '" data-act="deltest">&#10005;</button></td>'
+        + '<td style="display:flex;gap:4px"><button class="ab" data-vid="' + vid + '" data-ti="' + i + '" data-act="edittest" style="font-size:11px">&#9998;</button><button class="ab ab-r" data-vid="' + vid + '" data-ti="' + i + '" data-act="deltest">&#10005;</button></td>'
         + '</tr>';
     }).join('');
   } else {
@@ -1299,7 +1541,7 @@ function renderVertContent(vid) {
   html2 += '<div class="card">'
     + '<div class="ch" style="background:' + c.bg + '">'
     + '<span class="ch-t" style="color:#fff">Test Results</span>'
-    + '<button class="ab" style="border-color:#fff;color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addresult">+ Add Result</button>'
+    + '<button class="ab" style="border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);color:#fff;font-size:11px" data-vid="' + vid + '" data-act="addresult">+ Add Result</button>'
     + '</div>'
     + '<table class="tbl"><thead><tr>'
     + '<th>Affiliate</th><th>Clicks</th><th>Leads</th><th>Cost</th><th>Revenue</th><th>Profit</th><th>Notes</th><th></th>'
@@ -1319,7 +1561,7 @@ function renderVertContent(vid) {
         + '<td style="font-size:12px;color:#3B6D11;font-weight:600">' + (r.rev||'—') + '</td>'
         + '<td style="font-size:12px;font-weight:700;color:' + pc + '">' + (profit>=0?'+':'') + '$' + profit.toLocaleString() + '</td>'
         + '<td style="font-size:11px;max-width:120px;white-space:normal">' + esc(r.notes) + '</td>'
-        + '<td><button class="ab ab-r" data-vid="' + vid + '" data-ri="' + i + '" data-act="delresult">&#10005;</button></td>'
+        + '<td style="display:flex;gap:4px"><button class="ab" data-vid="' + vid + '" data-ri="' + i + '" data-act="editresult" style="font-size:11px">&#9998;</button><button class="ab ab-r" data-vid="' + vid + '" data-ri="' + i + '" data-act="delresult">&#10005;</button></td>'
         + '</tr>';
     }).join('');
   } else {
@@ -1354,6 +1596,8 @@ function renderVertContent(vid) {
       if (act === 'addhit')    openHitModal(vid2);
       if (act === 'deltest')   deleteTestRow(vid2, parseInt(ti));
       if (act === 'delresult') deleteResultRow(vid2, parseInt(ri));
+      if (act === 'edittest')  editTestRow(vid2, parseInt(ti));
+      if (act === 'editresult') editResultRow(vid2, parseInt(ri));
       if (act === 'vedit')     openVertEdit(vid2);
       if (act === 'vexport')   exportVertical(vid2);
       if (act === 'hitlist')   openHitList(vid2);
@@ -1489,15 +1733,60 @@ function saveQuickModal() {
     v.hitList.push({ pub:g('qm-pub'), affid:g('qm-affid'), status:g('qm-status'), notes:g('qm-notes') });
   }
   renderVertContent(_qModalVid);
+  // Persist vertical to Supabase
+  (function(vid){ var vv=verticals.filter(function(x){return x.id===vid;})[0]; if(vv&&window._sb){ window._sb.from('verticals').upsert({id:vv.id,name:vv.name,category:vv.category,payout:vv.payout,conversion:vv.conversion,demo:vv.demo,filters:vv.filters,test_plan:vv.testPlan,results:vv.results,hit_list:vv.hitList},{onConflict:'id'}).then(function(){}); }})(_qModalVid);
 }
 
 function deleteTestRow(vid, idx) {
   var v = verticals.filter(function(x){return x.id===vid;})[0];
-  if (v) { v.testPlan.splice(idx,1); renderVertContent(vid); }
+  if (v) { v.testPlan.splice(idx,1); renderVertContent(vid); if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); } }
 }
 function deleteResultRow(vid, idx) {
   var v = verticals.filter(function(x){return x.id===vid;})[0];
-  if (v) { v.results.splice(idx,1); renderVertContent(vid); }
+  if (v) { v.results.splice(idx,1); renderVertContent(vid); if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); } }
+}
+function editTestRow(vid, idx) {
+  var v = verticals.filter(function(x){return x.id===vid;})[0]; if(!v) return;
+  var t = v.testPlan[idx]; if(!t) return;
+  var c = vColor(v.name);
+  showQuickModal('Edit Test Plan Row — ' + v.name, c.bg, `
+    <div class="fg">
+      <div class="fi"><label class="fl">Affiliate ID</label><input class="inp" id="qm-affid" value="${esc(t.affid||'')}"></div>
+      <div class="fi"><label class="fl">Affiliate Name</label><input class="inp" id="qm-affname" value="${esc(t.affname||'')}"></div>
+      <div class="fi"><label class="fl">Budget</label><input class="inp" id="qm-budget" value="${esc(t.budget||'')}"></div>
+      <div class="fi"><label class="fl">Traffic Type</label>
+        <select class="inp" id="qm-traffic">
+          ${['Internal Display','Internal Social','Internal Email','Internal SMS','3rd Party Display','3rd Party Email','3rd Party Social','CPC'].map(function(x){return '<option'+(x===t.traffic?' selected':'')+'>'+x+'</option>';}).join('')}
+        </select></div>
+      <div class="fi"><label class="fl">ETA</label><input class="inp" id="qm-eta" value="${esc(t.eta||'')}"></div>
+      <div class="fi"><label class="fl">Status</label>
+        <select class="inp" id="qm-status">
+          ${['Live','Testing','Pending','Paused'].map(function(x){return '<option'+(x===t.status?' selected':'')+'>'+x+'</option>';}).join('')}
+        </select></div>
+    </div>`, function() {
+    v.testPlan[idx] = { affid:g('qm-affid'), affname:g('qm-affname'), budget:g('qm-budget'), traffic:g('qm-traffic'), eta:g('qm-eta'), status:g('qm-status') };
+    renderVertContent(vid);
+    if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); }
+  });
+}
+function editResultRow(vid, idx) {
+  var v = verticals.filter(function(x){return x.id===vid;})[0]; if(!v) return;
+  var r = v.results[idx]; if(!r) return;
+  var c = vColor(v.name);
+  showQuickModal('Edit Result — ' + v.name, c.bg, `
+    <div class="fg">
+      <div class="fi"><label class="fl">Affiliate ID</label><input class="inp" id="qm-affid" value="${esc(r.affid||'')}"></div>
+      <div class="fi"><label class="fl">Affiliate Name</label><input class="inp" id="qm-affname" value="${esc(r.affname||'')}"></div>
+      <div class="fi"><label class="fl">Clicks</label><input class="inp" id="qm-clicks" value="${esc(r.clicks||'')}"></div>
+      <div class="fi"><label class="fl">Paid Leads</label><input class="inp" id="qm-paid" value="${esc(r.paid||'')}"></div>
+      <div class="fi"><label class="fl">Cost</label><input class="inp" id="qm-cost" value="${esc(r.cost||'')}"></div>
+      <div class="fi"><label class="fl">Revenue</label><input class="inp" id="qm-rev" value="${esc(r.rev||'')}"></div>
+      <div class="fi full"><label class="fl">Notes</label><input class="inp" id="qm-notes" value="${esc(r.notes||'')}"></div>
+    </div>`, function() {
+    v.results[idx] = { affid:g('qm-affid'), affname:g('qm-affname'), clicks:g('qm-clicks'), paid:g('qm-paid'), cost:g('qm-cost'), rev:g('qm-rev'), notes:g('qm-notes') };
+    renderVertContent(vid);
+    if(window._sb){ window._sb.from('verticals').upsert({id:v.id,name:v.name,category:v.category,payout:v.payout,conversion:v.conversion,demo:v.demo,filters:v.filters,test_plan:v.testPlan,results:v.results,hit_list:v.hitList},{onConflict:'id'}).then(function(){}); }
+  });
 }
 
 // Add new vertical
@@ -1505,7 +1794,9 @@ function openVertModal() {
   var name = prompt('New vertical name (e.g. "Medicare", "Solar"):');
   if (!name || !name.trim()) return;
   var id = 'v' + Date.now();
-  verticals.push({ id:id, name:name.trim(), category:'Other', payout:'', conversion:'', demo:'', filters:'', testPlan:[], results:[], hitList:[] });
+  var newV={ id:id, name:name.trim(), category:'Other', payout:'', conversion:'', demo:'', filters:'', testPlan:[], results:[], hitList:[] };
+  verticals.push(newV);
+  if(window._sb){ window._sb.from('verticals').upsert({id:newV.id,name:newV.name,category:newV.category,payout:newV.payout,conversion:newV.conversion,demo:newV.demo,filters:newV.filters,test_plan:[],results:[],hit_list:[]},{onConflict:'id'}).then(function(){}); }
   activeVert = id;
   renderVerticals();
 }
@@ -1626,31 +1917,53 @@ function openEdit(id){
   resetModal(); document.getElementById('modal-title').textContent='Edit Publisher';
   document.getElementById('m-id').value=p.id; document.getElementById('m-name').value=p.name;
   document.getElementById('m-am').value=p.am||'Andrew Stubenrauch'; document.getElementById('m-tier').value=p.tier||'$50-$100K';
-  document.getElementById('m-group').value=p.grp||''; document.getElementById('m-notes').value=p.notes||'';
+  document.getElementById('m-group').value=p.grp||''; document.getElementById('m-notes').value=p.notes||''; document.getElementById('m-awaiting').checked=p.awaiting||false;
   document.getElementById('m-cname').value=p.cn||''; document.getElementById('m-cemail').value=p.ce||''; document.getElementById('m-cphone').value=p.cp||''; var pm=document.getElementById('m-pref-method'); if(pm){pm.value=p.prefMethod||''; toggleContactGroup();} var cg=document.getElementById('m-cgrp'); if(cg) cg.value=p.cgrp||'';
   document.getElementById('m-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('modal').classList.add('open');
 }
 function logFor(id){openEdit(id);setTimeout(function(){mTab(document.querySelectorAll('#modal .tab')[2],'logc');},80);}
-function resetModal(){['m-id','m-name','m-group','m-notes','m-cname','m-cemail','m-cphone','m-lnote','m-grpname','m-cgrp'].forEach(function(i){var el=document.getElementById(i);if(el)el.value='';});mTab(document.querySelector('#modal .tab'),'info'); var gw=document.getElementById('m-group-wrap'); if(gw) gw.style.display='none'; var gw2=document.getElementById('m-cgrp-wrap'); if(gw2) gw2.style.display='none'; var pm=document.getElementById('m-pref-method'); if(pm) pm.value='';}
+function resetModal(){ var aw=document.getElementById('m-awaiting'); if(aw) aw.checked=false;['m-id','m-name','m-group','m-notes','m-cname','m-cemail','m-cphone','m-lnote','m-grpname','m-cgrp'].forEach(function(i){var el=document.getElementById(i);if(el)el.value='';});mTab(document.querySelector('#modal .tab'),'info'); var gw=document.getElementById('m-group-wrap'); if(gw) gw.style.display='none'; var gw2=document.getElementById('m-cgrp-wrap'); if(gw2) gw2.style.display='none'; var pm=document.getElementById('m-pref-method'); if(pm) pm.value='';}
 function closeModal(){document.getElementById('modal').classList.remove('open');eid=null;}
 function closeDM(){document.getElementById('dm').classList.remove('open');}
 function mTab(el,t){document.querySelectorAll('#modal .tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');['info','contacts','logc'].forEach(function(id){document.getElementById('mt-'+id).style.display=id===t?'block':'none';});}
 function actTab(el,f){document.querySelectorAll('#page-activity .tab').forEach(function(x){x.classList.remove('active');});el.classList.add('active');renderActivity(f);}
 
-function savePub(){
+async function savePub(){
   var name=document.getElementById('m-name').value.trim(); if(!name){alert('Publisher name is required');return;}
   var id=document.getElementById('m-id').value.trim()||String(Date.now());
   var ld=document.getElementById('m-date').value, lm=document.getElementById('m-method').value, ln=document.getElementById('m-lnote').value;
   var pub={id:id,name:name,am:document.getElementById('m-am').value,tier:document.getElementById('m-tier').value,
     grp:document.getElementById('m-group').value,notes:document.getElementById('m-notes').value,
     cn:document.getElementById('m-cname').value,ce:document.getElementById('m-cemail').value,cp:document.getElementById('m-cphone').value,prefMethod:(document.getElementById('m-pref-method')||{}).value||'',cgrp:(document.getElementById('m-cgrp')||{}).value||'',
+    awaiting:document.getElementById('m-awaiting').checked,
     lc:'',mth:''};
   if(ld){pub.lc=ld;pub.mth=lm;}
-  var lgn=document.getElementById('m-grpname'); var lgrp=lgn?lgn.value.trim():''; if(ld&&ln) logs.push({pid:pub.id,date:ld,mth:lm,am:pub.am,note:ln,grp:lgrp});
+  var lgn=document.getElementById('m-grpname'); var lgrp=lgn?lgn.value.trim():'';
+  var newLog = null;
+  if(ld&&ln){ newLog={pid:pub.id,date:ld,mth:lm,am:pub.am,note:ln,grp:lgrp}; logs.push(newLog); }
   var idx=eid?pubs.findIndex(function(p){return p.id===eid;}): -1;
   if(idx>=0){var ex=pubs[idx];pub.lc=pub.lc||ex.lc;pub.mth=pub.mth||ex.mth;pubs[idx]=pub;}
   else pubs.push(pub);
+  // Save to Supabase
+  if(window._sb){
+    try{
+      var row={id:pub.id,name:pub.name,am:pub.am,tier:pub.tier,grp:pub.grp||'',notes:pub.notes||'',cn:pub.cn||'',ce:pub.ce||'',cp:pub.cp||'',pref_method:pub.prefMethod||'',cgrp:pub.cgrp||'',lc:pub.lc||'',mth:pub.mth||'',awaiting_response:pub.awaiting||false};
+      if(idx>=0){
+        var {error:ue}=await window._sb.from('publishers').update(row).eq('id',pub.id);
+        if(ue) console.error('Update error:',ue.message,ue);
+        else console.log('Publisher updated OK');
+      } else {
+        var {error:ie}=await window._sb.from('publishers').insert(row);
+        if(ie) console.error('Insert error:',ie.message,ie);
+        else console.log('Publisher inserted OK');
+      }
+      if(newLog){
+        var {error:le}=await window._sb.from('contact_logs').insert({pid:newLog.pid,date:newLog.date,mth:newLog.mth,am:newLog.am,note:newLog.note,grp:newLog.grp||''});
+        if(le) console.error('Log insert error:',le.message,le);
+      }
+    }catch(e){console.error('DB save error',e);}
+  }
   closeModal();renderAMSidebar();renderKPIs();renderAttn();renderTable();
 }
 
@@ -1722,6 +2035,11 @@ function handleUpload(input){
       }
     }
     msg.innerHTML='<div class="alert al-ok">&#10003; Import complete: '+added+' new publisher'+(added!==1?'s':'')+' added from '+esc(file.name)+'</div>';
+    if(window._sb&&added>0){
+      var newPubs=pubs.slice(-added);
+      var rows=newPubs.map(function(p){return{id:p.id,name:p.name,am:p.am,tier:p.tier,grp:p.grp,notes:p.notes,cn:p.cn,ce:p.ce,cp:p.cp,pref_method:p.prefMethod||'',cgrp:p.cgrp||'',lc:p.lc,mth:p.mth};});
+      window._sb.from('publishers').upsert(rows,{onConflict:'id'}).then(function(){});
+    }
     renderAMSidebar();renderKPIs();renderAttn();renderImportSummary();
   };
   reader.readAsText(file);
@@ -1739,13 +2057,57 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoaW9kZnByeXlqZnpvY3lsd2ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjMxOTQsImV4cCI6MjA5MzYzOTE5NH0.IofHDhyYAKVZPv60NkULRJ9TUFzYOQ11IAoP-6OlNMA';
   var sb=supabase.createClient(SB_URL,SB_KEY);
   window._sbClient=sb;
+  window._sb=sb;
 
   var overlay=document.getElementById('login-overlay');
 
-  function hideLogin(user){
+  async function loadAllData(){
+    try{
+      // Load publishers
+      var {data:pubRows,error:pErr}=await sb.from('publishers').select('*').order('name');
+      if(pErr){ console.error('publishers load error:',pErr.message,pErr); }
+      if(!pErr&&pubRows&&pubRows.length){
+        pubs=pubRows.map(function(r){return{id:r.id,name:r.name,am:r.am,tier:r.tier||'',grp:r.grp||'',notes:r.notes||'',cn:r.cn||'',ce:r.ce||'',cp:r.cp||'',prefMethod:r.pref_method||'',cgrp:r.cgrp||'',lc:r.lc||'',mth:r.mth||'',awaiting:r.awaiting_response||false};});
+        console.log('Loaded',pubs.length,'publishers');
+      }
+      // Load contact logs
+      var {data:logRows,error:lErr}=await sb.from('contact_logs').select('*').order('created_at',{ascending:false});
+      if(lErr){ console.error('contact_logs load error:',lErr.message,lErr); }
+      if(!lErr&&logRows&&logRows.length){
+        logs=logRows.map(function(r){return{pid:r.pid,date:r.date,mth:r.mth||'',am:r.am||'',note:r.note||'',grp:r.grp||''};});
+        console.log('Loaded',logs.length,'logs');
+      }
+      // Load gold opportunities
+      var {data:goldRows,error:gErr}=await sb.from('gold_opportunities').select('*').order('pub');
+      if(gErr){ console.error('gold load error:',gErr.message,gErr); }
+      if(!gErr&&goldRows&&goldRows.length){
+        goldData=goldRows.map(function(r){return{id:r.id,pub:r.pub,buyer:r.buyer||'',budget:r.budget||'',review:r.review||'',live:r.live||'No',launch:r.launch||'',notes:r.notes||'',needs:r.needs||''};});
+        console.log('Loaded',goldData.length,'gold rows');
+      }
+      // Load verticals
+      var {data:vertRows,error:vErr}=await sb.from('verticals').select('*').order('name');
+      if(vErr){ console.error('verticals load error:',vErr.message,vErr); }
+      if(!vErr&&vertRows&&vertRows.length){
+        verticals=vertRows.map(function(r){return{id:r.id,name:r.name,offerid:r.offerid||'',advertiser:r.advertiser||'',category:r.category||'Other',payout:r.payout||'',conversion:r.conversion||'',demo:r.demo||'',filters:r.filters||'',testPlan:r.test_plan||[],results:r.results||[],hitList:r.hit_list||[]};});
+        console.log('Loaded',verticals.length,'verticals');
+      }
+    }catch(e){ console.error('Data load error',e); }
+    renderAMSidebar();renderKPIs();renderAttn();renderTable();
+  }
+
+  async function hideLogin(user){
+    var allowedDomains=['admediary.com','admediaryllc.com'];
+    var domain=user.email.split('@')[1]||'';
+    if(!allowedDomains.includes(domain)){
+      await sb.auth.signOut();
+      var err=document.getElementById('l-err');
+      err.textContent='Access restricted to AdMediary team members only.';
+      err.style.display='block';
+      overlay.style.display='flex';
+      return;
+    }
     overlay.style.display='none';
     window._currentUserName=user.email.split('@')[0];
-    // Add sign-out button to topbar if not already there
     var tnav=document.querySelector('.tnav');
     if(tnav&&!document.getElementById('signout-btn')){
       var btn=document.createElement('button');
@@ -1755,25 +2117,21 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
       btn.onclick=function(){sb.auth.signOut();};
       tnav.appendChild(btn);
     }
+    await loadAllData();
   }
 
   function showLogin(){overlay.style.display='flex';}
 
   document.getElementById('l-btn').addEventListener('click',async function(){
-    var email=document.getElementById('l-email').value.trim();
-    var pw=document.getElementById('l-pw').value;
     var err=document.getElementById('l-err');
     err.style.display='none';
-    if(!email||!pw){err.textContent='Enter email and password.';err.style.display='block';return;}
-    this.textContent='Signing in...';
-    var r=await sb.auth.signInWithPassword({email:email,password:pw});
-    this.textContent='Sign In';
-    if(r.error){err.textContent=r.error.message;err.style.display='block';}
-    else{hideLogin(r.data.user);}
-  });
-
-  document.getElementById('l-pw').addEventListener('keydown',function(e){
-    if(e.key==='Enter')document.getElementById('l-btn').click();
+    this.textContent='Redirecting...';
+    this.disabled=true;
+    var r=await sb.auth.signInWithOAuth({
+      provider:'google',
+      options:{redirectTo:'https://pklein21.github.io/admpubcrm/'}
+    });
+    if(r.error){err.textContent=r.error.message;err.style.display='block';this.disabled=false;this.innerHTML='<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Sign in with Google';}
   });
 
   sb.auth.onAuthStateChange(function(event,session){
@@ -1781,11 +2139,241 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   });
 
   // Check for existing session
-  sb.auth.getSession().then(function(r){
-    if(r.data&&r.data.session)hideLogin(r.data.session.user);
+  sb.auth.getSession().then(async function(r){
+    if(r.data&&r.data.session)await hideLogin(r.data.session.user);
     else showLogin();
   });
 })();
+
+/* ===== PROFIT PROJECTOR JS ===== */
+(function() {
+  const PP_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const PP_DAYS = [31,28,29,31,31,30,31,31,30,31,30,31];
+  let ppCampaigns = [{ name: 'PGG/Money Group', profit: 85000, cap: 110000 }];
+  let ppIsLoading = false;
+  const PP_HISTORY = {
+    2026: [{month:'April',val:224727},{month:'March',val:238027},{month:'February',val:223193},{month:'January',val:204232}],
+    2025: [{month:'December',val:175801},{month:'November',val:156232},{month:'October',val:230657},{month:'September',val:235150},{month:'August',val:123719},{month:'July',val:102748},{month:'June',val:178946},{month:'May',val:186432}]
+  };
+
+  function ppGetDays(m,y){ if(m===1) return(y%4===0&&(y%100!==0||y%400===0))?29:28; return PP_DAYS[m]; }
+  function ppFmt(n){ if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M'; if(n>=1000) return '$'+Math.round(n/1000)+'k'; return '$'+Math.round(n); }
+  function ppFmtFull(n){ return '$'+Math.round(n).toLocaleString(); }
+  function ppFmtInput(n){ if(!n&&n!==0) return ''; return '$'+Math.round(n).toLocaleString(); }
+  function ppParseNum(s){ if(!s) return 0; return parseFloat(String(s).replace(/[$,]/g,''))||0; }
+  function ppG(id){ return document.getElementById(id); }
+
+  window.ppParseNum = ppParseNum;
+  window.ppFmtInput = ppFmtInput;
+  window.ppAddCampaign = function(){ ppCampaigns.push({name:'',profit:0,cap:0}); ppRecalc(); };
+
+  window.ppRemoveCampaign = function(i){ ppCampaigns.splice(i,1); ppRecalc(); };
+
+  function ppRenderCampaigns(){
+    const tbody = ppG('pp-campaign-tbody');
+    if(!tbody) return;
+    const daysCounted = parseInt(ppG('pp-days-counted').value)||1;
+    const month = parseInt(ppG('pp-month-select').value);
+    const year = parseInt(ppG('pp-year-input').value);
+    const totalDays = ppGetDays(month,year);
+    const remaining = totalDays - daysCounted;
+    tbody.innerHTML = '';
+    ppCampaigns.forEach(function(c,i){
+      const dailyRate = daysCounted>0 ? c.profit/daysCounted : 0;
+      const projected = c.cap>0 ? Math.min(c.cap, c.profit+dailyRate*remaining) : c.profit+dailyRate*remaining;
+      const isCapped = c.cap>0 && (c.profit+dailyRate*remaining)>=c.cap;
+      const pct = c.cap>0 ? Math.min(100,(c.profit/c.cap)*100) : 0;
+      const tr = document.createElement('tr');
+      tr.className = 'pp-campaign-row';
+      const td1 = document.createElement('td');
+      const nameInput = document.createElement('input');
+      nameInput.className='pp-cn-input'; nameInput.placeholder='Campaign name'; nameInput.value=c.name||'';
+      nameInput.addEventListener('input',function(){ ppCampaigns[i].name=this.value; });
+      td1.appendChild(nameInput);
+      if(c.cap>0){ const bm=document.createElement('div'); bm.className='pp-bar-mini'; const bmf=document.createElement('div'); bmf.className='pp-bar-mini-fill'+(isCapped?' over':''); bmf.style.width=pct+'%'; bm.appendChild(bmf); td1.appendChild(bm); }
+      const td2=document.createElement('td'); td2.style.textAlign='right';
+      const pi=document.createElement('input'); pi.className='pp-cp-input'; pi.type='text'; pi.value=ppFmtInput(c.profit); pi.placeholder='$0';
+      pi.addEventListener('focus',function(){ this.value=ppCampaigns[i].profit||''; this.select(); });
+      pi.addEventListener('blur',function(){ ppCampaigns[i].profit=ppParseNum(this.value); this.value=ppFmtInput(ppCampaigns[i].profit); ppRecalc(); });
+      pi.addEventListener('keydown',function(e){ if(e.key==='Enter') this.blur(); });
+      td2.appendChild(pi);
+      const td3=document.createElement('td'); td3.style.textAlign='right';
+      const ci=document.createElement('input'); ci.className='pp-cc-input'; ci.type='text'; ci.value=c.cap?ppFmtInput(c.cap):''; ci.placeholder='no cap';
+      ci.addEventListener('focus',function(){ this.value=ppCampaigns[i].cap||''; this.select(); });
+      ci.addEventListener('blur',function(){ ppCampaigns[i].cap=ppParseNum(this.value); this.value=ppCampaigns[i].cap?ppFmtInput(ppCampaigns[i].cap):''; ppRecalc(); });
+      ci.addEventListener('keydown',function(e){ if(e.key==='Enter') this.blur(); });
+      td3.appendChild(ci);
+      if(c.cap>0){ const badge=document.createElement('span'); badge.className='pp-cap-badge '+(isCapped?'capped':'ok'); badge.textContent=isCapped?'CAPPED':'open'; td3.appendChild(badge); }
+      const td4=document.createElement('td'); td4.className='pp-proj-cell'+(isCapped?' capped-val':''); td4.textContent=ppFmtFull(projected);
+      const td5=document.createElement('td');
+      const db=document.createElement('button'); db.className='pp-del-btn'; db.textContent='✕';
+      db.addEventListener('click',(function(idx){ return function(){ ppRemoveCampaign(idx); }; })(i));
+      td5.appendChild(db);
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4); tr.appendChild(td5);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function ppRenderHistory(){
+    const goal=parseFloat(ppG('pp-monthly-goal').value)||350000;
+    const allVals=Object.values(PP_HISTORY).flat().map(function(h){return h.val;});
+    const maxVal=Math.max(...allVals,goal);
+    [2026,2025].forEach(function(yr){
+      const el=ppG('pp-hist-'+yr); if(!el) return;
+      el.innerHTML='';
+      PP_HISTORY[yr].forEach(function(h){
+        const pct=Math.min(100,(h.val/maxVal)*100);
+        const hitGoal=h.val>=goal;
+        const card=document.createElement('div'); card.className='pp-hist-card';
+        card.innerHTML='<div class="hc-month">'+h.month+' '+yr+'</div>'+
+          '<div class="hc-val" style="color:'+(hitGoal?'#008040':'#111')+'">'+ppFmtFull(h.val)+'</div>'+
+          '<div class="hc-bar"><div class="hc-bar-fill" style="width:'+pct+'%;background:'+(hitGoal?'#008040':'#cc0000')+'"></div></div>';
+        el.appendChild(card);
+      });
+    });
+  }
+
+  window.ppRecalc = function(){
+    if(!ppG('pp-days-counted')) return;
+    const daysCounted=parseInt(ppG('pp-days-counted').value)||1;
+    const month=parseInt(ppG('pp-month-select').value);
+    const year=parseInt(ppG('pp-year-input').value);
+    const goal=parseFloat(ppG('pp-monthly-goal').value)||350000;
+    const totalDays=ppGetDays(month,year);
+    const remaining=totalDays-daysCounted;
+    ppG('pp-other-days-mirror').value=daysCounted;
+    const otherProfit=ppParseNum(ppG('pp-other-profit').value)||0;
+    const otherDaily=daysCounted>0?otherProfit/daysCounted:0;
+    const otherEOM=otherProfit+otherDaily*remaining;
+    ppG('pp-other-eom').textContent=ppFmt(otherEOM);
+    ppG('pp-other-daily').value=Math.round(otherDaily);
+    let cappedActual=0, cappedProjected=0;
+    ppCampaigns.forEach(function(c){
+      cappedActual+=c.profit;
+      const dr=daysCounted>0?c.profit/daysCounted:0;
+      const proj=c.cap>0?Math.min(c.cap,c.profit+dr*remaining):c.profit+dr*remaining;
+      cappedProjected+=proj;
+    });
+    const totalActual=cappedActual+otherProfit;
+    const totalProjected=cappedProjected+otherEOM;
+    const goalPct=Math.min(999,(totalActual/goal)*100);
+    const monthPct=(daysCounted/totalDays)*100;
+    ppG('pp-stat-actual').textContent=ppFmt(totalActual);
+    ppG('pp-stat-actual-sub').textContent='through day '+daysCounted;
+    ppG('pp-bar-actual').style.width=Math.min(100,(totalActual/goal)*100)+'%';
+    ppG('pp-stat-total').textContent=ppFmt(totalProjected);
+    ppG('pp-stat-total-sub').textContent='of '+ppFmt(goal)+' goal';
+    ppG('pp-bar-total').style.width=Math.min(100,goalPct)+'%';
+    ppG('pp-stat-goal-pct').textContent=Math.round(goalPct)+'%';
+    ppG('pp-stat-goal-sub').textContent='projected vs '+ppFmtFull(goal)+' goal';
+    ppG('pp-bar-goal').style.width=Math.min(100,goalPct)+'%';
+    ppG('pp-stat-month-pct').textContent=Math.round(monthPct)+'%';
+    ppG('pp-stat-month-sub').textContent=daysCounted+' of '+totalDays+' days elapsed';
+    ppG('pp-bar-month').style.width=monthPct+'%';
+    const totalDailyRate=daysCounted>0?totalActual/daysCounted:0;
+    const stillNeeded=Math.max(0,goal-totalProjected);
+    const dailyNeeded=remaining>0?(goal-totalActual)/remaining:0;
+    ppG('pp-pn-daily-needed').textContent=ppFmtFull(Math.max(0,dailyNeeded))+'/day';
+    ppG('pp-pn-daily-current').textContent=ppFmtFull(totalDailyRate)+'/day';
+    ppG('pp-pn-days-remaining').textContent=remaining+' days';
+    ppG('pp-pn-still-needed').textContent=ppFmtFull(stillNeeded);
+    const pi=ppG('pp-pace-indicator');
+    if(totalProjected>=goal){ pi.textContent='✓ On track to hit goal'; pi.className='pp-pace-ind ahead'; }
+    else if(goalPct>=monthPct){ pi.textContent='~ Slightly behind — monitor'; pi.className='pp-pace-ind behind'; }
+    else { pi.textContent='⚠ Needs attention'; pi.className='pp-pace-ind danger'; }
+    ppG('pp-header-sub').textContent=PP_MONTHS[month]+' '+year+' · '+daysCounted+' days counted · '+remaining+' remaining';
+    const lastWeek=ppParseNum(ppG('pp-last-week-val').value)||0;
+    ppG('pp-lw-vs').textContent=ppFmtFull(totalActual)+' now';
+    ppRenderCampaigns();
+    ppRenderHistory();
+    // Auto-save with debounce (skip during initial load)
+    if(window._sb && !ppIsLoading){
+      clearTimeout(window._ppSaveTimer);
+      window._ppSaveTimer = setTimeout(function(){ ppSave(true); }, 1500);
+    }
+  };
+
+  window.ppSave = async function(silent){
+    if(!window._sb){ if(!silent) alert('Not connected to database'); return; }
+    const statusEl=ppG('pp-save-status');
+    if(!silent) statusEl.textContent='Saving...';
+    const data={
+      id:'current',
+      month:parseInt(ppG('pp-month-select').value),
+      year:parseInt(ppG('pp-year-input').value),
+      days_counted:parseInt(ppG('pp-days-counted').value)||18,
+      goal:parseFloat(ppG('pp-monthly-goal').value)||350000,
+      last_week_val:ppParseNum(ppG('pp-last-week-val').value)||0,
+      other_profit:ppParseNum(ppG('pp-other-profit').value)||0,
+      campaigns:ppCampaigns,
+      updated_at:new Date().toISOString()
+    };
+    try{
+      console.log('PP saving data:', JSON.stringify(data));
+      const {error}=await window._sb.from('profit_projector').upsert(data,{onConflict:'id'});
+      if(error){ 
+        console.error('PP save error:', error.message, error); 
+        statusEl.textContent='Error: '+error.message; 
+      } else { 
+        console.log('PP saved OK');
+        statusEl.textContent='Auto-saved ✓ '+new Date().toLocaleTimeString(); 
+      }
+    }catch(e){ statusEl.textContent='Save failed'; console.error('PP save exception:',e); }
+  };
+
+  async function ppLoad(){
+    if(!window._sb) return;
+    try{
+      ppIsLoading = true;
+      console.log('PP loading from Supabase...');
+      const {data,error}=await window._sb.from('profit_projector').select('*').eq('id','current').single();
+      console.log('PP load result:', data, error);
+      if(error||!data){ ppIsLoading=false; console.log('PP no data found'); return; }
+      ppG('pp-month-select').value=data.month||4;
+      ppG('pp-year-input').value=data.year||2026;
+      ppG('pp-days-counted').value=data.days_counted||18;
+      ppG('pp-monthly-goal').value=data.goal||350000;
+      ppG('pp-last-week-val').value=data.last_week_val?ppFmtInput(data.last_week_val):'$99,047';
+      ppG('pp-other-profit').value=data.other_profit?ppFmtInput(data.other_profit):'$95,000';
+      if(data.campaigns&&data.campaigns.length>0) ppCampaigns=data.campaigns;
+      ppRecalc();
+      ppIsLoading = false;
+    }catch(e){ console.error('PP load error',e); ppIsLoading=false; ppRecalc(); }
+  }
+
+  // Event listeners — set up when page is shown
+  function ppInitListeners(){
+    var m=ppG('pp-month-select'); if(m&&!m._ppInit){ m._ppInit=true; m.addEventListener('change',ppRecalc); }
+    var y=ppG('pp-year-input'); if(y&&!y._ppInit){ y._ppInit=true; y.addEventListener('input',ppRecalc); }
+    var d=ppG('pp-days-counted'); if(d&&!d._ppInit){ d._ppInit=true; d.addEventListener('input',ppRecalc); }
+    var g=ppG('pp-monthly-goal'); if(g&&!g._ppInit){ g._ppInit=true; g.addEventListener('input',ppRecalc); }
+    var op=ppG('pp-other-profit'); if(op&&!op._ppInit){ op._ppInit=true; op.addEventListener('blur',ppRecalc); }
+    var lw=ppG('pp-last-week-val'); if(lw&&!lw._ppInit){ lw._ppInit=true; lw.addEventListener('blur',ppRecalc); }
+  }
+
+  // Hook into the existing goPage function to load data when tab is opened
+  var _origGoPage=window.goPage;
+  window.goPage=function(page){
+    _origGoPage(page);
+    if(page==='profit'){
+      ppInitListeners();
+      if(!ppG('pp-month-select')._ppLoaded){
+        ppG('pp-month-select')._ppLoaded=true;
+        ppLoad();
+      } else {
+        ppRecalc();
+      }
+    }
+  };
+
+  // Also load if already on profit page on init
+  document.addEventListener('DOMContentLoaded',function(){
+    ppInitListeners();
+    // Will load data when tab is first clicked via goPage hook
+  });
+})();
+/* ===== END PROFIT PROJECTOR JS ===== */
+
 </script>
 </body>
 </html>
