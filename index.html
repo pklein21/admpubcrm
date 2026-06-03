@@ -503,8 +503,8 @@ textarea.inp{resize:vertical;min-height:80px}
 </div>
 
 <!-- ADVERTISER MODAL -->
-<div class="modal" id="adv-modal" style="display:none" onclick="if(event.target===this)closeAdvModal()">
-  <div class="mc" style="max-width:600px">
+<div class="overlay" id="adv-modal" onclick="if(event.target===this)closeAdvModal()">
+  <div class="modal" style="max-width:600px">
     <div class="mh"><span class="mt" id="adv-modal-title">Advertiser</span><button class="mcl" onclick="closeAdvModal()">&#10005;</button></div>
     <input type="hidden" id="adv-eid">
     <div class="tabs" style="margin-bottom:16px">
@@ -1925,7 +1925,7 @@ function openAdvAdd(){
   var fields=['adv-ename','adv-ecn','adv-ephone','adv-eemail','adv-eaddr','adv-enotes','adv-elc','adv-emth','adv-eam'];
   for(var i=0;i<fields.length;i++){var el=document.getElementById(fields[i]);if(el)el.value='';}
   advTab('info');
-  document.getElementById('adv-modal').style.display='flex';
+  document.getElementById('adv-modal').classList.add('open');
 }
 
 function openAdvEdit(id){
@@ -1944,7 +1944,7 @@ function openAdvEdit(id){
   document.getElementById('adv-emth').value=a.mth||'';
   document.getElementById('adv-eam').value=a.am||'';
   advTab('info');
-  document.getElementById('adv-modal').style.display='flex';
+  document.getElementById('adv-modal').classList.add('open');
 }
 
 function saveAdv(){
@@ -1955,7 +1955,7 @@ function saveAdv(){
   closeAdvModal();renderAdvTable();
 }
 
-function closeAdvModal(){document.getElementById('adv-modal').style.display='none';}
+function closeAdvModal(){document.getElementById('adv-modal').classList.remove('open');}
 </script>
 
 </body>
