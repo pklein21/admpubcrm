@@ -2424,7 +2424,14 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
     b.className='nb'; b.id='nav-advertisers';
     b.innerHTML='\uD83C\uDFE2 Advertisers';
     b.addEventListener('click',function(){ goPage('advertisers'); });
-    nav.appendChild(b);
+    // place before the Sign Out button so Sign Out stays at the far right
+    var signout=null, btns=nav.querySelectorAll('button, a');
+    for(var i=0;i<btns.length;i++){
+      var t=(btns[i].textContent||'').toLowerCase();
+      var oc=(btns[i].getAttribute('onclick')||'').toLowerCase();
+      if(t.indexOf('sign out')>-1||t.indexOf('signout')>-1||t.indexOf('log out')>-1||t.indexOf('logout')>-1||oc.indexOf('signout')>-1||oc.indexOf('logout')>-1||oc.indexOf('sign_out')>-1){ signout=btns[i]; break; }
+    }
+    if(signout) nav.insertBefore(b, signout); else nav.appendChild(b);
   }
 
   /* ---------- page shell ---------- */
@@ -2590,7 +2597,7 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
   /* ---------- modal builders ---------- */
   function advOverlay(inner){
     var o=document.createElement('div');
-    o.className='overlay'; o.id='adv-overlay';
+    o.className='overlay open'; o.id='adv-overlay';
     o.innerHTML=inner;
     o.addEventListener('click',function(e){ if(e.target===o) advCloseModal(); });
     document.body.appendChild(o);
