@@ -2865,11 +2865,182 @@ populateAMFilter(); renderTable(); renderAMSidebar(); renderKPIs(); renderAttn()
 })();
 </script>
 <!-- ===================== END ADVERTISERS MODULE ===================== -->
-  <!-- ===================== END ADVERTISERS MODULE ===================== -->
-   <!-- ...PROFIT HISTORY MODULE... -->
-   ... the new block ...
-   <!-- ===================== END PROFIT HISTORY MODULE ===================== -->
-   </body>
-   </html>
+  <!-- ============================================================= -->
+<!-- PROFIT HISTORY MODULE — self-contained add-on. Touches nothing.-->
+<!-- Lets you save Monthly History months manually (no code edits). -->
+<!-- Paste this entire block immediately BEFORE the closing </body>.-->
+<!-- ============================================================= -->
+<script>
+(function(){
+  "use strict";
+
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  /* one-time seed = your existing hardcoded Monthly History */
+  var BASE=[
+    {yr:2026,mon_idx:4,mon:'April',val:224727},
+    {yr:2026,mon_idx:3,mon:'March',val:238027},
+    {yr:2026,mon_idx:2,mon:'February',val:223193},
+    {yr:2026,mon_idx:1,mon:'January',val:204232},
+    {yr:2025,mon_idx:12,mon:'December',val:175801},
+    {yr:2025,mon_idx:11,mon:'November',val:156232},
+    {yr:2025,mon_idx:10,mon:'October',val:230657},
+    {yr:2025,mon_idx:9,mon:'September',val:235150},
+    {yr:2025,mon_idx:8,mon:'August',val:123719},
+    {yr:2025,mon_idx:7,mon:'July',val:102748},
+    {yr:2025,mon_idx:6,mon:'June',val:178946},
+    {yr:2025,mon_idx:5,mon:'May',val:186432}
+  ];
+
+  var phData=[], phLoaded=false, phGoal=350000, phSeeding=false;
+
+  function $(id){return document.getElementById(id);}
+  function fmt(n){return '$'+Math.round(n).toLocaleString();}
+  function parseNum(s){ if(!s) return 0; return parseFloat(String(s).replace(/[$,]/g,''))||0; }
+  function sb(){ return window._sb; }
+
+  /* build our history block (hide the hardcoded one) */
+  function phBuild(){
+    var page=$('page-profit'); if(!page) return;
+    if($('ph2-wrap')) return;
+    var orig=page.querySelector('.pp-history');
+    if(orig) orig.style.display='none';
+    var wrap=document.createElement('div');
+    wrap.className='pp-history'; wrap.id='ph2-wrap';
+    wrap.innerHTML=''
+      +'<div class="pp-section-hdr">'
+        +'<div class="pp-section-title">Monthly History</div>'
+        +'<button class="pp-add-btn" id="ph2-add">+ Add Month</button>'
+      +'</div>'
+      +'<div id="ph2-body"></div>';
+    if(orig && orig.parentNode) orig.parentNode.insertBefore(wrap, orig.nextSibling);
+    else page.appendChild(wrap);
+    $('ph2-add').addEventListener('click',function(){ phOpenForm(); });
+    var goal=$('pp-monthly-goal');
+    if(goal && !goal._ph2bound){ goal._ph2bound=1; goal.addEventListener('input',function(){ phRender(); }); }
+  }
+
+  function phRender(){
+    var body=$('ph2-body'); if(!body) return;
+    var goalEl=$('pp-monthly-goal');
+    phGoal=goalEl?(parseFloat(goalEl.value)||350000):350000;
+    var years={};
+    phData.forEach(function(h){ (years[h.yr]=years[h.yr]||[]).push(h); });
+    var yrs=Object.keys(years).map(Number).sort(function(a,b){return b-a;});
+    var maxVal=Math.max.apply(null, phData.map(function(h){return Number(h.val)||0;}).concat([phGoal,1]));
+    body.innerHTML='';
+    if(!yrs.length){ body.innerHTML='<div style="font-size:.75rem;color:#888;font-family:\'DM Mono\',monospace;padding:8px 0">No months saved yet. Click "+ Add Month".</div>'; return; }
+    yrs.forEach(function(yr){
+      var yl=document.createElement('div'); yl.className='pp-hist-year'; yl.textContent=yr; body.appendChild(yl);
+      var grid=document.createElement('div'); grid.className='pp-hist-grid';
+      years[yr].sort(function(a,b){return b.mon_idx-a.mon_idx;}).forEach(function(h){
+        var v=Number(h.val)||0;
+        var pct=Math.min(100,(v/maxVal)*100), hit=v>=phGoal;
+        var card=document.createElement('div'); card.className='pp-hist-card'; card.style.position='relative';
+        card.innerHTML=''
+          +'<div class="hc-month">'+h.mon+' '+yr+'</div>'
+          +'<div class="hc-val" style="color:'+(hit?'#008040':'#111')+'">'+fmt(v)+'</div>'
+          +'<div class="hc-bar"><div class="hc-bar-fill" style="width:'+pct+'%;background:'+(hit?'#008040':'#cc0000')+'"></div></div>'
+          +'<button class="ph2-del" data-id="'+h.id+'" title="Remove this month" style="position:absolute;top:6px;right:8px;border:none;background:transparent;color:#ccc;cursor:pointer;font-size:12px;line-height:1;padding:2px">&#10005;</button>'
+          +'<button class="ph2-edit" data-y="'+yr+'" data-m="'+h.mon_idx+'" data-v="'+v+'" title="Edit" style="position:absolute;bottom:6px;right:8px;border:none;background:transparent;color:#ccc;cursor:pointer;font-size:11px;line-height:1;padding:2px">edit</button>';
+        grid.appendChild(card);
+      });
+      body.appendChild(grid);
+    });
+    body.querySelectorAll('.ph2-del').forEach(function(b){ b.addEventListener('click',function(){ phDelete(b.getAttribute('data-id')); }); });
+    body.querySelectorAll('.ph2-edit').forEach(function(b){ b.addEventListener('click',function(){ phOpenForm({yr:+b.getAttribute('data-y'),mon_idx:+b.getAttribute('data-m'),val:+b.getAttribute('data-v')}); }); });
+  }
+
+  function phLoad(){
+    var c=sb(); if(!c){ setTimeout(phLoad,400); return; }
+    c.from('profit_history').select('*').then(function(res){
+      if(res.error){ console.error('[ph] load error (did you run the SQL?)',res.error); return; }
+      if((!res.data || res.data.length===0) && !phSeeding){
+        phSeeding=true;
+        console.log('[ph] seeding base months...');
+        c.from('profit_history').insert(BASE).then(function(r){
+          if(r.error) console.error('[ph] seed error',r.error);
+          c.from('profit_history').select('*').then(function(r2){
+            phData=r2.data||[]; phLoaded=true; phSeeding=false;
+            console.log('[ph] seeded + loaded',phData.length,'months'); phRender();
+          });
+        });
+      } else {
+        phData=res.data||[]; phLoaded=true;
+        console.log('[ph] loaded',phData.length,'months'); phRender();
+      }
+    });
+  }
+
+  /* add / edit popover (themed to the Profit page) */
+  function phOpenForm(pre){
+    if($('ph2-ov')) return;
+    var now=new Date();
+    var defYr = pre?pre.yr:now.getFullYear();
+    var defMi = pre?(pre.mon_idx-1):((now.getMonth()-1+12)%12);
+    var defVal= pre?pre.val:'';
+    var monthOpts=MONTHS.map(function(m,i){return '<option value="'+i+'"'+(i===defMi?' selected':'')+'>'+m+'</option>';}).join('');
+    var ov=document.createElement('div'); ov.id='ph2-ov';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:9999';
+    ov.innerHTML='<div style="background:#fff;border-radius:12px;padding:22px;width:320px;font-family:\'DM Mono\',monospace;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
+      +'<div style="font-size:1rem;font-weight:700;margin-bottom:16px;font-family:\'Sora\',sans-serif;letter-spacing:-.02em">'+(pre?'Edit Month':'Add Month')+'</div>'
+      +'<label style="font-size:.66rem;color:#888;text-transform:uppercase;letter-spacing:.07em">Year</label>'
+      +'<input id="ph2-yr" type="number" value="'+defYr+'" style="width:100%;margin:5px 0 14px;padding:9px;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-family:inherit;font-size:.9rem">'
+      +'<label style="font-size:.66rem;color:#888;text-transform:uppercase;letter-spacing:.07em">Month</label>'
+      +'<select id="ph2-mon" style="width:100%;margin:5px 0 14px;padding:9px;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-family:inherit;font-size:.9rem">'+monthOpts+'</select>'
+      +'<label style="font-size:.66rem;color:#888;text-transform:uppercase;letter-spacing:.07em">Total Profit</label>'
+      +'<input id="ph2-val" type="text" value="'+(defVal!==''?fmt(defVal):'')+'" placeholder="$0" style="width:100%;margin:5px 0 18px;padding:9px;border:1px solid rgba(0,0,0,.15);border-radius:6px;font-family:inherit;font-size:.9rem">'
+      +'<div style="display:flex;gap:8px;justify-content:flex-end">'
+        +'<button id="ph2-cancel" style="background:#f1f1f2;border:none;border-radius:6px;padding:9px 14px;cursor:pointer;font-family:inherit;font-size:.8rem">Cancel</button>'
+        +'<button id="ph2-save" style="background:#cc0000;color:#fff;border:none;border-radius:6px;padding:9px 18px;cursor:pointer;font-family:inherit;font-size:.8rem">Save</button>'
+      +'</div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',function(e){ if(e.target===ov) ov.remove(); });
+    $('ph2-cancel').addEventListener('click',function(){ ov.remove(); });
+    var vi=$('ph2-val');
+    vi.addEventListener('focus',function(){ this.value=parseNum(this.value)||''; this.select(); });
+    vi.addEventListener('blur',function(){ var n=parseNum(this.value); this.value=n?fmt(n):''; });
+    $('ph2-save').addEventListener('click',phSaveForm);
+  }
+
+  function phSaveForm(){
+    var c=sb(); if(!c){ alert('Not connected to database.'); return; }
+    var yr=parseInt($('ph2-yr').value)||new Date().getFullYear();
+    var mi=parseInt($('ph2-mon').value);
+    var val=parseNum($('ph2-val').value);
+    var rec={yr:yr,mon_idx:mi+1,mon:MONTHS[mi],val:val};
+    var btn=$('ph2-save'); if(btn){ btn.disabled=true; btn.textContent='Saving...'; }
+    c.from('profit_history').upsert(rec,{onConflict:'yr,mon_idx'}).select().then(function(r){
+      if(r.error){ console.error('[ph] save error',r.error); alert('Save failed: '+r.error.message); if(btn){btn.disabled=false;btn.textContent='Save';} return; }
+      var saved=(r.data&&r.data[0])?r.data[0]:rec;
+      var idx=-1; for(var i=0;i<phData.length;i++){ if(Number(phData[i].yr)===rec.yr && Number(phData[i].mon_idx)===rec.mon_idx){ idx=i; break; } }
+      if(idx>-1) phData[idx]=saved; else phData.push(saved);
+      var ov=$('ph2-ov'); if(ov) ov.remove();
+      phRender();
+    });
+  }
+
+  function phDelete(id){
+    var c=sb(); if(!c) return;
+    if(!confirm('Remove this month from history?')) return;
+    c.from('profit_history').delete().eq('id',id).then(function(r){
+      if(r.error){ alert('Delete failed: '+r.error.message); return; }
+      phData=phData.filter(function(h){ return String(h.id)!==String(id); });
+      phRender();
+    });
+  }
+
+  /* init + goPage hook */
+  function phInit(){ phBuild(); phLoad(); }
+  var og=window.goPage;
+  window.goPage=function(p){
+    if(typeof og==='function') og(p);
+    if(p==='profit'){ phBuild(); if(!phLoaded) phLoad(); else phRender(); }
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',phInit);
+  else phInit();
+})();
+</script>
+<!-- ===================== END PROFIT HISTORY MODULE ===================== -->
 </body>
 </html>
